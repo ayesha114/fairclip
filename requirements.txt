@@ -1,0 +1,62 @@
+# =============================================================================
+# FairCLIP — Python dependencies
+# =============================================================================
+# All versions are PINNED for reproducibility (T-IP / TPAMI requirement).
+# Tested on: Ubuntu 22.04, Python 3.10, CUDA 11.8 / 12.1.
+#
+# To install on your machine:
+#   conda create -n fairclip python=3.10 -y
+#   conda activate fairclip
+#   pip install -r requirements.txt
+#
+# If a version fails, comment it out and try the latest, but DOCUMENT IT
+# in your paper's "Implementation Details" section.
+# =============================================================================
+
+# --- Core deep learning -----------------------------------------------------
+# PyTorch 2.2.x is the last LTS-style release with broad Ampere/Ada support.
+# We pin the cu118 build below in setup_local.sh because pip's index is fragile.
+torch==2.2.2
+torchvision==0.17.2
+
+# --- CLIP & transformers ----------------------------------------------------
+# OpenCLIP gives us ViT-B/32, ViT-B/16, ViT-L/14 with one API.
+# Official OpenAI clip is pinned for the original baseline reproduction.
+open-clip-torch==2.24.0
+ftfy==6.2.0
+regex==2024.5.15
+
+# --- Hugging Face -----------------------------------------------------------
+# Used for FairFace download (it's hosted on HF datasets).
+transformers==4.40.2
+datasets==2.19.1
+huggingface_hub==0.23.2
+
+# --- Numerical & ML stack ---------------------------------------------------
+numpy==1.26.4         # Last numpy 1.x release — torch 2.2 not yet numpy 2.0 ready
+scipy==1.13.0         # Used for orthogonal Procrustes (scipy.linalg)
+scikit-learn==1.4.2   # Used for PCA / SVD on bias subspace
+pandas==2.2.2
+
+# --- Visualization ----------------------------------------------------------
+matplotlib==3.8.4
+seaborn==0.13.2
+pillow==10.3.0
+
+# --- Experiment tracking ----------------------------------------------------
+wandb==0.17.0         # Free tier; signup at wandb.ai before first run
+tqdm==4.66.4
+tensorboard==2.16.2
+
+# --- Config management ------------------------------------------------------
+PyYAML==6.0.1
+omegaconf==2.3.0      # Hierarchical YAML configs (cleaner than argparse)
+
+# --- Testing ----------------------------------------------------------------
+pytest==8.2.1
+pytest-cov==5.0.0     # For coverage reports if reviewers ask
+
+# --- Utilities --------------------------------------------------------------
+einops==0.8.0         # Cleaner tensor operations
+rich==13.7.1          # Pretty printing for logs
+psutil==5.9.8         # GPU/CPU monitoring during training

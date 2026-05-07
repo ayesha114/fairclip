@@ -1,0 +1,91 @@
+# =============================================================================
+# FairCLIP — .gitignore
+# =============================================================================
+# Files and directories that should NEVER be committed to GitHub.
+# Keeps the repo small and stops accidental leaks of large datasets.
+
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environments ---------------------------------------------------
+venv/
+env/
+.venv/
+ENV/
+
+# --- Jupyter ----------------------------------------------------------------
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# --- Editor/IDE -------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- OS ---------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# --- Datasets (NEVER commit images!) ----------------------------------------
+# Datasets live OUTSIDE the repo. Manifests inside results/manifests/ are
+# .gitignored too because they contain absolute paths specific to your machine.
+data/raw/
+data/processed/
+*.jpg
+*.jpeg
+*.png
+*.tiff
+!docs/**/*.png
+!paper/figures/*.png
+!paper/figures/*.pdf
+
+# --- Results & logs ---------------------------------------------------------
+# Checkpoints and logs are too big for git. We keep RESULT CSVs only.
+results/checkpoints/
+results/logs/
+results/wandb/
+results/manifests/
+*.pth
+*.ckpt
+*.pt
+*.bin
+*.safetensors
+
+# --- W&B local cache --------------------------------------------------------
+wandb/
+
+# --- Test cache -------------------------------------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Local config (each user's machine has different paths) ----------------
+# We commit a TEMPLATE local_paths.yaml; each user copies + edits locally.
+configs/datasets/local_paths.yaml.local
+.env
+
+# --- LaTeX build artifacts --------------------------------------------------
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
+paper/*.toc
+paper/main.pdf  # commit final PDF separately, not from build
+
+# --- Misc -------------------------------------------------------------------
+*.tar
+*.zip
+*.gz
+!docs/**/*.zip
