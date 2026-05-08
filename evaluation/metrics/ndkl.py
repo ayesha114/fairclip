@@ -53,7 +53,7 @@ def compute_ndkl(
         scores = similarity_matrix[q]
         n_items = len(scores)
         actual_k = min(k, n_items)
-        topk_indices = scores.topk(actual_k).indices
+        topk_indices = scores.topk(min(actual_k, len(scores))).indices
         topk_labels = group_labels[topk_indices]
 
         # Compute KL divergence at each position

@@ -1,23 +1,8 @@
 """
-=============================================================================
 ABLE Metric — Alignment and Bias Level Evaluation
-=============================================================================
-ABLE is the combined metric proposed by Zhang et al. CVPR 2025.
-It balances BOTH fairness AND accuracy in one score.
+Zhang et al. CVPR 2025 combined metric.
 Higher ABLE = better overall model.
-
-Formula:
-    ABLE = VL_Alignment × (1 - Bias_Level)
-
-Where:
-    VL_Alignment = text-to-image retrieval accuracy (R@1)
-    Bias_Level   = normalized MaxSkew (between 0 and 1)
-
-ABLE is the PRIMARY metric for comparing FairCLIP vs Zhang.
-If your ABLE > Zhang's ABLE, your method is better.
-=============================================================================
 """
-
 import numpy as np
 import torch
 from evaluation.metrics.maxskew import compute_maxskew
@@ -32,44 +17,40 @@ def compute_able(
     """
     Compute ABLE metric.
 
-    Args:
-        image_embeddings: [N, D] L2-normalized image embeddings
-        text_embeddings: [N, D] L2-normalized text embeddings
-        group_labels: [N] demographic group labels for images
-        k: top-K for retrieval and MaxSkew
-
-    Returns:
-        dict with keys:
-            able: float (main metric, higher = better)
-            vl_alignment: float (retrieval accuracy)
-            bias_level: float (normalized bias, lower = better)
-            maxskew: float (raw MaxSkew value)
+    image_embeddings: [N, D] — one per image
+    text_embeddings:  [P, D] — one per demographic prompt (P = n_groups)
+    group_labels:     [N]    — demographic label for each image
     """
-    n = len(image_embeddings)
+    n_images = len(image_embeddings)
+    n_prompts = len(text_embeddings)
 
-    # Compute similarity matrix: [N, N]
+    # Similarity matrix: [N_images, N_prompts]
     sim = image_embeddings.float() @ text_embeddings.float().T
 
-    # VL Alignment = Text-to-Image Recall@1
-    # For each text query, check if the correct image is rank 1
+    # VL Alignment = how often the model picks the correct demographic prompt
+    # For each image, correct prompt = index matching its group label
     correct = 0
-    for i in range(n):
-        text_query_sims = sim[:, i]  # similarities of all images to text i
-        top1_idx = text_query_sims.argmax().item()
-        if top1_idx == i:
+    for i in range(n_images):
+        label = group_labels[i].item()
+        if label < 0 or label >= n_prompts:
+            continue
+        top1 = sim[i].argmax().item()
+        if top1 == label:
             correct += 1
-    vl_alignment = correct / n
 
-    # Compute MaxSkew (image retrieval fairness)
-    # Use text as queries, images as items
-    maxskew = compute_maxskew(sim.T, group_labels, k=k)
+    valid = (group_labels >= 0) & (group_labels < n_prompts)
+    n_valid = valid.sum().item()
+    vl_alignment = correct / n_valid if n_valid > 0 else 0.0
+
+    # MaxSkew: use image→prompt similarities, groups = image group labels
+    valid_sim = sim[valid]
+    valid_labels = group_labels[valid]
+    maxskew = compute_maxskew(valid_sim, valid_labels, k=min(k, n_prompts))
 
     # Normalize MaxSkew to [0, 1]
-    # MaxSkew can theoretically go up to log(K), so we clip and normalize
-    max_possible_skew = np.log(k) if k > 1 else 1.0
-    bias_level = min(maxskew / max_possible_skew, 1.0)
+    max_possible = np.log(max(k, 2))
+    bias_level = min(maxskew / max_possible, 1.0)
 
-    # ABLE = alignment × (1 - bias)
     able = vl_alignment * (1.0 - bias_level)
 
     return {

@@ -54,7 +54,7 @@ def compute_recall_at_k(
         for i in range(n):
             # Similarities of all images to text query i
             sims = sim[:, i]
-            topk = sims.topk(k).indices
+            topk = sims.topk(min(k, len(sims))).indices
             if i in topk:
                 correct += 1
         results[f"TR@{k}"] = round(100.0 * correct / n, 2)
@@ -65,7 +65,7 @@ def compute_recall_at_k(
         for i in range(n):
             # Similarities of all texts to image query i
             sims = sim[i, :]
-            topk = sims.topk(k).indices
+            topk = sims.topk(min(k, len(sims))).indices
             if i in topk:
                 correct += 1
         results[f"IR@{k}"] = round(100.0 * correct / n, 2)

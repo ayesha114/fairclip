@@ -48,7 +48,8 @@ def compute_maxskew(
     for q in range(n_queries):
         # Get top-K items for this query
         scores = similarity_matrix[q]
-        topk_indices = scores.topk(k).indices
+        actual_k = min(k, len(scores))
+        topk_indices = scores.topk(actual_k).indices
 
         # Count how many items from each group appear in top-K
         topk_labels = group_labels[topk_indices]

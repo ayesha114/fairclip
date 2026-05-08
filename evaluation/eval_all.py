@@ -101,10 +101,11 @@ def parse_args():
 
 
 def get_attr_col(attribute):
+    # FaceDataset returns "gender","age","race" (not "gender_idx" etc.)
     return {
-        "gender": "gender_idx",
-        "age": "age_idx",
-        "race": "race_idx",
+        "gender": "gender",
+        "age": "age",
+        "race": "race",
     }[attribute]
 
 
@@ -117,7 +118,7 @@ def extract_embeddings(model, dataset, attr_col, args):
     all_embs, all_labels = [], []
     for batch in loader:
         images = batch["image"].to(args.device)
-        labels = torch.tensor(batch[attr_col])
+        labels = batch[attr_col].clone().detach() if hasattr(batch[attr_col], "clone") else torch.tensor(batch[attr_col])
         if args.baseline:
             embs = model.encode_images(images)
         else:
