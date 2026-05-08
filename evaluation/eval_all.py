@@ -148,6 +148,9 @@ def evaluate_attribute(model, cfg, attribute, args):
         text_embs = (text_embs if text_embs is not None
                      else model.encode_text(prompts)).cpu()
 
+    # For MaxSkew/NDKL: use image-to-image similarity matrix
+    # This is the correct way to measure retrieval fairness
+    # (how fairly are different demographic groups retrieved)
     results = compute_all_metrics(image_embs, text_embs, labels, attribute)
 
     # Print summary
@@ -156,6 +159,7 @@ def evaluate_attribute(model, cfg, attribute, args):
     log.info(f"  Precision   : {results.get('precision',0):.4f}")
     log.info(f"  Recall      : {results.get('recall',0):.4f}")
     log.info(f"  DPG         : {results.get('dpg',0):.4f}  (↓ fairer)")
+    log.info(f"  RBS         : {results.get('rbs',0):.4f}  (↓ fairer — embedding bias)")
     log.info(f"  EOD         : {results.get('eod',0):.4f}  (↓ fairer)")
     log.info(f"  MaxSkew@5   : {results.get('maxskew_5',0):.4f}  (↓ fairer)")
     log.info(f"  NDKL        : {results.get('ndkl',0):.4f}  (↓ fairer)")
@@ -221,7 +225,7 @@ def main():
     col_order = [
         "method", "backbone", "attribute",
         "accuracy", "precision", "recall", "f1",
-        "dpg", "eod", "facet_bias_score",
+        "dpg", "eod", "rbs", "facet_bias_score",
         "maxskew_5", "ndkl", "able",
         "vl_alignment", "bias_level",
         "TR@1", "TR@5", "TR@10",

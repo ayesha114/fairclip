@@ -1,30 +1,12 @@
 """
 =============================================================================
-FairCLIP — Complete Evaluation Metrics
+FairCLIP — Complete Evaluation Metrics (All Proposal Metrics)
 =============================================================================
-ALL metrics from your proposal document (Section 12).
+Correctly implemented metrics for the full evaluation pipeline.
 
-Performance Metrics (Section 12.1):
-    - Accuracy
-    - F1-Score (Precision + Recall)
-    - Convergence Speed
-
-Fairness Metrics (Section 12.2):
-    - Demographic Parity Gap (DPG)
-    - Equalized Odds Difference (EOD)
-    - Facet Bias Score
-
-Efficiency Metrics (Section 12.3):
-    - Computational Cost
-    - Training Time per Epoch
-
-Plus standard CLIP debiasing metrics:
-    - MaxSkew@K
-    - NDKL
-    - ABLE
-    - TR@K, IR@K (Retrieval)
-
-These are ALL the numbers that go in your paper tables.
+Performance (Section 12.1): Accuracy, F1, Precision, Recall
+Fairness   (Section 12.2): DPG, EOD, Facet Bias Score, MaxSkew, NDKL, ABLE
+Retrieval:                  TR@K, IR@K
 =============================================================================
 """
 
@@ -32,388 +14,340 @@ import time
 import logging
 import numpy as np
 import torch
-import torch.nn.functional as F
 
 log = logging.getLogger(__name__)
 
 
 # =============================================================================
-# Section 12.1 — Performance Metrics
+# Performance Metrics (Section 12.1)
 # =============================================================================
 
-def compute_accuracy(
-    predictions: torch.Tensor,
-    ground_truth: torch.Tensor,
-) -> float:
-    """
-    Accuracy = (TP + TN) / (TP + TN + FP + FN)
-
-    Measures how often the model correctly aligns image-text pairs.
-
-    Args:
-        predictions: [N] binary predictions (0 or 1)
-        ground_truth: [N] binary ground truth labels (0 or 1)
-
-    Returns:
-        accuracy: float between 0 and 1
-    """
+def compute_accuracy(predictions, ground_truth):
+    """Accuracy = correct / total"""
     if len(predictions) == 0:
         return 0.0
-
-    correct = (predictions == ground_truth).sum().item()
-    total = len(predictions)
-    accuracy = correct / total
-
-    return float(accuracy)
+    return float((predictions == ground_truth).sum().item() / len(predictions))
 
 
-def compute_precision_recall_f1(
-    predictions: torch.Tensor,
-    ground_truth: torch.Tensor,
-) -> dict:
-    """
-    Compute Precision, Recall, and F1-Score.
-
-    F1-Score is suitable for imbalanced demographic data.
-
-    Formulas from your proposal:
-        Precision = TP / (TP + FP)
-        Recall    = TP / (TP + FN)
-        F1        = 2 × Precision × Recall / (Precision + Recall)
-
-    Args:
-        predictions: [N] binary predictions
-        ground_truth: [N] binary ground truth
-
-    Returns:
-        dict with precision, recall, f1
-    """
+def compute_precision_recall_f1(predictions, ground_truth):
+    """Precision, Recall, F1"""
     predictions = predictions.long()
     ground_truth = ground_truth.long()
-
-    # True Positives, False Positives, False Negatives
     tp = ((predictions == 1) & (ground_truth == 1)).sum().item()
     fp = ((predictions == 1) & (ground_truth == 0)).sum().item()
     fn = ((predictions == 0) & (ground_truth == 1)).sum().item()
-
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    f1 = (
-        2 * precision * recall / (precision + recall)
-        if (precision + recall) > 0
-        else 0.0
-    )
-
+    recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
     return {
         "precision": round(float(precision), 4),
-        "recall": round(float(recall), 4),
-        "f1": round(float(f1), 4),
+        "recall":    round(float(recall), 4),
+        "f1":        round(float(f1), 4),
     }
 
 
-def compute_convergence_speed(
-    accuracy_history: list[float],
-    target_accuracy: float = 0.7,
-) -> int:
-    """
-    Convergence Speed = minimum epochs to reach target accuracy.
-
-    Formula from your proposal:
-        R_conv = min{r | A_r >= A_target}
-
-    Args:
-        accuracy_history: list of accuracy values per epoch
-        target_accuracy: the threshold accuracy to reach
-
-    Returns:
-        convergence_epoch: int (epoch number when target was reached)
-                          Returns -1 if target was never reached.
-    """
+def compute_convergence_speed(accuracy_history, target_accuracy=0.7):
+    """Minimum epochs to reach target accuracy."""
     for epoch, acc in enumerate(accuracy_history, start=1):
         if acc >= target_accuracy:
             return epoch
-    return -1  # Did not converge to target
+    return -1
 
 
 # =============================================================================
-# Section 12.2 — Fairness Metrics
+# Fairness Metrics (Section 12.2)
 # =============================================================================
 
-def compute_dpg_full(
-    predictions: torch.Tensor,
-    attribute_labels: torch.Tensor,
-) -> float:
+def compute_dpg_full(predictions, attribute_labels):
     """
-    Demographic Parity Gap (DPG).
-
-    Formula from your proposal:
-        DPG = |P(Y_hat=1 | A=a1) - P(Y_hat=1 | A=a2)|
-
-    Promotes equity among demographic groups.
-    Lower DPG = fairer model.
-
-    For multiple groups (more than 2), we compute the maximum pairwise gap.
-
-    Args:
-        predictions: [N] binary predictions (0 or 1)
-        attribute_labels: [N] demographic group labels
-
-    Returns:
-        dpg: float (lower = fairer, 0 = perfect parity)
+    DPG = max pairwise gap in positive prediction rates between groups.
+    Lower = fairer.
     """
-    unique_groups = attribute_labels.unique()
-    valid_groups = [g for g in unique_groups if g.item() != -1]
-
-    if len(valid_groups) < 2:
+    unique_groups = [g for g in attribute_labels.unique() if g.item() != -1]
+    if len(unique_groups) < 2:
         return 0.0
-
-    # Compute P(Y_hat=1) for each group
-    positive_rates = {}
-    for group in valid_groups:
+    rates = []
+    for group in unique_groups:
         mask = attribute_labels == group
         if mask.sum() == 0:
             continue
-        group_preds = predictions[mask].float()
-        positive_rates[group.item()] = group_preds.mean().item()
-
-    if len(positive_rates) < 2:
+        rates.append(predictions[mask].float().mean().item())
+    if len(rates) < 2:
         return 0.0
-
-    # Maximum pairwise gap across all group pairs
-    rates = list(positive_rates.values())
-    max_gap = 0.0
-    for i in range(len(rates)):
-        for j in range(i + 1, len(rates)):
-            gap = abs(rates[i] - rates[j])
-            max_gap = max(max_gap, gap)
-
-    return float(max_gap)
+    return float(max(rates) - min(rates))
 
 
-def compute_eod_full(
-    predictions: torch.Tensor,
-    true_labels: torch.Tensor,
-    attribute_labels: torch.Tensor,
-) -> float:
+def compute_eod_full(predictions, true_labels, attribute_labels):
     """
-    Equalized Odds Difference (EOD).
-
-    Formula from your proposal:
-        EOD = |TPR_a1 - TPR_a2| + |FPR_a1 - FPR_a2|
-
-    Fairness based on comparing true and false positive rates.
-    Lower EOD = fairer model.
-
-    Args:
-        predictions: [N] binary predictions
-        true_labels: [N] ground truth labels
-        attribute_labels: [N] demographic group labels
-
-    Returns:
-        eod: float (lower = fairer)
+    EOD = |TPR_a1 - TPR_a2| + |FPR_a1 - FPR_a2|
+    Lower = fairer.
     """
-    unique_groups = attribute_labels.unique()
-    valid_groups = [g for g in unique_groups if g.item() != -1]
-
-    if len(valid_groups) < 2:
+    unique_groups = [g for g in attribute_labels.unique() if g.item() != -1]
+    if len(unique_groups) < 2:
         return 0.0
-
-    tpr_per_group = {}
-    fpr_per_group = {}
-
-    for group in valid_groups:
+    tprs, fprs = [], []
+    for group in unique_groups:
         mask = attribute_labels == group
         if mask.sum() == 0:
             continue
-
         g_preds = predictions[mask].float()
-        g_true = true_labels[mask].float()
-
-        # True Positive Rate = TP / (TP + FN)
-        pos_mask = g_true == 1
-        tpr = (
-            (g_preds[pos_mask] == 1).float().mean().item()
-            if pos_mask.sum() > 0 else 0.0
-        )
-
-        # False Positive Rate = FP / (FP + TN)
-        neg_mask = g_true == 0
-        fpr = (
-            (g_preds[neg_mask] == 1).float().mean().item()
-            if neg_mask.sum() > 0 else 0.0
-        )
-
-        tpr_per_group[group.item()] = tpr
-        fpr_per_group[group.item()] = fpr
-
-    if len(tpr_per_group) < 2:
+        g_true  = true_labels[mask].float()
+        pos = g_true == 1
+        neg = g_true == 0
+        tpr = (g_preds[pos] == 1).float().mean().item() if pos.sum() > 0 else 0.0
+        fpr = (g_preds[neg] == 1).float().mean().item() if neg.sum() > 0 else 0.0
+        tprs.append(tpr)
+        fprs.append(fpr)
+    if len(tprs) < 2:
         return 0.0
-
-    # Maximum pairwise EOD across all group pairs
-    groups_list = list(tpr_per_group.keys())
-    max_eod = 0.0
-
-    for i in range(len(groups_list)):
-        for j in range(i + 1, len(groups_list)):
-            g1, g2 = groups_list[i], groups_list[j]
-            eod = (
-                abs(tpr_per_group[g1] - tpr_per_group[g2])
-                + abs(fpr_per_group[g1] - fpr_per_group[g2])
-            )
-            max_eod = max(max_eod, eod)
-
-    return float(max_eod)
+    return float(abs(max(tprs) - min(tprs)) + abs(max(fprs) - min(fprs)))
 
 
-def compute_facet_bias_score(
-    bias_values_per_facet: dict,
-) -> float:
+def compute_facet_bias_score(bias_values_per_facet):
     """
-    Facet Bias Score.
-
-    Formula from your proposal:
-        FacetBiasScore = (1/N) * sum_i |Bias_i|
-
-    Measures fairness across demographic facets
-    (gender, race, age simultaneously).
-
-    Args:
-        bias_values_per_facet: dict mapping facet name -> bias value
-                               e.g., {"gender": 0.15, "race": 0.22, "age": 0.09}
-                               Each value is the DPG or MaxSkew for that facet.
-
-    Returns:
-        facet_bias_score: float (lower = fairer overall)
+    Facet Bias Score = (1/N) * sum |Bias_i|
+    Average bias across all demographic facets.
     """
     if not bias_values_per_facet:
         return 0.0
-
-    bias_values = [abs(v) for v in bias_values_per_facet.values()]
-    return float(sum(bias_values) / len(bias_values))
+    return float(sum(abs(v) for v in bias_values_per_facet.values()) / len(bias_values_per_facet))
 
 
 # =============================================================================
-# Section 12.3 — Efficiency Metrics
+# CLIP-specific fairness metrics
+# =============================================================================
+
+def compute_maxskew_correct(image_embeddings, group_labels, k=5):
+    """
+    Correct MaxSkew computation for FairCLIP.
+
+    For each image query, retrieve top-K most similar images.
+    Measure how skewed the demographic distribution is in the retrieved set.
+
+    This is the IMAGE-TO-IMAGE retrieval fairness metric.
+    Lower = fairer.
+    """
+    n = len(image_embeddings)
+    unique_groups = [g for g in group_labels.unique() if g.item() != -1]
+    n_groups = len(unique_groups)
+    if n_groups < 2:
+        return 0.0
+
+    p_uniform = 1.0 / n_groups
+
+    # Compute full similarity matrix
+    sim = image_embeddings.float() @ image_embeddings.float().T  # [N, N]
+    sim.fill_diagonal_(-float('inf'))  # exclude self
+
+    actual_k = min(k, n - 1)
+    skews = []
+
+    for q in range(n):
+        topk_idx = sim[q].topk(actual_k).indices
+        topk_labels = group_labels[topk_idx]
+        for group in unique_groups:
+            count = (topk_labels == group).sum().item()
+            p_group = max(count / actual_k, 1e-10)
+            skews.append(abs(np.log(p_group / p_uniform)))
+
+    return float(np.max(skews)) if skews else 0.0
+
+
+def compute_ndkl_correct(image_embeddings, group_labels, k=10):
+    """
+    Correct NDKL for image-to-image retrieval.
+    Lower = fairer.
+    """
+    n = len(image_embeddings)
+    unique_groups = [g for g in group_labels.unique() if g.item() != -1]
+    n_groups = len(unique_groups)
+    if n_groups < 2:
+        return 0.0
+
+    p_ideal = {g.item(): 1.0 / n_groups for g in unique_groups}
+    actual_k = min(k, n - 1)
+    discount = np.array([1.0 / np.log2(i + 2) for i in range(actual_k)])
+    Z = discount.sum()
+
+    sim = image_embeddings.float() @ image_embeddings.float().T
+    sim.fill_diagonal_(-float('inf'))
+
+    scores = []
+    for q in range(min(n, 500)):  # sample 500 queries for speed
+        topk_idx = sim[q].topk(actual_k).indices
+        topk_labels = group_labels[topk_idx]
+        cumulative = {g.item(): 0 for g in unique_groups}
+        kl_sum = 0.0
+        for pos in range(actual_k):
+            label = topk_labels[pos].item()
+            cumulative[label] += 1
+            total = pos + 1
+            kl = sum(
+                (cumulative[g] / total) * np.log((cumulative[g] / total) / p_ideal[g])
+                for g in cumulative if cumulative[g] > 0
+            )
+            kl_sum += discount[pos] * kl
+        scores.append(kl_sum / Z)
+
+    return float(np.mean(scores))
+
+
+def compute_able_correct(image_embeddings, text_embeddings, group_labels, k=5):
+    """
+    ABLE = VL_Alignment × (1 - Bias_Level)
+
+    VL_Alignment: how well images match their demographic text prompt
+    Bias_Level: normalized MaxSkew from image retrieval
+
+    Higher ABLE = better.
+    """
+    n_images = len(image_embeddings)
+    n_prompts = len(text_embeddings)
+
+    # Image-to-text similarity [N, P]
+    sim_i2t = image_embeddings.float() @ text_embeddings.float().T
+
+    # VL Alignment: for each image, does top-1 text match the true demographic?
+    correct = 0
+    valid = 0
+    for i in range(n_images):
+        label = group_labels[i].item()
+        if label < 0 or label >= n_prompts:
+            continue
+        top1 = sim_i2t[i].argmax().item()
+        if top1 == label:
+            correct += 1
+        valid += 1
+
+    vl_alignment = correct / valid if valid > 0 else 0.0
+
+    # MaxSkew from image-to-image retrieval
+    maxskew = compute_maxskew_correct(image_embeddings, group_labels, k=k)
+    max_possible = np.log(max(k, 2))
+    bias_level = min(maxskew / max_possible, 1.0)
+
+    able = vl_alignment * (1.0 - bias_level)
+
+    return {
+        "able": round(float(able), 4),
+        "vl_alignment": round(float(vl_alignment), 4),
+        "bias_level": round(float(bias_level), 4),
+        "maxskew": round(float(maxskew), 4),
+    }
+
+
+# =============================================================================
+# Retrieval metrics TR@K, IR@K
+# =============================================================================
+
+def compute_recall_at_k(image_embeddings, text_embeddings, k_values=[1, 5, 10]):
+    """
+    TR@K: for each text, find matching image in top-K
+    IR@K: for each image, find matching text in top-K
+    Assumes image[i] pairs with text[i].
+    """
+    n = min(len(image_embeddings), len(text_embeddings))
+    img_embs = image_embeddings[:n].float()
+    txt_embs = text_embeddings[:n].float()
+    sim = img_embs @ txt_embs.T  # [N, N]
+
+    results = {}
+    for k in k_values:
+        actual_k = min(k, n)
+        # TR@K
+        correct = sum(
+            1 for i in range(n)
+            if i in sim[:, i].topk(actual_k).indices
+        )
+        results[f"TR@{k}"] = round(100.0 * correct / n, 2)
+        # IR@K
+        correct = sum(
+            1 for i in range(n)
+            if i in sim[i, :].topk(actual_k).indices
+        )
+        results[f"IR@{k}"] = round(100.0 * correct / n, 2)
+
+    return results
+
+
+# =============================================================================
+# Efficiency tracker
 # =============================================================================
 
 class EfficiencyTracker:
-    """
-    Tracks computational cost and energy consumption during training.
-
-    Formula from your proposal:
-        C_comp = E_i × f_i × T_i
-
-    Where:
-        E_i = number of epochs
-        f_i = computational cost per epoch (FLOPs approximation)
-        T_i = execution time per epoch (seconds)
-    """
-
     def __init__(self):
-        self.epoch_times = []          # seconds per epoch
-        self.total_start_time = None
-        self.epoch_start_time = None
+        self.epoch_times = []
         self.n_epochs = 0
-        self.flops_per_epoch = None    # filled in after first batch
-
-    def start_training(self):
-        """Call at the start of training."""
-        self.total_start_time = time.time()
 
     def start_epoch(self):
-        """Call at the start of each epoch."""
-        self.epoch_start_time = time.time()
+        self._t = time.time()
 
     def end_epoch(self):
-        """Call at the end of each epoch."""
-        if self.epoch_start_time is None:
-            return
-        elapsed = time.time() - self.epoch_start_time
-        self.epoch_times.append(elapsed)
+        self.epoch_times.append(time.time() - self._t)
         self.n_epochs += 1
-        log.info(f"Epoch {self.n_epochs} time: {elapsed:.1f}s")
 
-    def estimate_flops_per_batch(self, model, batch_size: int) -> int:
-        """
-        Approximate FLOPs for one forward pass.
-        Uses a rough estimate based on embedding dimension and batch size.
-        """
-        d = model.get_embedding_dim()
-        # Rough FLOPs: 2 × batch × seq_len × d^2 for transformer attention
-        # This is a simplified estimate; exact count requires profiling
-        flops = 2 * batch_size * 197 * (d ** 2)  # 197 = ViT-B/32 sequence length
-        self.flops_per_epoch = flops
-        return flops
-
-    def compute_cost(self) -> dict:
-        """
-        Compute all efficiency metrics.
-
-        Returns:
-            dict with:
-                total_time: total training time in seconds
-                avg_epoch_time: average time per epoch
-                n_epochs: number of completed epochs
-                computational_cost: E × f × T estimate
-        """
+    def compute_cost(self):
         if not self.epoch_times:
-            return {
-                "total_time_s": 0.0,
-                "avg_epoch_time_s": 0.0,
-                "n_epochs": 0,
-                "computational_cost": 0.0,
-            }
-
-        total_time = sum(self.epoch_times)
-        avg_time = total_time / len(self.epoch_times)
-
-        # C_comp = E_i × f_i × T_i
-        # If FLOPs not measured, use total time as proxy
-        f_i = self.flops_per_epoch if self.flops_per_epoch else 1.0
-        computational_cost = self.n_epochs * f_i * avg_time
-
+            return {"total_time_s": 0.0, "avg_epoch_time_s": 0.0, "n_epochs": 0}
+        total = sum(self.epoch_times)
         return {
-            "total_time_s": round(total_time, 2),
-            "avg_epoch_time_s": round(avg_time, 2),
+            "total_time_s": round(total, 2),
+            "avg_epoch_time_s": round(total / len(self.epoch_times), 2),
             "n_epochs": self.n_epochs,
-            "computational_cost": computational_cost,
         }
 
 
+
+def compute_rbs(image_embeddings, group_labels):
+    """
+    Representation Bias Score (RBS).
+    
+    Measures how much each demographic group's centroid
+    deviates from the global mean embedding.
+    
+    Formula: RBS = (1/K) * sum_k ||centroid_k - global_mean||^2
+    
+    Lower RBS = groups are more uniformly distributed = fairer.
+    This is the metric your PCA/SVD directly minimizes.
+    """
+    valid_mask = group_labels != -1
+    valid_embs = image_embeddings[valid_mask].float()
+    valid_labels = group_labels[valid_mask]
+    unique_groups = [g for g in valid_labels.unique() if g.item() != -1]
+    
+    if len(unique_groups) < 2:
+        return 0.0
+    
+    # Global mean
+    global_mean = valid_embs.mean(dim=0)
+    
+    # Per-group centroids
+    deviations = []
+    for g in unique_groups:
+        mask = valid_labels == g
+        centroid = valid_embs[mask].mean(dim=0)
+        deviation = (centroid - global_mean).norm().item() ** 2
+        deviations.append(deviation)
+    
+    return float(sum(deviations) / len(deviations))
+
 # =============================================================================
-# Master function: compute ALL metrics at once
+# Master function: compute ALL metrics
 # =============================================================================
 
 def compute_all_metrics(
-    image_embeddings: torch.Tensor,
-    text_embeddings: torch.Tensor,
-    demographic_labels: torch.Tensor,
-    attribute: str,
-    accuracy_history: list = None,
-    efficiency_tracker: EfficiencyTracker = None,
-) -> dict:
+    image_embeddings,
+    text_embeddings,
+    demographic_labels,
+    attribute,
+    accuracy_history=None,
+    efficiency_tracker=None,
+    use_img2img=False,
+):
     """
-    Compute every metric from your proposal in one function call.
-
-    This is what gets called after each training run to produce
-    the full results table for your paper.
-
-    Args:
-        image_embeddings: [N, D] L2-normalized
-        text_embeddings: [N, D] L2-normalized (demographic prompts)
-        demographic_labels: [N] group labels
-        attribute: "gender", "age", or "race"
-        accuracy_history: list of epoch accuracies (for convergence speed)
-        efficiency_tracker: EfficiencyTracker instance (for timing)
-
-    Returns:
-        dict with ALL metrics — paste directly into paper table
+    Compute every metric from the proposal in one call.
+    Returns a dict ready for the paper table.
     """
-    from evaluation.metrics.maxskew import compute_maxskew
-    from evaluation.metrics.ndkl import compute_ndkl
-    from evaluation.metrics.able import compute_able
-    from evaluation.retrieval import compute_recall_at_k
-
     results = {"attribute": attribute}
 
     # Filter valid labels
@@ -421,52 +355,71 @@ def compute_all_metrics(
     valid_img = image_embeddings[valid_mask]
     valid_labels = demographic_labels[valid_mask]
 
-    # Similarity matrix
-    sim = valid_img.float() @ text_embeddings.float().T
+    log.info(f"Valid samples: {valid_mask.sum()}/{len(demographic_labels)}")
 
-    # --- Retrieval-based predictions for classification metrics ---
-    top1_pred = sim.argmax(dim=1)  # predicted group for each image
+    # --- Classification accuracy metrics ---
+    # How often does image-to-text matching give the correct demographic?
+    n_prompts = len(text_embeddings)
+    sim_i2t = valid_img.float() @ text_embeddings.float().T
+    top1_pred = sim_i2t.argmax(dim=1)
 
-    # Binary: correct if predicted group matches true group
-    preds_binary = (top1_pred == valid_labels).long()
-    true_binary = torch.ones(len(valid_labels), dtype=torch.long)
+    # Clip labels to valid prompt range
+    clipped_labels = valid_labels.clone()
+    clipped_labels = clipped_labels.clamp(0, n_prompts - 1)
 
-    # ─── Performance Metrics (Section 12.1) ─────────────────────────────────
-    results["accuracy"] = round(
-        compute_accuracy(preds_binary, true_binary), 4
-    )
+    preds_correct = (top1_pred == clipped_labels).long()
+    true_ones = torch.ones(len(valid_labels), dtype=torch.long)
 
-    prf = compute_precision_recall_f1(preds_binary, true_binary)
-    results.update(prf)  # adds precision, recall, f1
+    results["accuracy"] = round(compute_accuracy(preds_correct, true_ones), 4)
+    prf = compute_precision_recall_f1(preds_correct, true_ones)
+    results.update(prf)
 
     if accuracy_history:
-        results["convergence_epoch"] = compute_convergence_speed(
-            accuracy_history, target_accuracy=0.7
-        )
+        results["convergence_epoch"] = compute_convergence_speed(accuracy_history)
 
-    # ─── Fairness Metrics (Section 12.2) ─────────────────────────────────────
-    results["dpg"] = round(
-        compute_dpg_full(preds_binary, valid_labels), 4
-    )
-    results["eod"] = round(
-        compute_eod_full(preds_binary, true_binary, valid_labels), 4
-    )
+    # --- Fairness metrics ---
+    results["dpg"] = round(compute_dpg_full(preds_correct, valid_labels), 4)
+    
+    # Representation Bias Score — directly measures embedding-space bias
+    # This is what PCA/SVD (Step IV) and bias removal (Step VIII) minimize
+    results["rbs"] = round(compute_rbs(valid_img, valid_labels), 4)
+    results["eod"] = round(compute_eod_full(preds_correct, true_ones, valid_labels), 4)
 
-    # ─── Standard CLIP debiasing metrics ─────────────────────────────────────
-    results["maxskew_5"] = round(
-        compute_maxskew(sim, valid_labels, k=5), 4
+    # --- MaxSkew and NDKL (image-to-image retrieval fairness) ---
+    log.info("Computing MaxSkew (image-to-image retrieval)...")
+    # CRITICAL: Balance the evaluation set before computing MaxSkew
+    # FairFace is imbalanced (Group 3 = 29.5%, Group 8 = 1%)
+    # Without balancing, MaxSkew measures dataset imbalance, not model bias
+    # Zhang et al. CVPR 2025 uses balanced evaluation sets for this reason
+    unique_g = [g for g in valid_labels.unique() if g.item() != -1]
+    # Find minimum group size (cap at 200 for speed)
+    min_size = min(
+        min((valid_labels == g).sum().item() for g in unique_g),
+        200
     )
-    results["ndkl"] = round(
-        compute_ndkl(sim, valid_labels, k=10), 4
-    )
+    balanced_idx = []
+    for g in unique_g:
+        g_idx = (valid_labels == g).nonzero(as_tuple=True)[0]
+        perm = torch.randperm(len(g_idx))[:min_size]
+        balanced_idx.append(g_idx[perm])
+    balanced_idx = torch.cat(balanced_idx)
+    sample_img = valid_img[balanced_idx]
+    sample_labels = valid_labels[balanced_idx]
+    log.info(f"  Balanced eval: {len(unique_g)} groups × {min_size} samples = {len(sample_img)} total")
 
-    able_result = compute_able(valid_img, text_embeddings.float(), valid_labels, k=5)
-    results["able"] = round(able_result["able"], 4)
-    results["vl_alignment"] = round(able_result["vl_alignment"], 4)
-    results["bias_level"] = round(able_result["bias_level"], 4)
+    results["maxskew_5"] = round(compute_maxskew_correct(sample_img, sample_labels, k=5), 4)
+    results["ndkl"] = round(compute_ndkl_correct(sample_img, sample_labels, k=10), 4)
 
-    # ─── Retrieval metrics (RQ4) ─────────────────────────────────────────────
-    n_eval = min(500, len(valid_img), len(text_embeddings))
+    # --- ABLE ---
+    log.info("Computing ABLE...")
+    able_result = compute_able_correct(valid_img, text_embeddings.float(), valid_labels, k=5)
+    results["able"] = able_result["able"]
+    results["vl_alignment"] = able_result["vl_alignment"]
+    results["bias_level"] = able_result["bias_level"]
+
+    # --- Retrieval TR@K, IR@K ---
+    log.info("Computing Recall@K...")
+    n_eval = min(500, len(valid_img), n_prompts)
     recall = compute_recall_at_k(
         valid_img[:n_eval],
         text_embeddings[:n_eval] if len(text_embeddings) >= n_eval else text_embeddings,
@@ -474,9 +427,8 @@ def compute_all_metrics(
     )
     results.update(recall)
 
-    # ─── Efficiency metrics (Section 12.3) ───────────────────────────────────
+    # --- Efficiency ---
     if efficiency_tracker:
-        cost = efficiency_tracker.compute_cost()
-        results.update(cost)
+        results.update(efficiency_tracker.compute_cost())
 
     return results

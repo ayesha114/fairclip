@@ -318,12 +318,26 @@ class FairCLIP(nn.Module):
         log.info(f"Saved FairCLIP to {path}")
 
     def load(self, path: str) -> "FairCLIP":
-        """Load a saved FairCLIP model state."""
+        """Load a saved FairCLIP model state. Handles both old and new formats."""
         checkpoint = torch.load(path, map_location=self.device)
-        self.bias_discoverer.image_bias_directions = checkpoint["bias_discoverer_image"]
-        self.bias_discoverer.text_bias_directions = checkpoint["bias_discoverer_text"]
-        self.procrustes.rotation_matrix = checkpoint["procrustes_rotation"]
-        self._bias_subspace_fitted = checkpoint["bias_fitted"]
+
+        # New format (disaster recovery format)
+        if "model_state" in checkpoint:
+            state = checkpoint["model_state"]
+            self.bias_discoverer.image_bias_directions = state["bias_discoverer_image"]
+            self.bias_discoverer.text_bias_directions = state["bias_discoverer_text"]
+            self.procrustes.rotation_matrix = state["procrustes_rotation"]
+            self._bias_subspace_fitted = state["bias_fitted"]
+            # Load CLIP weights
+            if "clip_state_dict" in checkpoint:
+                self.backbone.clip_model.load_state_dict(checkpoint["clip_state_dict"])
+                self.backbone.clip_model = self.backbone.clip_model.float()
+        # Old format
+        else:
+            self.bias_discoverer.image_bias_directions = checkpoint["bias_discoverer_image"]
+            self.bias_discoverer.text_bias_directions = checkpoint["bias_discoverer_text"]
+            self.procrustes.rotation_matrix = checkpoint["procrustes_rotation"]
+            self._bias_subspace_fitted = checkpoint["bias_fitted"]
 
         if self._bias_subspace_fitted:
             self.bias_remover.set_bias_subspace(

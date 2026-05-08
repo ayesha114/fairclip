@@ -497,7 +497,8 @@ def main():
         )
 
         # Save full training state every epoch (disaster recovery)
-        latest_path = out_dir / f"epoch_{epoch:03d}.pt"
+        # Save only latest.pt (for resume) - not individual epochs (saves disk space)
+        latest_path = out_dir / "latest.pt"
         torch.save({
             "epoch": epoch,
             "model_state": {
@@ -515,16 +516,13 @@ def main():
             "args": vars(args),
         }, latest_path)
 
-        # Also save a 'latest.pt' that always points to the most recent epoch
-        # This is what you resume from after a crash
-        import shutil
-        shutil.copy(latest_path, out_dir / "latest.pt")
-        log.info(f"  Checkpoint saved: {latest_path.name}")
+        log.info(f"  Checkpoint saved: latest.pt (epoch {epoch})")
 
         # Save best model separately
         if val_metrics["val_loss"] < best_val_loss:
             best_val_loss = val_metrics["val_loss"]
-            shutil.copy(latest_path, out_dir / "best_model.pt")
+            import shutil
+            shutil.copy(str(latest_path), str(out_dir / "best_model.pt"))
             log.info(f"  New best model saved (epoch {epoch})")
             no_improve_count = 0  # Reset counter on improvement
         else:
