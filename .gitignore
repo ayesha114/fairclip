@@ -89,3 +89,4 @@ paper/main.pdf  # commit final PDF separately, not from build
 *.zip
 *.gz
 !docs/**/*.zip
+datasets/
