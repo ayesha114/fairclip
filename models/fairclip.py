@@ -172,6 +172,13 @@ class FairCLIP(nn.Module):
         img_dirs = self.bias_discoverer.image_bias_directions
         txt_dirs = self.bias_discoverer.text_bias_directions
 
+        # Match dimensions — trim to minimum
+        min_dirs = min(img_dirs.shape[1], txt_dirs.shape[1])
+        img_dirs = img_dirs[:, :min_dirs]
+        txt_dirs = txt_dirs[:, :min_dirs]
+        self.bias_discoverer.image_bias_directions = img_dirs
+        self.bias_discoverer.text_bias_directions = txt_dirs
+
         # Step V: Align text bias directions to image bias directions
         aligned_txt_dirs = self.procrustes.fit_transform(img_dirs, txt_dirs)
 

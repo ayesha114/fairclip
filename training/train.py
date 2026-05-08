@@ -48,6 +48,36 @@ logging.basicConfig(
 )
 log = logging.getLogger("train")
 
+# Demographic text prompts for each attribute
+# Using attribute-specific prompts gives meaningful image-text pairs
+ATTRIBUTE_PROMPTS = {
+    "age": [
+        "A photo of a 0-2 year old person",
+        "A photo of a 3-9 year old person",
+        "A photo of a 10-19 year old person",
+        "A photo of a 20-29 year old person",
+        "A photo of a 30-39 year old person",
+        "A photo of a 40-49 year old person",
+        "A photo of a 50-59 year old person",
+        "A photo of a 60-69 year old person",
+        "A photo of an elderly person",
+    ],
+    "gender": [
+        "A photo of a Male person",
+        "A photo of a Female person",
+    ],
+    "race": [
+        "A photo of a White person",
+        "A photo of a Black person",
+        "A photo of a Latino person",
+        "A photo of an East Asian person",
+        "A photo of a Southeast Asian person",
+        "A photo of an Indian person",
+        "A photo of a Middle Eastern person",
+    ],
+}
+
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Train FairCLIP")
@@ -72,6 +102,8 @@ def parse_args():
                         help="Learning rate")
     parser.add_argument("--seed",       type=int,   default=42)
     parser.add_argument("--output_dir", default="results/checkpoints")
+    parser.add_argument("--patience", type=int, default=5,
+                        help="Early stopping patience (epochs without improvement)")
     parser.add_argument("--device",     default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--num_workers",type=int,   default=4)
     parser.add_argument("--log_every",  type=int,   default=50,
@@ -89,7 +121,7 @@ def set_seed(seed: int):
 
 
 def get_attribute_column(attribute: str) -> str:
-    """Map attribute name to manifest column name."""
+    """Map attribute name to manifest column name (DataFrame uses _idx suffix)."""
     return {"gender": "gender_idx", "age": "age_idx", "race": "race_idx"}[attribute]
 
 
@@ -167,10 +199,13 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
     all_image_embs = []
     all_labels = []
 
+    # Ensure float32 for stable computation
+    model.backbone.clip_model = model.backbone.clip_model.float()
     log.info("Extracting CLIP embeddings for bias subspace fitting...")
     for i, batch in enumerate(setup_loader):
         images = batch["image"].to(args.device)
-        labels = torch.tensor(batch[attr_col]).to(args.device)
+        batch_key = attr_col.replace("_idx", "")
+        labels = batch[batch_key].clone().detach().to(args.device)
 
         image_embs = model.backbone.encode_images(images)
         all_image_embs.append(image_embs.cpu())
@@ -229,16 +264,15 @@ def train_one_epoch(
 
     for step, batch in enumerate(train_loader):
         images = batch["image"].to(args.device)
-        labels = torch.tensor(batch[attr_col]).to(args.device)
+        batch_key = attr_col.replace("_idx", "")
+        labels = batch[batch_key].clone().detach().to(args.device)
 
         # Build text prompts from demographic attribute
         # For FairFace: we pair each image with a demographic description
         # This creates image-text pairs for the contrastive loss
-        attr_strs = batch.get(f"{args.attribute}_str", None)
-        if attr_strs is not None:
-            texts = [f"A photo of a {s} person" for s in attr_strs]
-        else:
-            texts = [f"A photo of a person"] * len(images)
+        # Build texts using demographic labels for meaningful contrastive pairs
+        prompts = ATTRIBUTE_PROMPTS[args.attribute]
+        texts = [prompts[min(l.item(), len(prompts)-1)] for l in labels]
 
         # Zero gradients
         optimizer.zero_grad()
@@ -249,9 +283,10 @@ def train_one_epoch(
         # Backward pass
         loss.backward()
 
-        # Gradient clipping prevents training instability
+        # Clip gradients BEFORE optimizer step (critical for CLIP fine-tuning)
         torch.nn.utils.clip_grad_norm_(
-            model.backbone.clip_model.parameters(), max_norm=1.0
+            [p for group in optimizer.param_groups for p in group['params']],
+            max_norm=0.1  # tight clipping for CLIP stability
         )
 
         optimizer.step()
@@ -296,13 +331,12 @@ def validate(model: FairCLIP, val_loader, args) -> dict:
 
     for batch in val_loader:
         images = batch["image"].to(args.device)
-        labels = torch.tensor(batch[attr_col]).to(args.device)
+        batch_key = attr_col.replace("_idx", "")
+        labels = batch[batch_key].clone().detach().to(args.device)
 
-        attr_strs = batch.get(f"{args.attribute}_str", None)
-        if attr_strs is not None:
-            texts = [f"A photo of a {s} person" for s in attr_strs]
-        else:
-            texts = [f"A photo of a person"] * len(images)
+        # Build texts using demographic labels for meaningful contrastive pairs
+        prompts = ATTRIBUTE_PROMPTS[args.attribute]
+        texts = [prompts[min(l.item(), len(prompts)-1)] for l in labels]
 
         # Use training_step in eval mode
         loss, info = model.training_step(images, texts, labels)
@@ -347,9 +381,38 @@ def main():
     # Phase 1: Fit bias subspace (Steps IV + V)
     fit_bias_subspace(model, train_ds, args)
 
-    # Optimizer — only update CLIP backbone parameters
+    # Only fine-tune the last 2 transformer blocks + projection
+    # Fine-tuning ALL of CLIP causes gradient explosion
+    # This is standard practice for CLIP fine-tuning
+    trainable_params = []
+    
+    # Visual transformer - last 2 blocks only
+    visual = model.backbone.clip_model.visual
+    if hasattr(visual, 'transformer'):
+        blocks = visual.transformer.resblocks
+        for block in list(blocks)[-2:]:
+            trainable_params.extend(block.parameters())
+    if hasattr(visual, 'proj') and visual.proj is not None:
+        trainable_params.append(visual.proj)
+    
+    # Text transformer - last 2 blocks only  
+    transformer = model.backbone.clip_model.transformer
+    if hasattr(transformer, 'resblocks'):
+        blocks = transformer.resblocks
+        for block in list(blocks)[-2:]:
+            trainable_params.extend(block.parameters())
+    
+    # Text projection
+    if hasattr(model.backbone.clip_model, 'text_projection'):
+        tp = model.backbone.clip_model.text_projection
+        if tp is not None:
+            trainable_params.append(tp)
+
+    n_params = sum(p.numel() for p in trainable_params)
+    log.info(f"Trainable parameters: {n_params:,} (last 2 layers only)")
+
     optimizer = torch.optim.AdamW(
-        model.backbone.clip_model.parameters(),
+        trainable_params,
         lr=args.lr,
         weight_decay=0.01,
     )
@@ -365,9 +428,46 @@ def main():
 
     # Phase 2: Training loop (Steps VI + VII + VIII)
     best_val_loss = float("inf")
+    no_improve_count = 0  # Early stopping counter
     log.info("Starting training...")
 
-    for epoch in range(1, args.epochs + 1):
+
+    # =========================================================================
+    # DISASTER RECOVERY: Auto-resume from last checkpoint if it exists
+    # If training stops due to power cut / crash, just re-run the same command
+    # =========================================================================
+    start_epoch = 1
+    latest_ckpt = out_dir / "latest.pt"
+
+    if latest_ckpt.exists():
+        log.info(f"Found checkpoint: {latest_ckpt} — resuming training...")
+        ckpt = torch.load(str(latest_ckpt), map_location=args.device)
+        start_epoch = ckpt["epoch"] + 1
+
+        # Restore CLIP weights
+        model.backbone.clip_model.load_state_dict(ckpt["clip_state_dict"])
+        model.backbone.clip_model = model.backbone.clip_model.float()
+
+        # Restore bias subspace
+        state = ckpt["model_state"]
+        model.bias_discoverer.image_bias_directions = state["bias_discoverer_image"]
+        model.bias_discoverer.text_bias_directions = state["bias_discoverer_text"]
+        model.procrustes.rotation_matrix = state["procrustes_rotation"]
+        model._bias_subspace_fitted = state["bias_fitted"]
+        model.bias_remover.set_bias_subspace(
+            state["bias_discoverer_image"],
+            state["bias_discoverer_text"],
+        )
+
+        # Restore optimizer and scheduler
+        optimizer.load_state_dict(ckpt["optimizer_state_dict"])
+        scheduler.load_state_dict(ckpt["scheduler_state_dict"])
+        best_val_loss = ckpt.get("best_val_loss", float("inf"))
+        log.info(f"Resumed from epoch {ckpt['epoch']} — continuing from epoch {start_epoch}")
+    else:
+        log.info("No checkpoint found — starting fresh.")
+
+    for epoch in range(start_epoch, args.epochs + 1):
         log.info(f"\nEpoch {epoch}/{args.epochs}")
 
         # Reset temperature history each epoch
@@ -396,16 +496,44 @@ def main():
             f"max={temp_stats.get('temperature_max', 0):.4f}"
         )
 
-        # Save best checkpoint
+        # Save full training state every epoch (disaster recovery)
+        latest_path = out_dir / f"epoch_{epoch:03d}.pt"
+        torch.save({
+            "epoch": epoch,
+            "model_state": {
+                "bias_discoverer_image": model.bias_discoverer.image_bias_directions,
+                "bias_discoverer_text": model.bias_discoverer.text_bias_directions,
+                "procrustes_rotation": model.procrustes.rotation_matrix,
+                "bias_fitted": model._bias_subspace_fitted,
+            },
+            "clip_state_dict": model.backbone.clip_model.state_dict(),
+            "optimizer_state_dict": optimizer.state_dict(),
+            "scheduler_state_dict": scheduler.state_dict(),
+            "best_val_loss": best_val_loss,
+            "train_metrics": train_metrics,
+            "val_metrics": val_metrics,
+            "args": vars(args),
+        }, latest_path)
+
+        # Also save a 'latest.pt' that always points to the most recent epoch
+        # This is what you resume from after a crash
+        import shutil
+        shutil.copy(latest_path, out_dir / "latest.pt")
+        log.info(f"  Checkpoint saved: {latest_path.name}")
+
+        # Save best model separately
         if val_metrics["val_loss"] < best_val_loss:
             best_val_loss = val_metrics["val_loss"]
-            ckpt_path = out_dir / "best_model.pt"
-            model.save(str(ckpt_path))
-            log.info(f"  New best model saved: {ckpt_path}")
-
-        # Save latest checkpoint every epoch
-        latest_path = out_dir / f"epoch_{epoch:03d}.pt"
-        model.save(str(latest_path))
+            shutil.copy(latest_path, out_dir / "best_model.pt")
+            log.info(f"  New best model saved (epoch {epoch})")
+            no_improve_count = 0  # Reset counter on improvement
+        else:
+            no_improve_count += 1
+            log.info(f"  No improvement for {no_improve_count}/{args.patience} epochs")
+            if no_improve_count >= args.patience:
+                log.info(f"Early stopping triggered at epoch {epoch}!")
+                log.info(f"Best val loss: {best_val_loss:.4f} (epoch {epoch - no_improve_count})")
+                break
 
     log.info("\nTraining complete!")
     log.info(f"Best val loss: {best_val_loss:.4f}")
