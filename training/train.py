@@ -48,6 +48,19 @@ logging.basicConfig(
 )
 log = logging.getLogger("train")
 
+def load_coco_captions(manifest_path, n=50000):
+    """Load COCO captions for neutral contrastive training."""
+    import pandas as pd
+    try:
+        df = pd.read_csv(manifest_path)
+        captions = df["caption"].dropna().tolist()
+        import random
+        random.shuffle(captions)
+        return captions[:n]
+    except Exception:
+        return None
+
+
 # Demographic text prompts for each attribute
 # Using attribute-specific prompts gives meaningful image-text pairs
 ATTRIBUTE_PROMPTS = {
@@ -67,13 +80,13 @@ ATTRIBUTE_PROMPTS = {
         "A photo of a Female person",
     ],
     "race": [
-        "A photo of a White person",
-        "A photo of a Black person",
-        "A photo of a Latino person",
-        "A photo of an East Asian person",
-        "A photo of a Southeast Asian person",
-        "A photo of an Indian person",
-        "A photo of a Middle Eastern person",
+        "A photo of a person with light skin tone",
+        "A photo of a person with dark skin tone",
+        "A photo of a person with olive skin tone",
+        "A photo of a person with yellow skin tone",
+        "A photo of a person with tan skin tone",
+        "A photo of a person with brown skin tone",
+        "A photo of a person with warm skin tone",
     ],
 }
 
@@ -271,6 +284,7 @@ def train_one_epoch(
         # For FairFace: we pair each image with a demographic description
         # This creates image-text pairs for the contrastive loss
         # Build texts using demographic labels for meaningful contrastive pairs
+        # EXCEPTION: for race, use neutral texts to avoid reinforcing stereotypes
         prompts = ATTRIBUTE_PROMPTS[args.attribute]
         texts = [prompts[min(l.item(), len(prompts)-1)] for l in labels]
 
@@ -335,6 +349,7 @@ def validate(model: FairCLIP, val_loader, args) -> dict:
         labels = batch[batch_key].clone().detach().to(args.device)
 
         # Build texts using demographic labels for meaningful contrastive pairs
+        # EXCEPTION: for race, use neutral texts to avoid reinforcing stereotypes
         prompts = ATTRIBUTE_PROMPTS[args.attribute]
         texts = [prompts[min(l.item(), len(prompts)-1)] for l in labels]
 
@@ -429,6 +444,19 @@ def main():
     # Phase 2: Training loop (Steps VI + VII + VIII)
     best_val_loss = float("inf")
     no_improve_count = 0  # Early stopping counter
+    # Load COCO captions for race training (neutral contrastive pairs)
+    if args.attribute == "race":
+        coco_manifest = cfg.coco.get("manifest_train", "results/manifests/coco_train.csv")
+        captions = load_coco_captions(coco_manifest)
+        if captions:
+            args._coco_captions = captions
+            log.info(f"Loaded {len(captions)} COCO captions for race contrastive training")
+        else:
+            args._coco_captions = None
+            log.warning("COCO captions not found — falling back to demographic prompts")
+    else:
+        args._coco_captions = None
+
     log.info("Starting training...")
 
 

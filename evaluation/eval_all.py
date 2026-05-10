@@ -71,13 +71,13 @@ TEXT_PROMPTS = {
         "A photo of an elderly person",
     ],
     "race": [
-        "A photo of a White person",
-        "A photo of a Black person",
-        "A photo of a Latino person",
-        "A photo of an East Asian person",
-        "A photo of a Southeast Asian person",
-        "A photo of an Indian person",
-        "A photo of a Middle Eastern person",
+        "A photo of a person with light skin tone",
+        "A photo of a person with dark skin tone",
+        "A photo of a person with olive skin tone",
+        "A photo of a person with yellow skin tone",
+        "A photo of a person with tan skin tone",
+        "A photo of a person with brown skin tone",
+        "A photo of a person with warm skin tone",
     ],
 }
 
