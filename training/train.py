@@ -158,9 +158,17 @@ def build_dataloaders(cfg, args):
     # This ensures each batch has equal representation of demographic groups
     # Critical for the fairness loss to work properly (Step VI)
     train_labels = train_ds.df[attr_col].values
+    # Calculate optimal samples per group
+    # More samples = less noisy fairness gradient estimates
+    # Standard: batch_size / n_groups, minimum 14 for stable training
+    n_groups = len(set(train_labels.tolist()))
+    samples_per_group = max(14, args.batch_size // n_groups)
+    effective_batch = samples_per_group * n_groups
+    log.info(f"Using {samples_per_group} samples/group × {n_groups} groups = {effective_batch} effective batch size")
+
     sampler = DemographicBalancedSampler(
         train_labels,
-        batch_size=args.batch_size,
+        batch_size=effective_batch,
         seed=args.seed,
     )
 
@@ -215,8 +223,10 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
     # Ensure float32 for stable computation
     model.backbone.clip_model = model.backbone.clip_model.float()
     log.info("Extracting CLIP embeddings for bias subspace fitting...")
+    # Use CPU for bias fitting to save GPU memory for training
+    fitting_device = args.device
     for i, batch in enumerate(setup_loader):
-        images = batch["image"].to(args.device)
+        images = batch["image"].to(fitting_device)
         batch_key = attr_col.replace("_idx", "")
         labels = batch[batch_key].clone().detach().to(args.device)
 
@@ -500,6 +510,12 @@ def main():
 
         # Reset temperature history each epoch
         model.temperature_controller.reset_history()
+
+        # Refit bias subspace every 5 epochs to keep directions fresh
+        # This fixes the stale bias direction problem
+        if epoch % 5 == 0:
+            log.info(f"Refitting bias subspace at epoch {epoch}...")
+            fit_bias_subspace(model, train_ds, args)
 
         # Train
         train_metrics = train_one_epoch(model, train_loader, optimizer, args, epoch)
