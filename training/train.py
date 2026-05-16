@@ -211,7 +211,7 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
     # Load data in larger batches for efficiency (no gradient needed here)
     setup_loader = DataLoader(
         train_ds,
-        batch_size=256,
+        batch_size=128,
         shuffle=False,
         collate_fn=collate_dict,
         num_workers=args.num_workers,
@@ -263,6 +263,13 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
         attribute=args.attribute,
     )
     log.info("Bias subspace fitted successfully")
+    # Free GPU cache after fitting
+    import gc
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        torch.cuda.synchronize()
+    log.info(f"GPU memory after fitting: {torch.cuda.memory_allocated()/1e9:.2f}GB used")
 
 
 def train_one_epoch(
