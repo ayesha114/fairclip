@@ -1,0 +1,6 @@
+gender seed123: MaxSkew=0.016 NDKL=0.012 (round 2)
+gender seed456: MaxSkew=0.014 NDKL=0.012 (round 2)
+age seed123: MaxSkew=0.276 NDKL=0.074 (round 3)
+age seed456: MaxSkew=0.245 NDKL=0.087 (round 5)
+race seed123: MaxSkew=0.188 NDKL=0.084 (round 3)
+race seed456: MaxSkew=0.121 NDKL=0.077 (round 3)

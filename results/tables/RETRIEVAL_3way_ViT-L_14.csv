@@ -1,0 +1,4 @@
+Attr,MS_Baseline,MS_FairCLIP,MS_Zhang,MS_beats_Zhang,NDKL_Baseline,NDKL_FairCLIP,NDKL_Zhang,NDKL_beats_Zhang
+gender,0.154,0.049,0.106,YES,0.037,0.016,0.035,YES
+age,2.077,0.315,0.579,YES,0.18,0.065,0.332,YES
+race,0.574,0.135,0.353,YES,0.157,0.063,0.125,YES

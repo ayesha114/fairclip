@@ -1,0 +1,5 @@
+attribute,method,MaxSkew,NDKL
+gender,Original_CLIP_Zhang,0.138,0.054
+gender,Zhang_Ours,0.09,0.03
+gender,FairCLIP_before_INLP,0.748,0.086
+gender,FairCLIP_INLP,0.099,0.017

@@ -1,0 +1,72 @@
+12:50:30 [INFO] ============================================================
+12:50:30 [INFO] FairCLIP Complete Evaluation
+12:50:30 [INFO]   Backbone : ViT-H/14
+12:50:30 [INFO]   Baseline : False
+12:50:30 [INFO]   Attribute: age
+12:50:30 [INFO] ============================================================
+12:50:30 [INFO] ============================================================
+12:50:30 [INFO] Initializing FairCLIP
+12:50:30 [INFO]   Backbone: ViT-H/14
+12:50:30 [INFO]   Bias directions: 5
+12:50:30 [INFO]   Lambda fair: img=0.1, txt=0.1
+12:50:30 [INFO]   Temperature: base=0.07, alpha=0.5
+12:50:30 [INFO] ============================================================
+12:50:30 [INFO] Loading CLIP backbone: ViT-H/14
+12:50:30 [INFO] Embedding dimension: 1024
+12:50:30 [INFO] Device: cuda
+12:50:30 [INFO] Parsing model identifier. Schema: None, Identifier: ViT-H-14
+12:50:30 [INFO] Loaded built-in ViT-H-14 model config.
+12:50:31 [INFO] HTTP Request: HEAD https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K/resolve/main/open_clip_model.safetensors "HTTP/1.1 302 Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+12:50:31 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+12:50:31 [INFO] Instantiating model architecture: CLIP
+12:50:37 [INFO] Loading full pretrained weights from: /home/ayeshakalsoom/.cache/huggingface/hub/models--laion--CLIP-ViT-H-14-laion2B-s32B-b79K/snapshots/1c2b8495b28150b8a4922ee1c8edee224c284c0c/open_clip_model.safetensors
+12:50:37 [INFO] Final image preprocessing configuration set: {'size': (224, 224), 'mode': 'RGB', 'mean': (0.48145466, 0.4578275, 0.40821073), 'std': (0.26862954, 0.26130258, 0.27577711), 'interpolation': 'bicubic', 'resize_mode': 'shortest', 'fill_color': 0}
+12:50:37 [INFO] Model ViT-H-14 creation process complete.
+12:50:37 [INFO] Loaded OpenCLIP successfully
+12:50:37 [INFO] Gradient checkpointing ENABLED (memory saving)
+12:50:37 [INFO] Parsing tokenizer identifier. Schema: None, Identifier: ViT-H-14
+12:50:37 [INFO] Attempting to load config from built-in: ViT-H-14
+12:50:37 [INFO] Using default SimpleTokenizer.
+12:50:37 [INFO] Backbone frozen — CLIP weights will not be updated
+12:50:37 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+12:50:37 [INFO] FairnessAwareLoss initialized: λ_img=0.1, λ_txt=0.1
+12:50:37 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+12:50:41 [INFO] Bias subspace set: image_dirs=torch.Size([1024, 4]), text_dirs=torch.Size([1024, 4])
+12:50:41 [INFO] Loaded FairCLIP from results/checkpoints/fairface/ViT-H_14/age/seed42/best_model.pt
+12:50:41 [INFO] 
+=======================================================
+12:50:41 [INFO] Attribute: AGE | Backbone: ViT-H/14
+12:50:41 [INFO] =======================================================
+12:50:41 [INFO] Loaded manifest fairface.csv: 97698 rows
+12:50:41 [INFO] Filtered to split='val': 10954 rows
+12:50:41 [INFO] Dataset: fairface
+12:50:41 [INFO] Samples: 10954
+13:14:14 [INFO] Valid samples: 10954/10954
+13:14:14 [INFO] Computing MaxSkew (image-to-image retrieval)...
+13:14:14 [INFO]   Balanced eval: 9 groups × 118 samples = 1062 total
+13:14:14 [INFO] Computing ABLE...
+13:14:14 [INFO] Computing Recall@K...
+13:14:14 [INFO]   Accuracy    : 0.5911
+13:14:14 [INFO]   F1-Score    : 0.7430
+13:14:14 [INFO]   Precision   : 1.0000
+13:14:14 [INFO]   Recall      : 0.5911
+13:14:14 [INFO]   DPG         : 0.4799  (↓ fairer)
+13:14:14 [INFO]   RBS         : 0.1448  (↓ fairer — embedding bias)
+13:14:14 [INFO]   EOD         : 0.4799  (↓ fairer)
+13:14:14 [INFO]   MaxSkew@5   : 2.8898  (↓ fairer)
+13:14:14 [INFO]   NDKL        : 1.3810  (↓ fairer)
+13:14:14 [INFO]   ABLE        : 10.1600  (↑ better)
+13:14:14 [INFO]   TR@1        : 22.22%
+13:14:14 [INFO]   TR@5        : 66.67%
+13:14:14 [INFO]   IR@1        : 22.22%
+13:14:14 [INFO]   IR@5        : 55.56%
+13:14:14 [INFO] 
+Facet Bias Score (all attributes): 2.8898  (↓ better)
+13:14:14 [INFO] 
+Saved: results/tables/eval_FairCLIP_ViT-H_14_age.csv
+13:14:14 [INFO] 
+           method backbone attribute  accuracy  precision  recall    f1    dpg    eod    rbs  facet_bias_score  maxskew_5  ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+FairCLIP_ViT-H_14 ViT-H/14       age    0.5911        1.0  0.5911 0.743 0.4799 0.4799 0.1448            2.8898     2.8898 1.381 10.16        0.5911      2.8898 22.22 66.67  100.0 22.22 55.56  100.0
+13:14:14 [INFO] 
+Evaluation complete.

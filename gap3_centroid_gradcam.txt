@@ -1,0 +1,3 @@
+gender: centroid spread before=0.5469 after=0.0133 reduction=97.6%
+age: centroid spread before=0.4346 after=0.0018 reduction=99.6%
+race: centroid spread before=0.3153 after=0.0012 reduction=99.6%

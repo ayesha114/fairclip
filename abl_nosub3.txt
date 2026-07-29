@@ -1,0 +1,64 @@
+04:50:14 [INFO] ============================================================
+04:50:14 [INFO] FairCLIP Training
+04:50:14 [INFO] Attribute: race
+04:50:14 [INFO] Backbone:  ViT-B/32
+04:50:14 [INFO] Epochs:    30
+04:50:14 [INFO] Batch:     32
+04:50:14 [INFO] Lambda:    2.0
+04:50:14 [INFO] Device:    cuda
+04:50:14 [INFO] Seed:      42
+04:50:14 [INFO] ============================================================
+04:50:14 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+04:50:14 [INFO] Loaded manifest fairface.csv: 97698 rows
+04:50:14 [INFO] Filtered to split='train': 86744 rows
+04:50:14 [INFO] Loaded manifest fairface.csv: 97698 rows
+04:50:14 [INFO] Filtered to split='val': 10954 rows
+04:50:14 [INFO] Using 14 samples/group × 7 groups = 98 effective batch size
+04:50:14 [INFO]   Group 0: 16527 samples (19.1%)
+04:50:14 [INFO]   Group 1: 12233 samples (14.1%)
+04:50:14 [INFO]   Group 2: 13367 samples (15.4%)
+04:50:14 [INFO]   Group 3: 12287 samples (14.2%)
+04:50:14 [INFO]   Group 4: 10795 samples (12.4%)
+04:50:14 [INFO]   Group 5: 12319 samples (14.2%)
+04:50:14 [INFO]   Group 6: 9216 samples (10.6%)
+04:50:14 [INFO] DemographicBalancedSampler: 7 groups, 14/group, 658 batches/epoch, effective batch size 98
+04:50:14 [INFO] Train: 86744 samples
+04:50:14 [INFO] Val:   10954 samples
+04:50:14 [INFO] ============================================================
+04:50:14 [INFO] Initializing FairCLIP
+04:50:14 [INFO]   Backbone: ViT-B/32
+04:50:14 [INFO]   Bias directions: 5
+04:50:14 [INFO]   Lambda fair: img=2.0, txt=2.0
+04:50:14 [INFO]   Temperature: base=0.07, alpha=0.5
+04:50:14 [INFO] ============================================================
+04:50:14 [INFO] Loading CLIP backbone: ViT-B/32
+04:50:14 [INFO] Embedding dimension: 512
+04:50:14 [INFO] Device: cuda
+04:50:16 [INFO] Loaded OpenAI CLIP successfully
+04:50:16 [INFO] Backbone frozen — CLIP weights will not be updated
+04:50:16 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+04:50:16 [INFO] FairnessAwareLoss initialized: λ_img=2.0, λ_txt=2.0
+04:50:16 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+04:50:16 [INFO] Bias subspace set: image_dirs=torch.Size([512, 1]), text_dirs=torch.Size([512, 1])
+04:50:16 [INFO] Trainable parameters: 21,135,872 (last 2 layers only)
+04:50:17 [INFO] Loaded 50000 COCO captions for race contrastive training
+04:50:17 [INFO] Starting training...
+04:50:17 [INFO] No checkpoint found — starting fresh.
+04:50:17 [INFO] 
+Epoch 1/30
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 659, in <module>
+    main()
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 594, in main
+    train_metrics = train_one_epoch(model, train_loader, optimizer, args, epoch)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 357, in train_one_epoch
+    _scaler.unscale_(optimizer)
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/cuda/amp/grad_scaler.py", line 336, in unscale_
+    optimizer_state["found_inf_per_device"] = self._unscale_grads_(
+                                              ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/cuda/amp/grad_scaler.py", line 258, in _unscale_grads_
+    raise ValueError("Attempting to unscale FP16 gradients.")
+ValueError: Attempting to unscale FP16 gradients.

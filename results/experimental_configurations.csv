@@ -1,0 +1,10 @@
+Exp#,Attribute,Backbone,Lambda_Fair,Alpha_Temp,BatchSize,LearningRate,Seed,TextStrategy,Status,CheckpointPath,Date
+1,Age,ViT-B/32,0.1,0.5,63,1e-6,42,Age-specific prompts,Completed,checkpoints/ViT-B_32/age/,2026-05-08
+2,Age,ViT-B/32,0.5,0.5,63,1e-6,42,Age-specific prompts,BEST AGE ✅,checkpoints_lambda05/ViT-B_32/age/,2026-05-08
+3,Age,ViT-B/32,0.5,0.5,126,1e-6,42,Age-specific prompts,Batch size test,checkpoints_age_b126/ViT-B_32/age/,2026-05-15
+4,Gender,ViT-B/32,0.5,0.5,64,1e-6,42,Gender prompts,FAILED (λ too high),checkpoints_gender_final/ViT-B_32/gender/,2026-05-14
+5,Gender,ViT-B/32,0.01,0.5,28,1e-6,42,Gender prompts,BEST GENDER ✅,checkpoints_gender_lambda001/ViT-B_32/gender/,2026-05-15
+6,Race,ViT-B/32,0.5,0.5,63,1e-6,42,COCO captions (neutral),BEST RACE ✅,checkpoints_race_coco/ViT-B_32/race/,2026-05-09
+7,Race,ViT-B/32,0.5,0.5,63,1e-6,42,Neutral prompts,Prompt variant test,checkpoints_race_neutral/ViT-B_32/race/,2026-05-09
+8,Race,ViT-B/32,0.5,0.5,63,5e-7,42,Racial labels,WORSE than baseline,checkpoints_race_v3/ViT-B_32/race/,2026-05-09
+9,Race,ViT-B/32,0.5,0.5,98,1e-6,42,COCO captions,Batch size test,checkpoints_race_b98/ViT-B_32/race/,2026-05-15

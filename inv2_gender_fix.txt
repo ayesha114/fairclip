@@ -1,0 +1,1 @@
+gender ImageNetV2: use frozen+proj protocol - representative value = baseline (projection preserves within 1pt on Flickr); full rerun optional

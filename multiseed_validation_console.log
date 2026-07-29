@@ -1,0 +1,2 @@
+nohup: ignoring input
+TRAIN: ViT-L_14 gender seed123 lam=0.003 nbd=10 bs=16 Wed Jul 29 10:54:53 AM PKT 2026

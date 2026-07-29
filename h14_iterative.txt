@@ -1,0 +1,6 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+ViT-H_14 gender: MaxSkew=0.056 NDKL=0.017 (round 4)
+ViT-H_14 age: MaxSkew=0.277 NDKL=0.060 (round 3)
+ViT-H_14 race: missing
+ViT-L_14 gender: MaxSkew=0.094 NDKL=0.040 (round 8)

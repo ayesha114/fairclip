@@ -1,61 +1,32 @@
 """
-ABLE Metric — Alignment and Bias Level Evaluation
-Zhang et al. CVPR 2025 combined metric.
-Higher ABLE = better overall model.
+ABLE Metric — Zhang et al. CVPR 2025 formula.
+ABLE = 2 / (1/Acc + 1/exp(-MaxSkew))  on a 0-100 scale.
+Higher ABLE = better (high accuracy AND low skew).
+
+Both accuracy and maxskew are passed IN (already computed correctly elsewhere)
+so ABLE never recomputes a blown-up skew.
 """
 import numpy as np
-import torch
-from evaluation.metrics.maxskew import compute_maxskew
 
 
-def compute_able(
-    image_embeddings: torch.Tensor,
-    text_embeddings: torch.Tensor,
-    group_labels: torch.Tensor,
-    k: int = 5,
-) -> dict:
+def compute_able(image_embeddings=None, text_embeddings=None, group_labels=None,
+                 k: int = 5, accuracy: float = None, maxskew: float = None) -> dict:
     """
-    Compute ABLE metric.
+    Zhang-style ABLE.
 
-    image_embeddings: [N, D] — one per image
-    text_embeddings:  [P, D] — one per demographic prompt (P = n_groups)
-    group_labels:     [N]    — demographic label for each image
+    accuracy: zero-shot accuracy (0-1), passed in.
+    maxskew:  text-query MaxSkew (already computed, bounded), passed in.
     """
-    n_images = len(image_embeddings)
-    n_prompts = len(text_embeddings)
+    acc = max(min(accuracy if accuracy is not None else 0.0, 1.0), 1e-6)
+    ms = maxskew if maxskew is not None else 0.0
 
-    # Similarity matrix: [N_images, N_prompts]
-    sim = image_embeddings.float() @ text_embeddings.float().T
-
-    # VL Alignment = how often the model picks the correct demographic prompt
-    # For each image, correct prompt = index matching its group label
-    correct = 0
-    for i in range(n_images):
-        label = group_labels[i].item()
-        if label < 0 or label >= n_prompts:
-            continue
-        top1 = sim[i].argmax().item()
-        if top1 == label:
-            correct += 1
-
-    valid = (group_labels >= 0) & (group_labels < n_prompts)
-    n_valid = valid.sum().item()
-    vl_alignment = correct / n_valid if n_valid > 0 else 0.0
-
-    # MaxSkew: use image→prompt similarities, groups = image group labels
-    valid_sim = sim[valid]
-    valid_labels = group_labels[valid]
-    maxskew = compute_maxskew(valid_sim, valid_labels, k=min(k, n_prompts))
-
-    # Normalize MaxSkew to [0, 1]
-    max_possible = np.log(max(k, 2))
-    bias_level = min(maxskew / max_possible, 1.0)
-
-    able = vl_alignment * (1.0 - bias_level)
+    skew_term = max(np.exp(-ms), 1e-6)          # (0,1], 1 = perfectly fair
+    able = 2.0 / (1.0 / acc + 1.0 / skew_term)  # harmonic mean of acc & fairness
+    able = able * 100.0                          # 0-100 scale like Zhang
 
     return {
-        "able": able,
-        "vl_alignment": vl_alignment,
-        "bias_level": bias_level,
-        "maxskew": maxskew,
+        "able": round(float(able), 2),
+        "accuracy_term": round(float(acc), 4),
+        "maxskew": round(float(ms), 4),
+        "skew_term": round(float(skew_term), 4),
     }

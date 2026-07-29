@@ -1,0 +1,9 @@
+  ...0/1000 classes, running Top-1=0.800
+  ...200/1000 classes, running Top-1=0.621
+  ...400/1000 classes, running Top-1=0.614
+  ...600/1000 classes, running Top-1=0.603
+  ...800/1000 classes, running Top-1=0.589
+
+=== ImageNetV2 Zero-Shot (Baseline) ===
+  Top-1: 58.34%   Top-5: 83.19%   (N=10000)
+  DISCLAIMER: ImageNetV2 (matched-frequency), NOT ImageNet-1K.

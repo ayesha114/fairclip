@@ -1,0 +1,10 @@
+Attr,Metric,Baseline,Zhang,FairCLIP,Beats_both
+gender,MaxSkew,0.154,0.106,0.049,YES
+gender,NDKL,0.037,0.035,0.016,YES
+gender,ABLE,90.090,82.040,96.555,YES
+age,MaxSkew,2.077,0.579,0.315,YES
+age,NDKL,0.180,0.332,0.065,YES
+age,ABLE,18.243,64.250,65.090,YES
+race,MaxSkew,0.574,0.353,0.135,YES
+race,NDKL,0.157,0.125,0.063,YES
+race,ABLE,42.513,69.140,82.459,YES

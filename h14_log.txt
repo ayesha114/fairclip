@@ -1,0 +1,2 @@
+nohup: ignoring input
+./run_h14.sh: line 6: 37902 Killed                  python -m training.train --dataset fairface --attribute "$attr" --backbone ViT-H/14 --epochs 30 --patience 8 --batch_size 8 --lambda_fair "${LAMBDA[$attr]}" --n_bias_dirs 5 --seed 42 > "h14_${attr}.txt" 2>&1

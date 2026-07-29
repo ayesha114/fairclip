@@ -1,0 +1,59 @@
+12:26:16 [INFO] ============================================================
+12:26:16 [INFO] FairCLIP Complete Evaluation
+12:26:16 [INFO]   Backbone : ViT-B/32
+12:26:16 [INFO]   Baseline : False
+12:26:16 [INFO]   Attribute: race
+12:26:16 [INFO] ============================================================
+12:26:16 [INFO] ============================================================
+12:26:16 [INFO] Initializing FairCLIP
+12:26:16 [INFO]   Backbone: ViT-B/32
+12:26:16 [INFO]   Bias directions: 5
+12:26:16 [INFO]   Lambda fair: img=0.1, txt=0.1
+12:26:16 [INFO]   Temperature: base=0.07, alpha=0.5
+12:26:16 [INFO] ============================================================
+12:26:16 [INFO] Loading CLIP backbone: ViT-B/32
+12:26:16 [INFO] Embedding dimension: 512
+12:26:16 [INFO] Device: cuda
+12:26:18 [INFO] Loaded OpenAI CLIP successfully
+12:26:18 [INFO] Backbone frozen — CLIP weights will not be updated
+12:26:18 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+12:26:18 [INFO] FairnessAwareLoss initialized: λ_img=0.1, λ_txt=0.1
+12:26:18 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+12:26:19 [INFO] Bias subspace set: image_dirs=torch.Size([512, 4]), text_dirs=torch.Size([512, 4])
+12:26:19 [INFO] Loaded FairCLIP from results/checkpoints/utkface/ViT-B_32/race/seed42/best_model.pt
+12:26:19 [INFO] 
+=======================================================
+12:26:19 [INFO] Attribute: RACE | Backbone: ViT-B/32
+12:26:19 [INFO] =======================================================
+12:26:19 [INFO] Loaded manifest utkface.csv: 24102 rows
+12:26:19 [INFO] Filtered to split='val': 4845 rows
+12:26:19 [INFO] Dataset: utkface
+12:26:19 [INFO] Samples: 4845
+12:26:33 [INFO] Valid samples: 4845/4845
+12:26:33 [INFO] Computing MaxSkew (image-to-image retrieval)...
+12:26:33 [INFO]   Balanced eval: 5 groups × 200 samples = 1000 total
+12:26:33 [INFO] Computing ABLE...
+12:26:33 [INFO] Computing Recall@K...
+12:26:33 [INFO]   Accuracy    : 0.8667
+12:26:33 [INFO]   F1-Score    : 0.9286
+12:26:33 [INFO]   Precision   : 1.0000
+12:26:33 [INFO]   Recall      : 0.8667
+12:26:33 [INFO]   DPG         : 0.2593  (↓ fairer)
+12:26:33 [INFO]   RBS         : 0.0561  (↓ fairer — embedding bias)
+12:26:33 [INFO]   EOD         : 0.2593  (↓ fairer)
+12:26:33 [INFO]   MaxSkew@5   : 1.6716  (↓ fairer)
+12:26:33 [INFO]   NDKL        : 0.4934  (↓ fairer)
+12:26:33 [INFO]   ABLE        : 30.8900  (↑ better)
+12:26:33 [INFO]   TR@1        : 0.00%
+12:26:33 [INFO]   TR@5        : 71.43%
+12:26:33 [INFO]   IR@1        : 14.29%
+12:26:33 [INFO]   IR@5        : 71.43%
+12:26:33 [INFO] 
+Facet Bias Score (all attributes): 1.6716  (↓ better)
+12:26:33 [INFO] 
+Saved: results/tables/eval_FairCLIP_ViT-B_32_utkface_race.csv
+12:26:33 [INFO] 
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+FairCLIP_ViT-B_32 ViT-B/32      race    0.8667        1.0  0.8667 0.9286 0.2593 0.2593 0.0561            1.6716     1.6716 0.4934 30.89        0.8667      1.6716   0.0 71.43  100.0 14.29 71.43  100.0
+12:26:33 [INFO] 
+Evaluation complete.

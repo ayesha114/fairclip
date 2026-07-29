@@ -1,0 +1,4 @@
+Attribute,DPG_base,DPG_ours,DPG_reduction_%,EOD_base,EOD_ours,RBS_base,RBS_ours
+gender,0.0022,0.0108,-390.9,0.0022,0.0108,0.0168,0.2607
+age,0.8177,0.3954,51.6,0.8177,0.3954,0.0594,0.154
+race,0.4325,0.302,30.2,0.4325,0.302,0.0411,0.103

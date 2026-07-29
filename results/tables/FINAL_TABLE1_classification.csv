@@ -1,0 +1,7 @@
+Attribute,Method,Acc,F1,DPG,EOD,RBS
+gender,Baseline CLIP,0.944,0.9712,0.0022,0.0022,0.0168
+gender,FairCLIP (ours),0.973,0.9863,0.0108,0.0108,0.2607
+age,Baseline CLIP,0.437,0.6082,0.8177,0.8177,0.0594
+age,FairCLIP (ours),0.5749,0.7301,0.3954,0.3954,0.154
+race,Baseline CLIP,0.6283,0.7717,0.4325,0.4325,0.0411
+race,FairCLIP (ours),0.7479,0.8557,0.302,0.302,0.103

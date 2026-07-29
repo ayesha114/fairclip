@@ -1,0 +1,2 @@
+method,backbone,attribute,accuracy,precision,recall,f1,dpg,eod,rbs,facet_bias_score,maxskew_5,ndkl,able,vl_alignment,bias_level,TR@1,TR@5,TR@10,IR@1,IR@5,IR@10
+Baseline_CLIP_ViT-H_14,ViT-H/14,gender,0.9656,1.0,0.9656,0.9825,0.0244,0.0244,0.0267,1.0929,1.0929,0.2891,49.77,0.9656,1.0929,100.0,100.0,100.0,100.0,100.0,100.0

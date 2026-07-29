@@ -1,0 +1,59 @@
+02:40:49 [INFO] ============================================================
+02:40:49 [INFO] FairCLIP Complete Evaluation
+02:40:49 [INFO]   Backbone : ViT-B/32
+02:40:49 [INFO]   Baseline : False
+02:40:49 [INFO]   Attribute: age
+02:40:49 [INFO] ============================================================
+02:40:49 [INFO] ============================================================
+02:40:49 [INFO] Initializing FairCLIP
+02:40:49 [INFO]   Backbone: ViT-B/32
+02:40:49 [INFO]   Bias directions: 5
+02:40:49 [INFO]   Lambda fair: img=0.1, txt=0.1
+02:40:49 [INFO]   Temperature: base=0.07, alpha=0.5
+02:40:49 [INFO] ============================================================
+02:40:49 [INFO] Loading CLIP backbone: ViT-B/32
+02:40:49 [INFO] Embedding dimension: 512
+02:40:49 [INFO] Device: cuda
+02:40:51 [INFO] Loaded OpenAI CLIP successfully
+02:40:51 [INFO] Backbone frozen — CLIP weights will not be updated
+02:40:51 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+02:40:51 [INFO] FairnessAwareLoss initialized: λ_img=0.1, λ_txt=0.1
+02:40:51 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+02:40:51 [INFO] Bias subspace set: image_dirs=torch.Size([512, 4]), text_dirs=torch.Size([512, 4])
+02:40:51 [INFO] Loaded FairCLIP from results/checkpoints/fairface/ViT-B_32/age/seed456/best_model.pt
+02:40:51 [INFO] 
+=======================================================
+02:40:51 [INFO] Attribute: AGE | Backbone: ViT-B/32
+02:40:51 [INFO] =======================================================
+02:40:51 [INFO] Loaded manifest fairface.csv: 97698 rows
+02:40:51 [INFO] Filtered to split='val': 10954 rows
+02:40:51 [INFO] Dataset: fairface
+02:40:51 [INFO] Samples: 10954
+02:41:21 [INFO] Valid samples: 10954/10954
+02:41:21 [INFO] Computing MaxSkew (image-to-image retrieval)...
+02:41:21 [INFO]   Balanced eval: 9 groups × 118 samples = 1062 total
+02:41:21 [INFO] Computing ABLE...
+02:41:21 [INFO] Computing Recall@K...
+02:41:21 [INFO]   Accuracy    : 0.5691
+02:41:21 [INFO]   F1-Score    : 0.7254
+02:41:21 [INFO]   Precision   : 1.0000
+02:41:21 [INFO]   Recall      : 0.5691
+02:41:21 [INFO]   DPG         : 0.5314  (↓ fairer)
+02:41:21 [INFO]   RBS         : 0.1580  (↓ fairer — embedding bias)
+02:41:21 [INFO]   EOD         : 0.5314  (↓ fairer)
+02:41:21 [INFO]   MaxSkew@5   : 1.7040  (↓ fairer)
+02:41:21 [INFO]   NDKL        : 0.6819  (↓ fairer)
+02:41:21 [INFO]   ABLE        : 27.5700  (↑ better)
+02:41:21 [INFO]   TR@1        : 22.22%
+02:41:21 [INFO]   TR@5        : 55.56%
+02:41:21 [INFO]   IR@1        : 11.11%
+02:41:21 [INFO]   IR@5        : 66.67%
+02:41:21 [INFO] 
+Facet Bias Score (all attributes): 1.7040  (↓ better)
+02:41:21 [INFO] 
+Saved: results/tables/eval_FairCLIP_ViT-B_32_age.csv
+02:41:21 [INFO] 
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+FairCLIP_ViT-B_32 ViT-B/32       age    0.5691        1.0  0.5691 0.7254 0.5314 0.5314 0.158             1.704      1.704 0.6819 27.57        0.5691       1.704 22.22 55.56  100.0 11.11 66.67  100.0
+02:41:21 [INFO] 
+Evaluation complete.

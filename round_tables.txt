@@ -1,0 +1,15 @@
+ViT-B_32 gender: best-both k/round/MS/ND = (2, 2, 0.029283234707299405, 0.012136203446594471)
+ViT-B_32 age: best-both k/round/MS/ND = (8, 3, 0.1809308586884532, 0.07166499060644498)
+ViT-B_32 race: best-both k/round/MS/ND = (6, 5, 0.21409359402148936, 0.06640604734253876)
+ViT-B_16 gender: best-both k/round/MS/ND = (1, 8, 0.04471751814806732, 0.012028467277618578)
+ViT-B_16 age: best-both k/round/MS/ND = (6, 8, 0.30184228237319816, 0.08009831789324659)
+ViT-B_16 race: best-both k/round/MS/ND = (4, 5, 0.33963925254973965, 0.09275729371602734)
+ViT-L_14 gender: best-both k/round/MS/ND = None
+ViT-L_14 age: best-both k/round/MS/ND = (6, 7, 0.2977769880540486, 0.05760368208566448)
+ViT-L_14 race: best-both k/round/MS/ND = (6, 4, 0.09976428678013383, 0.05989337203716074)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+ViT-H_14 gender: best-both k/round/MS/ND = (2, 4, 0.056322392524848344, 0.016513589252413002)
+ViT-H_14 age: best-both k/round/MS/ND = (6, 5, 0.19243005202591268, 0.05561293492618564)
+ViT-H_14 race: best-both k/round/MS/ND = (6, 5, 0.13178324146437392, 0.0664360433179581)
+saved results/tables/round_selection_full.csv

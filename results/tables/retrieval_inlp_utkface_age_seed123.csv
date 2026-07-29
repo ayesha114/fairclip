@@ -1,0 +1,5 @@
+attribute,method,MaxSkew,NDKL
+age,Original_CLIP_Zhang,0.617,0.416
+age,Zhang_Ours,0.572,0.364
+age,FairCLIP_before_INLP,4.245,0.58
+age,FairCLIP_INLP,0.174,0.077

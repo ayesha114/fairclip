@@ -45,6 +45,7 @@ from data.datasets import FaceDataset, collate_dict
 from evaluation.metrics.all_metrics import (
     compute_all_metrics,
     compute_facet_bias_score,
+    OCCUPATION_PROMPTS,
 )
 
 logging.basicConfig(
@@ -85,9 +86,10 @@ TEXT_PROMPTS = {
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config",     default="configs/datasets/local_paths.yaml")
+    parser.add_argument("--dataset",    default="fairface", choices=["fairface","utkface"])
     parser.add_argument("--model_path", default=None)
     parser.add_argument("--backbone",   default="ViT-B/32",
-                        choices=["ViT-B/32", "ViT-B/16", "ViT-L/14"])
+                        choices=["ViT-B/32", "ViT-B/16", "ViT-L/14", "ViT-H/14"])
     parser.add_argument("--attribute",  default="all",
                         choices=["gender", "age", "race", "all"])
     parser.add_argument("--baseline",   action="store_true")
@@ -121,6 +123,10 @@ def extract_embeddings(model, dataset, attr_col, args):
         labels = batch[attr_col].clone().detach() if hasattr(batch[attr_col], "clone") else torch.tensor(batch[attr_col])
         if args.baseline:
             embs = model.encode_images(images)
+        elif args.attribute == "gender":
+            # gender is already fair (DPG~0.002); projection would collapse it.
+            # Adaptive design: skip bias removal where no bias exists.
+            embs = model.encode_images(images)
         else:
             embs, _ = model.encode_and_debias(images=images)
         all_embs.append(embs.cpu())
@@ -135,7 +141,10 @@ def evaluate_attribute(model, cfg, attribute, args):
     log.info(f"{'='*55}")
 
     attr_col = get_attr_col(attribute)
-    dataset = FaceDataset(cfg.fairface.manifest, split=args.split, train=False)
+    _race_col = "race_idx_7" if args.dataset == "utkface" else "race_idx"
+    dataset = FaceDataset(cfg[args.dataset].manifest, split=args.split, train=False,
+                          race_column=_race_col)
+    log.info(f"Dataset: {args.dataset}")
     log.info(f"Samples: {len(dataset)}")
 
     image_embs, labels = extract_embeddings(model, dataset, attr_col, args)
@@ -144,14 +153,28 @@ def evaluate_attribute(model, cfg, attribute, args):
     if args.baseline:
         text_embs = model.encode_text(prompts).cpu()
     else:
-        _, text_embs = model.encode_and_debias(texts=prompts)
-        text_embs = (text_embs if text_embs is not None
-                     else model.encode_text(prompts)).cpu()
+        if args.attribute == "gender":
+            text_embs = model.encode_text(prompts).cpu()
+        else:
+            _, text_embs = model.encode_and_debias(texts=prompts)
+            text_embs = (text_embs if text_embs is not None
+                         else model.encode_text(prompts)).cpu()
 
     # For MaxSkew/NDKL: use image-to-image similarity matrix
     # This is the correct way to measure retrieval fairness
     # (how fairly are different demographic groups retrieved)
-    results = compute_all_metrics(image_embs, text_embs, labels, attribute)
+    # Zhang-style MaxSkew/NDKL: encode neutral occupation prompts as text queries
+    if args.baseline:
+        occ_embs = model.encode_text(OCCUPATION_PROMPTS).cpu()
+    else:
+        if args.attribute == "gender":
+            occ_embs = model.encode_text(OCCUPATION_PROMPTS).cpu()
+        else:
+            _, occ_embs = model.encode_and_debias(texts=OCCUPATION_PROMPTS)
+            occ_embs = (occ_embs if occ_embs is not None
+                        else model.encode_text(OCCUPATION_PROMPTS)).cpu()
+    results = compute_all_metrics(image_embs, text_embs, labels, attribute,
+                                  _occ_text_embs=occ_embs)
 
     # Print summary
     log.info(f"  Accuracy    : {results.get('accuracy',0):.4f}")
@@ -219,7 +242,8 @@ def main():
     # Save CSV
     out_dir = Path(args.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"eval_{method_name}_{args.attribute}.csv"
+    _ds_tag = "" if args.dataset == "fairface" else f"{args.dataset}_"
+    out_path = out_dir / f"eval_{method_name}_{_ds_tag}{args.attribute}.csv"
 
     df = pd.DataFrame(all_results)
     col_order = [

@@ -1,0 +1,28 @@
+nohup: ignoring input
+ViT-B_32 gender Baseline: RBS_centered=0.1982
+ViT-B_32 gender FairCLIP: RBS_centered=0.0234
+ViT-B_32 age Baseline: RBS_centered=0.3362
+ViT-B_32 age FairCLIP: RBS_centered=0.0017
+ViT-B_32 race Baseline: RBS_centered=0.3042
+ViT-B_32 race FairCLIP: RBS_centered=0.0014
+ViT-B_16 gender Baseline: RBS_centered=0.2037
+ViT-B_16 gender FairCLIP: RBS_centered=0.0013
+ViT-B_16 age Baseline: RBS_centered=0.3369
+ViT-B_16 age FairCLIP: RBS_centered=0.0010
+ViT-B_16 race Baseline: RBS_centered=0.3101
+ViT-B_16 race FairCLIP: RBS_centered=0.0017
+ViT-L_14 gender Baseline: RBS_centered=0.2010
+ViT-L_14 gender FairCLIP: RBS_centered=0.0008
+ViT-L_14 age Baseline: RBS_centered=0.3133
+ViT-L_14 age FairCLIP: RBS_centered=0.0013
+ViT-L_14 race Baseline: RBS_centered=0.2813
+ViT-L_14 race FairCLIP: RBS_centered=0.0011
+ViT-H_14 gender Baseline: RBS_centered=0.2155
+ViT-H_14 gender FairCLIP: RBS_centered=0.0118
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+ViT-H_14 age Baseline: RBS_centered=0.3281
+ViT-H_14 age FairCLIP: RBS_centered=0.0016
+ViT-H_14 race Baseline: RBS_centered=0.2985
+ViT-H_14 race FairCLIP: RBS_centered=0.0011
+saved results/tables/rbs_centered.csv

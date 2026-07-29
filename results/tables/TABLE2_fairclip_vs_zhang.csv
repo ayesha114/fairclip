@@ -1,0 +1,4 @@
+Attribute,MaxSkew (ours),MaxSkew (Zhang),MaxSkew beats?,NDKL (ours),NDKL (Zhang),NDKL beats?,ABLE (ours),ABLE (Zhang),ABLE beats?
+gender,0.098,0.08,no,0.1,0.025,no,67.37,78.35,no
+age,1.833,0.608,no,0.825,0.294,no,25.03,60.61,no
+race,1.715,0.353,no,0.609,0.125,no,29.0,69.14,no

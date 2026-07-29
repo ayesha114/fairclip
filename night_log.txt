@@ -1,0 +1,5 @@
+nohup: ignoring input
+STAGE1 utility done
+ratio -> 25% prompts / 75% COCO
+ratio restored -> 50/50
+STAGE2 lever done

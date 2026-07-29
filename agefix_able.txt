@@ -1,0 +1,4 @@
+lam0.25: Acc=0.461 MaxSkew=0.262 NDKL=0.079 ABLE=57.65 (k=8,r=3)
+   Zhang targets: ABLE 59.60, MaxSkew 0.572, NDKL 0.364 | current best ABLE 58.92
+lam0.75: Acc=0.449 MaxSkew=0.207 NDKL=0.067 ABLE=57.83 (k=8,r=3)
+   Zhang targets: ABLE 59.60, MaxSkew 0.572, NDKL 0.364 | current best ABLE 58.92

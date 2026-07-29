@@ -1,0 +1,3 @@
+race: plots saved
+age: plots saved
+gender: plots saved

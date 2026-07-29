@@ -1,0 +1,37 @@
+Backbone,Attribute,Method,Acc,F1,DPG,EOD,RBS,MaxSkew,NDKL,ABLE
+ViT-B/32,gender,Baseline,0.944,0.971,0.002,0.0,0.1295,0.28,0.072,83.95
+ViT-B/32,gender,FairCLIP,0.973,0.986,0.011,0.0,0.5469,0.029,0.012,97.22
+ViT-B/32,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.09,0.03,74.24
+ViT-B/32,age,Baseline,0.437,0.608,0.818,0.164,0.2248,2.021,0.177,20.34
+ViT-B/32,age,FairCLIP,0.575,0.73,0.395,0.205,0.4487,0.181,0.072,68.08
+ViT-B/32,age,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.572,0.364,59.6
+ViT-B/32,race,Baseline,0.362,0.532,0.674,0.082,0.1996,0.774,0.17,40.57
+ViT-B/32,race,FairCLIP,0.748,0.856,0.302,0.082,0.3154,0.214,0.066,77.65
+ViT-B/32,race,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.353,0.125,69.14
+ViT-B/16,gender,Baseline,0.931,0.964,0.066,0.0,0.13,0.188,0.044,87.68
+ViT-B/16,gender,FairCLIP,0.979,0.989,0.001,0.0,0.5887,0.045,0.012,96.74
+ViT-B/16,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.08,0.025,78.35
+ViT-B/16,age,Baseline,0.311,0.475,0.9,0.154,0.2198,2.043,0.208,18.3
+ViT-B/16,age,FairCLIP,0.579,0.733,0.434,0.168,0.4605,0.302,0.08,64.94
+ViT-B/16,age,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.608,0.294,60.61
+ViT-B/16,race,Baseline,0.26,0.412,0.626,0.083,0.199,0.984,0.157,30.64
+ViT-B/16,race,FairCLIP,0.769,0.869,0.322,0.099,0.3002,0.34,0.093,73.92
+ViT-B/16,race,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.353,0.125,69.14
+ViT-L/14,gender,Baseline,0.949,0.974,0.044,0.0,0.1288,0.155,0.037,90.04
+ViT-L/14,gender,FairCLIP,0.979,0.99,0.013,0.0,0.6117,0.09,0.027,94.55
+ViT-L/14,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.106,0.035,82.04
+ViT-L/14,age,Baseline,0.335,0.502,0.798,0.12,0.2048,2.077,0.18,18.24
+ViT-L/14,age,FairCLIP,0.587,0.74,0.45,0.129,0.4444,0.298,0.058,65.58
+ViT-L/14,age,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.579,0.332,64.25
+ViT-L/14,race,Baseline,0.341,0.509,0.732,0.089,0.1808,0.573,0.157,42.53
+ViT-L/14,race,FairCLIP,0.781,0.877,0.314,0.084,0.2908,0.1,0.06,83.82
+ViT-L/14,race,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.353,0.125,69.14
+ViT-H/14,gender,Baseline,0.966,0.983,0.024,0.0,0.1631,0.103,0.018,93.28
+ViT-H/14,gender,FairCLIP,0.978,0.989,0.007,0.0,0.6191,0.056,0.017,96.17
+ViT-H/14,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.138,0.051,82.11
+ViT-H/14,age,Baseline,0.548,0.708,0.538,0.14,0.2567,1.928,0.154,22.98
+ViT-H/14,age,FairCLIP,0.542,0.703,0.417,0.154,0.4573,0.192,0.056,65.42
+ViT-H/14,age,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.515,0.289,67.62
+ViT-H/14,race,Baseline,0.307,0.47,0.594,0.074,0.2267,0.483,0.104,41.03
+ViT-H/14,race,FairCLIP,0.772,0.871,0.316,0.074,0.2888,0.132,0.066,82.07
+ViT-H/14,race,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.353,0.125,69.14

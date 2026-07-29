@@ -1,0 +1,4 @@
+backbone,attribute,baseline_MaxSkew,baseline_NDKL
+ViT-H/14,gender,0.103,0.018
+ViT-H/14,age,1.928,0.154
+ViT-H/14,race,0.483,0.104

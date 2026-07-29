@@ -1,0 +1,7 @@
+backbone,attribute,MaxSkew,NDKL,round
+ViT-B_16,gender,0.052,0.013,5
+ViT-B_16,age,0.346,0.085,3
+ViT-B_16,race,0.338,0.125,5
+ViT-L_14,gender,0.11,0.039,4
+ViT-L_14,age,0.325,0.068,2
+ViT-L_14,race,0.099,0.06,4

@@ -1,0 +1,5 @@
+attribute,method,MaxSkew,NDKL
+race,Original_CLIP_Zhang,0.528,0.182
+race,Zhang_Ours,0.353,0.125
+race,FairCLIP_before_INLP,4.87,1.009
+race,FairCLIP_INLP,0.208,0.074

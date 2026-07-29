@@ -1,0 +1,9 @@
+  ...0/1000 classes, running Top-1=0.000
+  ...200/1000 classes, running Top-1=0.005
+  ...400/1000 classes, running Top-1=0.003
+  ...600/1000 classes, running Top-1=0.006
+  ...800/1000 classes, running Top-1=0.005
+
+=== ImageNetV2 Zero-Shot (FairCLIP) ===
+  Top-1: 0.51%   Top-5: 5.31%   (N=10000)
+  DISCLAIMER: ImageNetV2 (matched-frequency), NOT ImageNet-1K.

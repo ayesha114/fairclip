@@ -1,0 +1,5 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+frozen+proj ViT-H_14 gender: TR@5=88.6 IR@5=86.2
+frozen+proj ViT-H_14 age: TR@5=88.0 IR@5=85.4
+RESULT baseline_ViT-H_14: TR@5=89.1 IR@5=87.3 TR@1=18.4 IR@1=19.2

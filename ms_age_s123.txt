@@ -1,0 +1,374 @@
+00:45:56 [INFO] ============================================================
+00:45:56 [INFO] FairCLIP Training
+00:45:56 [INFO] Attribute: age
+00:45:56 [INFO] Backbone:  ViT-B/32
+00:45:56 [INFO] Epochs:    30
+00:45:56 [INFO] Batch:     64
+00:45:56 [INFO] Lambda:    0.5
+00:45:56 [INFO] Device:    cuda
+00:45:56 [INFO] Seed:      123
+00:45:56 [INFO] ============================================================
+00:45:56 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+00:45:56 [INFO] Loaded manifest fairface.csv: 97698 rows
+00:45:56 [INFO] Filtered to split='train': 86744 rows
+00:45:56 [INFO] Loaded manifest fairface.csv: 97698 rows
+00:45:56 [INFO] Filtered to split='val': 10954 rows
+00:45:56 [INFO] Using 14 samples/group × 9 groups = 126 effective batch size
+00:45:56 [INFO]   Group 0: 1792 samples (2.1%)
+00:45:56 [INFO]   Group 1: 10408 samples (12.0%)
+00:45:56 [INFO]   Group 2: 9103 samples (10.5%)
+00:45:56 [INFO]   Group 3: 25598 samples (29.5%)
+00:45:56 [INFO]   Group 4: 19250 samples (22.2%)
+00:45:56 [INFO]   Group 5: 10744 samples (12.4%)
+00:45:56 [INFO]   Group 6: 6228 samples (7.2%)
+00:45:56 [INFO]   Group 7: 2779 samples (3.2%)
+00:45:56 [INFO]   Group 8: 842 samples (1.0%)
+00:45:56 [INFO] DemographicBalancedSampler: 9 groups, 14/group, 60 batches/epoch, effective batch size 126
+00:45:56 [INFO] Train: 86744 samples
+00:45:56 [INFO] Val:   10954 samples
+00:45:56 [INFO] ============================================================
+00:45:56 [INFO] Initializing FairCLIP
+00:45:56 [INFO]   Backbone: ViT-B/32
+00:45:56 [INFO]   Bias directions: 5
+00:45:56 [INFO]   Lambda fair: img=0.5, txt=0.5
+00:45:56 [INFO]   Temperature: base=0.07, alpha=0.5
+00:45:56 [INFO] ============================================================
+00:45:56 [INFO] Loading CLIP backbone: ViT-B/32
+00:45:56 [INFO] Embedding dimension: 512
+00:45:56 [INFO] Device: cuda
+00:45:58 [INFO] Loaded OpenAI CLIP successfully
+00:45:58 [INFO] Backbone frozen — CLIP weights will not be updated
+00:45:58 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+00:45:58 [INFO] FairnessAwareLoss initialized: λ_img=0.5, λ_txt=0.5
+00:45:58 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+00:45:58 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+00:45:58 [INFO] This runs once before training starts.
+00:45:58 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+00:46:05 [INFO]   Processed 5120 / 86744 samples
+00:46:12 [INFO]   Processed 10240 / 86744 samples
+00:46:19 [INFO]   Processed 15360 / 86744 samples
+00:46:26 [INFO]   Processed 20480 / 86744 samples
+00:46:33 [INFO]   Processed 25600 / 86744 samples
+00:46:40 [INFO]   Processed 30720 / 86744 samples
+00:46:47 [INFO]   Processed 35840 / 86744 samples
+00:46:54 [INFO]   Processed 40960 / 86744 samples
+00:47:01 [INFO]   Processed 46080 / 86744 samples
+00:47:07 [INFO]   Processed 51200 / 86744 samples
+00:47:14 [INFO]   Processed 56320 / 86744 samples
+00:47:21 [INFO]   Processed 61440 / 86744 samples
+00:47:28 [INFO]   Processed 66560 / 86744 samples
+00:47:35 [INFO]   Processed 71680 / 86744 samples
+00:47:42 [INFO]   Processed 76800 / 86744 samples
+00:47:49 [INFO]   Processed 81920 / 86744 samples
+00:47:56 [INFO]   Processed 87040 / 86744 samples
+00:48:03 [INFO]   Processed 92160 / 86744 samples
+00:48:10 [INFO]   Processed 97280 / 86744 samples
+00:48:16 [INFO]   Processed 102400 / 86744 samples
+00:48:23 [INFO]   Processed 107520 / 86744 samples
+00:48:30 [INFO]   Processed 112640 / 86744 samples
+00:48:37 [INFO]   Processed 117760 / 86744 samples
+00:48:44 [INFO]   Processed 122880 / 86744 samples
+00:48:51 [INFO]   Processed 128000 / 86744 samples
+00:48:58 [INFO]   Processed 133120 / 86744 samples
+00:49:05 [INFO]   Processed 138240 / 86744 samples
+00:49:12 [INFO]   Processed 143360 / 86744 samples
+00:49:19 [INFO]   Processed 148480 / 86744 samples
+00:49:25 [INFO]   Processed 153600 / 86744 samples
+00:49:32 [INFO]   Processed 158720 / 86744 samples
+00:49:39 [INFO]   Processed 163840 / 86744 samples
+00:49:46 [INFO]   Processed 168960 / 86744 samples
+00:49:53 [INFO] Fitting bias subspace for attribute: age
+00:49:53 [INFO] Fitting image bias subspace for attribute: age
+00:49:53 [INFO]   Input: 86744 embeddings, dim=512
+00:49:53 [INFO]   Group 0: 1792 samples, centroid norm=0.8364
+00:49:53 [INFO]   Group 1: 10408 samples, centroid norm=0.8223
+00:49:53 [INFO]   Group 2: 9103 samples, centroid norm=0.7874
+00:49:53 [INFO]   Group 3: 25598 samples, centroid norm=0.7665
+00:49:53 [INFO]   Group 4: 19250 samples, centroid norm=0.7644
+00:49:53 [INFO]   Group 5: 10744 samples, centroid norm=0.7643
+00:49:53 [INFO]   Group 6: 6228 samples, centroid norm=0.7658
+00:49:53 [INFO]   Group 7: 2779 samples, centroid norm=0.7700
+00:49:53 [INFO]   Group 8: 842 samples, centroid norm=0.7941
+00:49:53 [INFO]   Bias direction 1: singular value=0.5047, explained variance=49.7%
+00:49:53 [INFO]   Bias direction 2: singular value=0.4225, explained variance=34.8%
+00:49:53 [INFO]   Bias direction 3: singular value=0.2106, explained variance=8.6%
+00:49:53 [INFO]   Bias direction 4: singular value=0.1625, explained variance=5.1%
+00:49:53 [INFO]   Bias direction 5: singular value=0.0771, explained variance=1.2%
+00:49:53 [INFO] Image bias subspace discovered: torch.Size([512, 5])
+00:49:53 [INFO] Fitting text bias subspace for attribute: age
+00:49:53 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+00:49:53 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+00:49:53 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+00:49:53 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+00:49:53 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+00:49:53 [INFO]   Bias direction 1: singular value=0.3829, explained variance=53.9%
+00:49:53 [INFO]   Bias direction 2: singular value=0.2706, explained variance=26.9%
+00:49:53 [INFO]   Bias direction 3: singular value=0.1788, explained variance=11.8%
+00:49:53 [INFO]   Bias direction 4: singular value=0.1416, explained variance=7.4%
+00:49:53 [INFO] Text bias subspace discovered: torch.Size([512, 4])
+00:49:53 [INFO] Computing Procrustes alignment...
+00:49:53 [INFO]   Reference shape: torch.Size([512, 4])
+00:49:53 [INFO]   Source shape: torch.Size([512, 4])
+00:49:53 [INFO] Alignment complete:
+00:49:53 [INFO]   Rotation matrix shape: torch.Size([4, 4])
+00:49:53 [INFO]   Alignment error: 1.240958 (lower is better)
+00:49:53 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+00:49:53 [INFO]   Direction 1 cosine similarity after alignment: 0.3329
+00:49:53 [INFO]   Direction 2 cosine similarity after alignment: 0.1625
+00:49:53 [INFO]   Direction 3 cosine similarity after alignment: 0.1759
+00:49:53 [INFO]   Direction 4 cosine similarity after alignment: 0.2427
+00:49:53 [INFO] Procrustes alignment quality: {'alignment_error': 1.2409580945968628, 'rotation_det': 1.0000004768371582, 'is_orthogonal': True}
+00:49:53 [INFO] Bias subspace set: image_dirs=torch.Size([512, 4]), text_dirs=torch.Size([512, 4])
+00:49:53 [INFO] Bias subspace fitted and ready for training
+00:49:53 [INFO] Bias subspace fitted successfully
+00:49:53 [INFO] GPU cache cleared after fitting. Free now: 7.37 GB
+00:49:53 [INFO] GPU cache cleared after fitting. Free now: 7.37 GB
+00:49:53 [INFO] GPU memory after fitting: 0.67GB used
+00:49:53 [INFO] Trainable parameters: 21,135,872 (last 2 layers only)
+00:49:53 [INFO] Loaded 50000 COCO captions for race contrastive training
+00:49:53 [INFO] Starting training...
+00:49:53 [INFO] No checkpoint found — starting fresh.
+00:49:53 [INFO] 
+Epoch 1/30
+00:50:08 [INFO] Epoch 1 | Step 50/60 | Loss: 4.5616 | InfoNCE: 4.4704 | Fair_img: 0.1146 | Fair_txt: 0.0677 | τ: 0.0868 | Time: 14.0s
+00:50:43 [INFO] Epoch 1 Summary: train_loss=4.7297 | val_loss=3.7576 | lr=9.97e-06
+00:50:43 [INFO]   Temperature: mean=0.0900 min=0.0774 max=0.1001
+00:50:43 [INFO]   Checkpoint saved: latest.pt (epoch 1)
+00:50:44 [INFO]   New best model saved (epoch 1)
+00:50:44 [INFO] 
+Epoch 2/30
+00:50:57 [INFO] Epoch 2 | Step 50/60 | Loss: 4.3548 | InfoNCE: 4.2076 | Fair_img: 0.1486 | Fair_txt: 0.1458 | τ: 0.0896 | Time: 13.5s
+00:51:32 [INFO] Epoch 2 Summary: train_loss=4.3881 | val_loss=3.6752 | lr=9.89e-06
+00:51:32 [INFO]   Temperature: mean=0.0924 min=0.0889 max=0.1010
+00:51:33 [INFO]   Checkpoint saved: latest.pt (epoch 2)
+00:51:34 [INFO]   New best model saved (epoch 2)
+00:51:34 [INFO] 
+Epoch 3/30
+00:51:47 [INFO] Epoch 3 | Step 50/60 | Loss: 4.2557 | InfoNCE: 4.0942 | Fair_img: 0.1633 | Fair_txt: 0.1597 | τ: 0.0907 | Time: 13.5s
+00:52:22 [INFO] Epoch 3 Summary: train_loss=4.2737 | val_loss=3.6868 | lr=9.76e-06
+00:52:22 [INFO]   Temperature: mean=0.0942 min=0.0897 max=0.1045
+00:52:23 [INFO]   Checkpoint saved: latest.pt (epoch 3)
+00:52:23 [INFO]   No improvement for 1/8 epochs
+00:52:23 [INFO] 
+Epoch 4/30
+00:52:37 [INFO] Epoch 4 | Step 50/60 | Loss: 4.1341 | InfoNCE: 3.9557 | Fair_img: 0.1797 | Fair_txt: 0.1769 | τ: 0.0918 | Time: 13.5s
+00:53:12 [INFO] Epoch 4 Summary: train_loss=4.1635 | val_loss=3.7405 | lr=9.57e-06
+00:53:12 [INFO]   Temperature: mean=0.0960 min=0.0907 max=0.1089
+00:53:13 [INFO]   Checkpoint saved: latest.pt (epoch 4)
+00:53:13 [INFO]   No improvement for 2/8 epochs
+00:53:13 [INFO] 
+Epoch 5/30
+00:53:13 [INFO] Refitting bias subspace at epoch 5...
+00:53:13 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+00:53:13 [INFO] This runs once before training starts.
+00:53:13 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+00:53:20 [INFO]   Processed 5120 / 86744 samples
+00:53:27 [INFO]   Processed 10240 / 86744 samples
+00:53:34 [INFO]   Processed 15360 / 86744 samples
+00:53:41 [INFO]   Processed 20480 / 86744 samples
+00:53:48 [INFO]   Processed 25600 / 86744 samples
+00:53:55 [INFO]   Processed 30720 / 86744 samples
+00:54:02 [INFO]   Processed 35840 / 86744 samples
+00:54:09 [INFO]   Processed 40960 / 86744 samples
+00:54:16 [INFO]   Processed 46080 / 86744 samples
+00:54:23 [INFO]   Processed 51200 / 86744 samples
+00:54:29 [INFO]   Processed 56320 / 86744 samples
+00:54:36 [INFO]   Processed 61440 / 86744 samples
+00:54:43 [INFO]   Processed 66560 / 86744 samples
+00:54:50 [INFO]   Processed 71680 / 86744 samples
+00:54:57 [INFO]   Processed 76800 / 86744 samples
+00:55:04 [INFO]   Processed 81920 / 86744 samples
+00:55:11 [INFO]   Processed 87040 / 86744 samples
+00:55:18 [INFO]   Processed 92160 / 86744 samples
+00:55:25 [INFO]   Processed 97280 / 86744 samples
+00:55:32 [INFO]   Processed 102400 / 86744 samples
+00:55:39 [INFO]   Processed 107520 / 86744 samples
+00:55:46 [INFO]   Processed 112640 / 86744 samples
+00:55:52 [INFO]   Processed 117760 / 86744 samples
+00:55:59 [INFO]   Processed 122880 / 86744 samples
+00:56:06 [INFO]   Processed 128000 / 86744 samples
+00:56:13 [INFO]   Processed 133120 / 86744 samples
+00:56:20 [INFO]   Processed 138240 / 86744 samples
+00:56:27 [INFO]   Processed 143360 / 86744 samples
+00:56:34 [INFO]   Processed 148480 / 86744 samples
+00:56:41 [INFO]   Processed 153600 / 86744 samples
+00:56:48 [INFO]   Processed 158720 / 86744 samples
+00:56:55 [INFO]   Processed 163840 / 86744 samples
+00:57:02 [INFO]   Processed 168960 / 86744 samples
+00:57:08 [INFO] Fitting bias subspace for attribute: age
+00:57:08 [INFO] Fitting image bias subspace for attribute: age
+00:57:08 [INFO]   Input: 86744 embeddings, dim=512
+00:57:08 [INFO]   Group 0: 1792 samples, centroid norm=0.7248
+00:57:08 [INFO]   Group 1: 10408 samples, centroid norm=0.7026
+00:57:08 [INFO]   Group 2: 9103 samples, centroid norm=0.6362
+00:57:08 [INFO]   Group 3: 25598 samples, centroid norm=0.5637
+00:57:08 [INFO]   Group 4: 19250 samples, centroid norm=0.5308
+00:57:08 [INFO]   Group 5: 10744 samples, centroid norm=0.5353
+00:57:08 [INFO]   Group 6: 6228 samples, centroid norm=0.5532
+00:57:08 [INFO]   Group 7: 2779 samples, centroid norm=0.5706
+00:57:08 [INFO]   Group 8: 842 samples, centroid norm=0.6463
+00:57:08 [INFO]   Bias direction 1: singular value=0.9580, explained variance=42.1%
+00:57:08 [INFO]   Bias direction 2: singular value=0.8821, explained variance=35.7%
+00:57:08 [INFO]   Bias direction 3: singular value=0.5306, explained variance=12.9%
+00:57:08 [INFO]   Bias direction 4: singular value=0.3974, explained variance=7.2%
+00:57:08 [INFO]   Bias direction 5: singular value=0.1878, explained variance=1.6%
+00:57:08 [INFO] Image bias subspace discovered: torch.Size([512, 5])
+00:57:08 [INFO] Fitting text bias subspace for attribute: age
+00:57:08 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+00:57:08 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+00:57:08 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+00:57:08 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+00:57:08 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+00:57:08 [INFO]   Bias direction 1: singular value=0.8670, explained variance=48.5%
+00:57:08 [INFO]   Bias direction 2: singular value=0.6390, explained variance=26.3%
+00:57:08 [INFO]   Bias direction 3: singular value=0.4920, explained variance=15.6%
+00:57:08 [INFO]   Bias direction 4: singular value=0.3851, explained variance=9.6%
+00:57:08 [INFO] Text bias subspace discovered: torch.Size([512, 4])
+00:57:08 [INFO] Computing Procrustes alignment...
+00:57:08 [INFO]   Reference shape: torch.Size([512, 4])
+00:57:08 [INFO]   Source shape: torch.Size([512, 4])
+00:57:08 [INFO] Alignment complete:
+00:57:08 [INFO]   Rotation matrix shape: torch.Size([4, 4])
+00:57:08 [INFO]   Alignment error: 1.192949 (lower is better)
+00:57:08 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+00:57:08 [INFO]   Direction 1 cosine similarity after alignment: 0.2666
+00:57:08 [INFO]   Direction 2 cosine similarity after alignment: 0.1600
+00:57:08 [INFO]   Direction 3 cosine similarity after alignment: 0.2883
+00:57:08 [INFO]   Direction 4 cosine similarity after alignment: 0.4260
+00:57:08 [INFO] Procrustes alignment quality: {'alignment_error': 1.1929489374160767, 'rotation_det': 1.0000008344650269, 'is_orthogonal': True}
+00:57:08 [INFO] Bias subspace set: image_dirs=torch.Size([512, 4]), text_dirs=torch.Size([512, 4])
+00:57:08 [INFO] Bias subspace fitted and ready for training
+00:57:08 [INFO] Bias subspace fitted successfully
+00:57:08 [INFO] GPU cache cleared after fitting. Free now: 6.96 GB
+00:57:08 [INFO] GPU cache cleared after fitting. Free now: 6.96 GB
+00:57:08 [INFO] GPU memory after fitting: 0.93GB used
+00:57:22 [INFO] Epoch 5 | Step 50/60 | Loss: 4.1036 | InfoNCE: 3.9055 | Fair_img: 0.1935 | Fair_txt: 0.2027 | τ: 0.0925 | Time: 13.6s
+00:57:57 [INFO] Epoch 5 Summary: train_loss=4.2834 | val_loss=3.8891 | lr=9.33e-06
+00:57:57 [INFO]   Temperature: mean=0.0957 min=0.0823 max=0.1106
+00:57:58 [INFO]   Checkpoint saved: latest.pt (epoch 5)
+00:57:58 [INFO]   No improvement for 3/8 epochs
+00:57:58 [INFO] 
+Epoch 6/30
+00:58:11 [INFO] Epoch 6 | Step 50/60 | Loss: 3.9337 | InfoNCE: 3.7432 | Fair_img: 0.1697 | Fair_txt: 0.2113 | τ: 0.0913 | Time: 13.5s
+00:58:47 [INFO] Epoch 6 Summary: train_loss=3.9671 | val_loss=3.8837 | lr=9.05e-06
+00:58:47 [INFO]   Temperature: mean=0.0962 min=0.0898 max=0.1115
+00:58:48 [INFO]   Checkpoint saved: latest.pt (epoch 6)
+00:58:48 [INFO]   No improvement for 4/8 epochs
+00:58:48 [INFO] 
+Epoch 7/30
+00:59:01 [INFO] Epoch 7 | Step 50/60 | Loss: 3.7641 | InfoNCE: 3.5779 | Fair_img: 0.1619 | Fair_txt: 0.2106 | τ: 0.0908 | Time: 13.5s
+00:59:36 [INFO] Epoch 7 Summary: train_loss=3.7943 | val_loss=3.8979 | lr=8.72e-06
+00:59:36 [INFO]   Temperature: mean=0.0960 min=0.0895 max=0.1119
+00:59:37 [INFO]   Checkpoint saved: latest.pt (epoch 7)
+00:59:37 [INFO]   No improvement for 5/8 epochs
+00:59:37 [INFO] 
+Epoch 8/30
+00:59:51 [INFO] Epoch 8 | Step 50/60 | Loss: 3.6025 | InfoNCE: 3.4190 | Fair_img: 0.1557 | Fair_txt: 0.2114 | τ: 0.0905 | Time: 13.5s
+01:00:26 [INFO] Epoch 8 Summary: train_loss=3.6319 | val_loss=3.9282 | lr=8.35e-06
+01:00:26 [INFO]   Temperature: mean=0.0959 min=0.0895 max=0.1121
+01:00:27 [INFO]   Checkpoint saved: latest.pt (epoch 8)
+01:00:27 [INFO]   No improvement for 6/8 epochs
+01:00:27 [INFO] 
+Epoch 9/30
+01:00:41 [INFO] Epoch 9 | Step 50/60 | Loss: 3.4667 | InfoNCE: 3.2825 | Fair_img: 0.1553 | Fair_txt: 0.2130 | τ: 0.0905 | Time: 13.5s
+01:01:16 [INFO] Epoch 9 Summary: train_loss=3.4847 | val_loss=3.9569 | lr=7.94e-06
+01:01:16 [INFO]   Temperature: mean=0.0958 min=0.0891 max=0.1123
+01:01:17 [INFO]   Checkpoint saved: latest.pt (epoch 9)
+01:01:17 [INFO]   No improvement for 7/8 epochs
+01:01:17 [INFO] 
+Epoch 10/30
+01:01:17 [INFO] Refitting bias subspace at epoch 10...
+01:01:17 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+01:01:17 [INFO] This runs once before training starts.
+01:01:17 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+01:01:24 [INFO]   Processed 5120 / 86744 samples
+01:01:31 [INFO]   Processed 10240 / 86744 samples
+01:01:38 [INFO]   Processed 15360 / 86744 samples
+01:01:45 [INFO]   Processed 20480 / 86744 samples
+01:01:52 [INFO]   Processed 25600 / 86744 samples
+01:01:59 [INFO]   Processed 30720 / 86744 samples
+01:02:06 [INFO]   Processed 35840 / 86744 samples
+01:02:12 [INFO]   Processed 40960 / 86744 samples
+01:02:19 [INFO]   Processed 46080 / 86744 samples
+01:02:26 [INFO]   Processed 51200 / 86744 samples
+01:02:33 [INFO]   Processed 56320 / 86744 samples
+01:02:40 [INFO]   Processed 61440 / 86744 samples
+01:02:47 [INFO]   Processed 66560 / 86744 samples
+01:02:54 [INFO]   Processed 71680 / 86744 samples
+01:03:01 [INFO]   Processed 76800 / 86744 samples
+01:03:08 [INFO]   Processed 81920 / 86744 samples
+01:03:15 [INFO]   Processed 87040 / 86744 samples
+01:03:22 [INFO]   Processed 92160 / 86744 samples
+01:03:28 [INFO]   Processed 97280 / 86744 samples
+01:03:35 [INFO]   Processed 102400 / 86744 samples
+01:03:42 [INFO]   Processed 107520 / 86744 samples
+01:03:49 [INFO]   Processed 112640 / 86744 samples
+01:03:56 [INFO]   Processed 117760 / 86744 samples
+01:04:03 [INFO]   Processed 122880 / 86744 samples
+01:04:10 [INFO]   Processed 128000 / 86744 samples
+01:04:17 [INFO]   Processed 133120 / 86744 samples
+01:04:24 [INFO]   Processed 138240 / 86744 samples
+01:04:31 [INFO]   Processed 143360 / 86744 samples
+01:04:37 [INFO]   Processed 148480 / 86744 samples
+01:04:44 [INFO]   Processed 153600 / 86744 samples
+01:04:51 [INFO]   Processed 158720 / 86744 samples
+01:04:58 [INFO]   Processed 163840 / 86744 samples
+01:05:05 [INFO]   Processed 168960 / 86744 samples
+01:05:11 [INFO] Fitting bias subspace for attribute: age
+01:05:11 [INFO] Fitting image bias subspace for attribute: age
+01:05:11 [INFO]   Input: 86744 embeddings, dim=512
+01:05:11 [INFO]   Group 0: 1792 samples, centroid norm=0.5990
+01:05:11 [INFO]   Group 1: 10408 samples, centroid norm=0.5677
+01:05:11 [INFO]   Group 2: 9103 samples, centroid norm=0.5472
+01:05:11 [INFO]   Group 3: 25598 samples, centroid norm=0.4827
+01:05:11 [INFO]   Group 4: 19250 samples, centroid norm=0.4473
+01:05:11 [INFO]   Group 5: 10744 samples, centroid norm=0.4464
+01:05:11 [INFO]   Group 6: 6228 samples, centroid norm=0.4395
+01:05:11 [INFO]   Group 7: 2779 samples, centroid norm=0.4055
+01:05:11 [INFO]   Group 8: 842 samples, centroid norm=0.4872
+01:05:11 [INFO]   Bias direction 1: singular value=0.9475, explained variance=40.5%
+01:05:11 [INFO]   Bias direction 2: singular value=0.8420, explained variance=32.0%
+01:05:11 [INFO]   Bias direction 3: singular value=0.5894, explained variance=15.7%
+01:05:11 [INFO]   Bias direction 4: singular value=0.4549, explained variance=9.3%
+01:05:11 [INFO]   Bias direction 5: singular value=0.2041, explained variance=1.9%
+01:05:11 [INFO] Image bias subspace discovered: torch.Size([512, 5])
+01:05:11 [INFO] Fitting text bias subspace for attribute: age
+01:05:11 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+01:05:11 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+01:05:11 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+01:05:11 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+01:05:11 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+01:05:11 [INFO]   Bias direction 1: singular value=1.0432, explained variance=51.3%
+01:05:11 [INFO]   Bias direction 2: singular value=0.7657, explained variance=27.6%
+01:05:11 [INFO]   Bias direction 3: singular value=0.5252, explained variance=13.0%
+01:05:11 [INFO]   Bias direction 4: singular value=0.4136, explained variance=8.1%
+01:05:11 [INFO] Text bias subspace discovered: torch.Size([512, 4])
+01:05:11 [INFO] Computing Procrustes alignment...
+01:05:11 [INFO]   Reference shape: torch.Size([512, 4])
+01:05:11 [INFO]   Source shape: torch.Size([512, 4])
+01:05:11 [INFO] Alignment complete:
+01:05:11 [INFO]   Rotation matrix shape: torch.Size([4, 4])
+01:05:11 [INFO]   Alignment error: 1.325669 (lower is better)
+01:05:11 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+01:05:11 [INFO]   Direction 1 cosine similarity after alignment: 0.0418
+01:05:11 [INFO]   Direction 2 cosine similarity after alignment: 0.1467
+01:05:11 [INFO]   Direction 3 cosine similarity after alignment: 0.1149
+01:05:11 [INFO]   Direction 4 cosine similarity after alignment: 0.1790
+01:05:11 [INFO] Procrustes alignment quality: {'alignment_error': 1.3256688117980957, 'rotation_det': 0.9999998807907104, 'is_orthogonal': True}
+01:05:11 [INFO] Bias subspace set: image_dirs=torch.Size([512, 4]), text_dirs=torch.Size([512, 4])
+01:05:11 [INFO] Bias subspace fitted and ready for training
+01:05:11 [INFO] Bias subspace fitted successfully
+01:05:11 [INFO] GPU cache cleared after fitting. Free now: 6.96 GB
+01:05:11 [INFO] GPU cache cleared after fitting. Free now: 6.96 GB
+01:05:11 [INFO] GPU memory after fitting: 0.93GB used
+01:05:25 [INFO] Epoch 10 | Step 50/60 | Loss: 3.4708 | InfoNCE: 3.2849 | Fair_img: 0.1508 | Fair_txt: 0.2210 | τ: 0.0901 | Time: 13.5s
+01:06:00 [INFO] Epoch 10 Summary: train_loss=3.5785 | val_loss=4.0444 | lr=7.50e-06
+01:06:00 [INFO]   Temperature: mean=0.0951 min=0.0837 max=0.1121
+01:06:01 [INFO]   Checkpoint saved: latest.pt (epoch 10)
+01:06:01 [INFO]   No improvement for 8/8 epochs
+01:06:01 [INFO] Early stopping triggered at epoch 10!
+01:06:01 [INFO] Best val loss: 3.6752 (epoch 2)
+01:06:01 [INFO] 
+Training complete!
+01:06:01 [INFO] Best val loss: 3.6752
+01:06:01 [INFO] Checkpoints saved to: results/checkpoints/fairface/ViT-B_32/age/seed123

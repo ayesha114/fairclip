@@ -47,7 +47,8 @@ class CLIPBackbone(nn.Module):
     SUPPORTED_MODELS = {
         "ViT-B/32": 512,   # faster, less memory, good for RTX 3050
         "ViT-B/16": 512,   # slightly better quality, same embedding size
-        "ViT-L/14": 768,   # large model — needs 24GB GPU
+        "ViT-L/14": 768,   # large model
+        "ViT-H/14": 1024,  # huge model — OpenCLIP only (laion2b)
     }
 
     def __init__(
@@ -106,14 +107,16 @@ class CLIPBackbone(nn.Module):
         Load pretrained CLIP model.
         Tries OpenAI CLIP first, then OpenCLIP as backup.
         """
-        try:
-            import clip
-            model, preprocess = clip.load(model_name, device=device)
-            log.info("Loaded OpenAI CLIP successfully")
-            self._clip_type = "openai"
-            return model, preprocess
-        except Exception as e:
-            log.warning(f"OpenAI CLIP failed ({e}), trying OpenCLIP...")
+        # ViT-H/14 only exists in OpenCLIP, skip OpenAI attempt
+        if model_name != "ViT-H/14":
+            try:
+                import clip
+                model, preprocess = clip.load(model_name, device=device)
+                log.info("Loaded OpenAI CLIP successfully")
+                self._clip_type = "openai"
+                return model, preprocess
+            except Exception as e:
+                log.warning(f"OpenAI CLIP failed ({e}), trying OpenCLIP...")
 
         try:
             import open_clip
@@ -122,6 +125,7 @@ class CLIPBackbone(nn.Module):
                 "ViT-B/32": ("ViT-B-32", "openai"),
                 "ViT-B/16": ("ViT-B-16", "openai"),
                 "ViT-L/14": ("ViT-L-14", "openai"),
+                "ViT-H/14": ("ViT-H-14", "laion2b_s32b_b79k"),
             }
             arch, pretrained = name_map[model_name]
             model, _, preprocess = open_clip.create_model_and_transforms(
@@ -129,6 +133,13 @@ class CLIPBackbone(nn.Module):
             )
             log.info("Loaded OpenCLIP successfully")
             self._clip_type = "openclip"
+            # Gradient checkpointing: recomputes activations in backward instead
+            # of storing them — large memory saving, lets ViT-H/14 fit on 8GB.
+            try:
+                model.set_grad_checkpointing(True)
+                log.info("Gradient checkpointing ENABLED (memory saving)")
+            except Exception as _e:
+                log.warning(f"Could not enable grad checkpointing: {_e}")
             return model, preprocess
         except Exception as e:
             raise RuntimeError(
@@ -233,12 +244,22 @@ class CLIPBackbone(nn.Module):
         """
         Same as encode_text() but WITH gradient tracking.
         Used during training.
+        Memory-efficient: encodes only UNIQUE prompts then maps back.
+        Demographic prompts repeat heavily (e.g. 9 unique for 126 samples),
+        so this drastically cuts memory on large backbones (ViT-L/14, H/14).
         """
-        tokens = self.tokenizer(texts)
+        # find unique texts and an index mapping
+        uniq = list(dict.fromkeys(texts))           # preserves order
+        idx = {t: i for i, t in enumerate(uniq)}
+        map_ids = torch.tensor([idx[t] for t in texts], device=self.device)
+
+        tokens = self.tokenizer(uniq)
         if isinstance(tokens, torch.Tensor):
             tokens = tokens.to(self.device)
-        features = self.clip_model.encode_text(tokens)
-        features = features / features.norm(dim=-1, keepdim=True)
+        feats_uniq = self.clip_model.encode_text(tokens)         # [U, D]
+        feats_uniq = feats_uniq / feats_uniq.norm(dim=-1, keepdim=True)
+        # expand back to full batch order (keeps gradient graph)
+        features = feats_uniq.index_select(0, map_ids)           # [N, D]
         return features.float()
 
     @property

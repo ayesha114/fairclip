@@ -1,0 +1,2 @@
+method,backbone,attribute,accuracy,precision,recall,f1,dpg,eod,rbs,facet_bias_score,maxskew_5,ndkl,able,vl_alignment,bias_level,TR@1,TR@5,TR@10,IR@1,IR@5,IR@10
+FairCLIP_ViT-B_32,ViT-B/32,age,0.6262,1.0,0.6262,0.7701,0.4539,0.4539,0.1444,1.5382,1.5382,0.7278,31.98,0.6262,1.5382,22.22,55.56,100.0,11.11,44.44,100.0

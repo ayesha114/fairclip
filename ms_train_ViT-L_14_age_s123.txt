@@ -1,0 +1,48 @@
+16:56:40 [INFO] ============================================================
+16:56:40 [INFO] FairCLIP Training
+16:56:40 [INFO] Attribute: age
+16:56:40 [INFO] Backbone:  ViT-L/14
+16:56:40 [INFO] Epochs:    30
+16:56:40 [INFO] Batch:     16
+16:56:40 [INFO] Lambda:    0.5
+16:56:40 [INFO] Device:    cuda
+16:56:40 [INFO] Seed:      123
+16:56:40 [INFO] ============================================================
+16:56:40 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+16:56:40 [INFO] Loaded manifest fairface.csv: 97698 rows
+16:56:40 [INFO] Filtered to split='train': 86744 rows
+16:56:40 [INFO] Loaded manifest fairface.csv: 97698 rows
+16:56:40 [INFO] Filtered to split='val': 10954 rows
+16:56:40 [INFO] Using 14 samples/group × 9 groups = 126 effective batch size
+16:56:40 [INFO]   Group 0: 1792 samples (2.1%)
+16:56:40 [INFO]   Group 1: 10408 samples (12.0%)
+16:56:40 [INFO]   Group 2: 9103 samples (10.5%)
+16:56:40 [INFO]   Group 3: 25598 samples (29.5%)
+16:56:40 [INFO]   Group 4: 19250 samples (22.2%)
+16:56:40 [INFO]   Group 5: 10744 samples (12.4%)
+16:56:40 [INFO]   Group 6: 6228 samples (7.2%)
+16:56:40 [INFO]   Group 7: 2779 samples (3.2%)
+16:56:40 [INFO]   Group 8: 842 samples (1.0%)
+16:56:40 [INFO] DemographicBalancedSampler: 9 groups, 14/group, 60 batches/epoch, effective batch size 126
+16:56:40 [INFO] Train: 86744 samples
+16:56:40 [INFO] Val:   10954 samples
+16:56:40 [INFO] ============================================================
+16:56:40 [INFO] Initializing FairCLIP
+16:56:40 [INFO]   Backbone: ViT-L/14
+16:56:40 [INFO]   Bias directions: 5
+16:56:40 [INFO]   Lambda fair: img=0.5, txt=0.5
+16:56:40 [INFO]   Temperature: base=0.07, alpha=0.5
+16:56:40 [INFO] ============================================================
+16:56:40 [INFO] Loading CLIP backbone: ViT-L/14
+16:56:40 [INFO] Embedding dimension: 768
+16:56:40 [INFO] Device: cuda
+16:56:45 [INFO] Loaded OpenAI CLIP successfully
+16:56:45 [INFO] Backbone frozen — CLIP weights will not be updated
+16:56:45 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+16:56:45 [INFO] FairnessAwareLoss initialized: λ_img=0.5, λ_txt=0.5
+16:56:45 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+16:56:45 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+16:56:45 [INFO] This runs once before training starts.
+16:56:45 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+16:58:41 [INFO]   Processed 5120 / 86744 samples
+17:00:37 [INFO]   Processed 10240 / 86744 samples

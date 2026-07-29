@@ -95,11 +95,12 @@ ATTRIBUTE_PROMPTS = {
 def parse_args():
     parser = argparse.ArgumentParser(description="Train FairCLIP")
     parser.add_argument("--config",     default="configs/datasets/local_paths.yaml")
+    parser.add_argument("--dataset",    default="fairface", choices=["fairface","utkface"])
     parser.add_argument("--attribute",  default="gender",
                         choices=["gender", "age", "race"],
                         help="Which demographic attribute to debias")
     parser.add_argument("--backbone",   default="ViT-B/32",
-                        choices=["ViT-B/32", "ViT-B/16"],
+                        choices=["ViT-B/32", "ViT-B/16", "ViT-L/14", "ViT-H/14"],
                         help="CLIP backbone to use")
     parser.add_argument("--epochs",     type=int,   default=10)
     parser.add_argument("--batch_size", type=int,   default=64)
@@ -119,6 +120,10 @@ def parse_args():
                         help="Early stopping patience (epochs without improvement)")
     parser.add_argument("--device",     default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--num_workers",type=int,   default=4)
+    parser.add_argument("--no_adaptive_temp", action="store_true")
+    parser.add_argument("--no_procrustes", action="store_true")
+    parser.add_argument("--no_train_proj", action="store_true")
+    parser.add_argument("--no_subspace", action="store_true")
     parser.add_argument("--log_every",  type=int,   default=50,
                         help="Log training stats every N steps")
     return parser.parse_args()
@@ -137,21 +142,29 @@ def get_attribute_column(attribute: str) -> str:
     """Map attribute name to manifest column name (DataFrame uses _idx suffix)."""
     return {"gender": "gender_idx", "age": "age_idx", "race": "race_idx"}[attribute]
 
+def get_attribute_column_for(attribute: str, dataset: str) -> str:
+    if attribute == "race" and dataset == "utkface":
+        return "race_idx_7"
+    return get_attribute_column(attribute)
+
 
 def build_dataloaders(cfg, args):
     """Build train and val dataloaders for FairFace."""
-    attr_col = get_attribute_column(args.attribute)
+    attr_col = get_attribute_column_for(args.attribute, args.dataset)
 
+    _manifest = cfg[args.dataset].manifest
+    log.info(f"Dataset: {args.dataset}  manifest: {_manifest}")
     train_ds = FaceDataset(
-        cfg.fairface.manifest,
+        _manifest,
         split="train",
         train=True,
-        race_column=attr_col if args.attribute == "race" else "race_idx",
+        race_column=("race_idx_7" if args.dataset=="utkface" else "race_idx"),
     )
     val_ds = FaceDataset(
-        cfg.fairface.manifest,
+        _manifest,
         split="val",
         train=False,
+        race_column=("race_idx_7" if args.dataset=="utkface" else "race_idx"),
     )
 
     # Use demographic-balanced sampler for training
@@ -206,7 +219,7 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
     log.info("Fitting bias subspace on training data (Steps IV + V)...")
     log.info("This runs once before training starts.")
 
-    attr_col = get_attribute_column(args.attribute)
+    attr_col = get_attribute_column_for(args.attribute, args.dataset)
 
     # Load data in larger batches for efficiency (no gradient needed here)
     setup_loader = DataLoader(
@@ -227,7 +240,7 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
     fitting_device = args.device
     for i, batch in enumerate(setup_loader):
         images = batch["image"].to(fitting_device)
-        batch_key = attr_col.replace("_idx", "")
+        batch_key = args.attribute
         labels = batch[batch_key].clone().detach().to(args.device)
 
         image_embs = model.backbone.encode_images(images)
@@ -263,6 +276,16 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
         attribute=args.attribute,
     )
     log.info("Bias subspace fitted successfully")
+    # Free GPU memory held during fitting so training has room (critical for ViT-H/14)
+    import gc as _gc
+    _gc.collect()
+    torch.cuda.empty_cache()
+    log.info(f"GPU cache cleared after fitting. Free now: {(torch.cuda.mem_get_info()[0]/1e9):.2f} GB")
+    # Free GPU memory held during fitting so training has room (critical for ViT-H/14)
+    import gc as _gc
+    _gc.collect()
+    torch.cuda.empty_cache()
+    log.info(f"GPU cache cleared after fitting. Free now: {(torch.cuda.mem_get_info()[0]/1e9):.2f} GB")
     # Free GPU cache after fitting
     import gc
     gc.collect()
@@ -270,6 +293,14 @@ def fit_bias_subspace(model: FairCLIP, train_ds, args):
         torch.cuda.empty_cache()
         torch.cuda.synchronize()
     log.info(f"GPU memory after fitting: {torch.cuda.memory_allocated()/1e9:.2f}GB used")
+
+
+# Mixed precision (FP16): halves memory so large backbones (ViT-L/14, H/14)
+# fit on 8GB. Enabled automatically when CUDA is available.
+import torch as _torch_amp
+import os as _os
+_USE_AMP = _torch_amp.cuda.is_available() and _os.environ.get('FAIRCLIP_NO_AMP','0') != '1'
+_scaler = _torch_amp.cuda.amp.GradScaler(enabled=_USE_AMP)
 
 
 def train_one_epoch(
@@ -281,9 +312,9 @@ def train_one_epoch(
 ) -> dict:
     """Run one complete training epoch."""
     model.train()
-    model.backbone.unfreeze_backbone()  # Allow CLIP weights to update
+    # backbone stays frozen except the 2 layers we put in the optimizer
 
-    attr_col = get_attribute_column(args.attribute)
+    attr_col = get_attribute_column_for(args.attribute, args.dataset)
 
     total_loss = 0.0
     total_infonce = 0.0
@@ -294,7 +325,7 @@ def train_one_epoch(
 
     for step, batch in enumerate(train_loader):
         images = batch["image"].to(args.device)
-        batch_key = attr_col.replace("_idx", "")
+        batch_key = args.attribute
         labels = batch[batch_key].clone().detach().to(args.device)
 
         # Build text prompts from demographic attribute
@@ -303,16 +334,30 @@ def train_one_epoch(
         # Build texts using demographic labels for meaningful contrastive pairs
         # EXCEPTION: for race, use neutral texts to avoid reinforcing stereotypes
         prompts = ATTRIBUTE_PROMPTS[args.attribute]
-        texts = [prompts[min(l.item(), len(prompts)-1)] for l in labels]
+        if args.attribute in ("race", "age") and getattr(args, "_coco_captions", None):
+            # Mixed source: even idx -> demographic prompt (class signal),
+            # odd idx -> neutral COCO caption (neutral geometry). Deterministic.
+            caps = args._coco_captions
+            base = step * len(labels)
+            texts = [prompts[min(l.item(), len(prompts)-1)] if i % 2 == 0
+                     else caps[(base + i) % len(caps)]
+                     for i, l in enumerate(labels)]
+        else:
+            texts = [prompts[min(l.item(), len(prompts)-1)] for l in labels]
 
         # Zero gradients
         optimizer.zero_grad()
 
         # Forward pass — Steps III, VI, VII, VIII
-        loss, info = model.training_step(images, texts, labels)
+        with torch.cuda.amp.autocast(enabled=_USE_AMP):
+            loss, info = model.training_step(images, texts, labels)
 
         # Backward pass
-        loss.backward()
+        if _USE_AMP:
+            _scaler.scale(loss).backward()
+            _scaler.unscale_(optimizer)
+        else:
+            loss.backward()
 
         # Clip gradients BEFORE optimizer step (critical for CLIP fine-tuning)
         torch.nn.utils.clip_grad_norm_(
@@ -320,7 +365,11 @@ def train_one_epoch(
             max_norm=0.1  # tight clipping for CLIP stability
         )
 
-        optimizer.step()
+        if _USE_AMP:
+            _scaler.step(optimizer)
+            _scaler.update()
+        else:
+            optimizer.step()
 
         # Accumulate stats
         total_loss += info["total"]
@@ -355,14 +404,14 @@ def train_one_epoch(
 def validate(model: FairCLIP, val_loader, args) -> dict:
     """Run validation — compute loss on val set."""
     model.eval()
-    attr_col = get_attribute_column(args.attribute)
+    attr_col = get_attribute_column_for(args.attribute, args.dataset)
 
     total_loss = 0.0
     n_batches = 0
 
     for batch in val_loader:
         images = batch["image"].to(args.device)
-        batch_key = attr_col.replace("_idx", "")
+        batch_key = args.attribute
         labels = batch[batch_key].clone().detach().to(args.device)
 
         # Build texts using demographic labels for meaningful contrastive pairs
@@ -400,6 +449,7 @@ def main():
     train_loader, val_loader, train_ds = build_dataloaders(cfg, args)
 
     # Initialize FairCLIP model
+    # (ablation attributes set after construction below)
     model = FairCLIP(
         model_name=args.backbone,
         device=args.device,
@@ -411,7 +461,17 @@ def main():
     )
 
     # Phase 1: Fit bias subspace (Steps IV + V)
-    fit_bias_subspace(model, train_ds, args)
+    model.ablate_adaptive_temp = args.no_adaptive_temp
+    model.ablate_procrustes = args.no_procrustes
+    model.ablate_train_proj = args.no_train_proj
+    if args.no_subspace:
+        model.ablate_train_proj = True  # no subspace implies no projection
+        model._bias_subspace_fitted = True  # skip fitting requirement
+        import torch as _t
+        d = model.get_embedding_dim()
+        model.bias_remover.set_bias_subspace(_t.zeros(d,1), _t.zeros(d,1))
+    else:
+        fit_bias_subspace(model, train_ds, args)
 
     # Only fine-tune the last 2 transformer blocks + projection
     # Fine-tuning ALL of CLIP causes gradient explosion
@@ -440,6 +500,13 @@ def main():
         if tp is not None:
             trainable_params.append(tp)
 
+    # Freeze everything first, then unfreeze ONLY the trainable params.
+    # This keeps memory low (only these layers build gradients) but ensures
+    # the loss has a grad path (fixes "does not require grad").
+    for p in model.backbone.clip_model.parameters():
+        p.requires_grad = False
+    for p in trainable_params:
+        p.requires_grad = True
     n_params = sum(p.numel() for p in trainable_params)
     log.info(f"Trainable parameters: {n_params:,} (last 2 layers only)")
 
@@ -455,14 +522,14 @@ def main():
     )
 
     # Output directory
-    out_dir = Path(args.output_dir) / args.backbone.replace("/", "_") / args.attribute
+    out_dir = Path(args.output_dir) / args.dataset / args.backbone.replace("/", "_") / args.attribute / f"seed{args.seed}"
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # Phase 2: Training loop (Steps VI + VII + VIII)
     best_val_loss = float("inf")
     no_improve_count = 0  # Early stopping counter
     # Load COCO captions for race training (neutral contrastive pairs)
-    if args.attribute == "race":
+    if args.attribute in ("race", "age"):
         coco_manifest = cfg.coco.get("manifest_train", "results/manifests/coco_train.csv")
         captions = load_coco_captions(coco_manifest)
         if captions:

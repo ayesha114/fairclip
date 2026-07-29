@@ -1,0 +1,43 @@
+nohup: ignoring input
+10:46:17 [INFO] ============================================================
+10:46:17 [INFO] FairCLIP Training
+10:46:17 [INFO] Attribute: gender
+10:46:17 [INFO] Backbone:  ViT-H/14
+10:46:17 [INFO] Epochs:    30
+10:46:17 [INFO] Batch:     16
+10:46:17 [INFO] Lambda:    0.01
+10:46:17 [INFO] Device:    cuda
+10:46:17 [INFO] Seed:      42
+10:46:17 [INFO] ============================================================
+10:46:17 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+10:46:17 [INFO] Loaded manifest fairface.csv: 97698 rows
+10:46:17 [INFO] Filtered to split='train': 86744 rows
+10:46:17 [INFO] Loaded manifest fairface.csv: 97698 rows
+10:46:17 [INFO] Filtered to split='val': 10954 rows
+10:46:17 [INFO] Using 14 samples/group × 2 groups = 28 effective batch size
+10:46:17 [INFO]   Group 0: 45986 samples (53.0%)
+10:46:17 [INFO]   Group 1: 40758 samples (47.0%)
+10:46:17 [INFO] DemographicBalancedSampler: 2 groups, 14/group, 2911 batches/epoch, effective batch size 28
+10:46:17 [INFO] Train: 86744 samples
+10:46:17 [INFO] Val:   10954 samples
+10:46:17 [INFO] ============================================================
+10:46:17 [INFO] Initializing FairCLIP
+10:46:17 [INFO]   Backbone: ViT-H/14
+10:46:17 [INFO]   Bias directions: 5
+10:46:17 [INFO]   Lambda fair: img=0.01, txt=0.01
+10:46:17 [INFO]   Temperature: base=0.07, alpha=0.5
+10:46:17 [INFO] ============================================================
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 619, in <module>
+    main()
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 422, in main
+    model = FairCLIP(
+            ^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/fairclip.py", line 102, in __init__
+    self.backbone = CLIPBackbone(
+                    ^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/clip_backbone.py", line 73, in __init__
+    raise ValueError(
+ValueError: Unknown model: ViT-H/14. Choose from: ['ViT-B/32', 'ViT-B/16', 'ViT-L/14']

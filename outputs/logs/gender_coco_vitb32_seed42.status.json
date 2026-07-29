@@ -1,0 +1,17 @@
+{
+  "run_label": "fairclip | gender | coco | ViT-B/32 | seed42",
+  "status": "done",
+  "epoch": 19,
+  "total_epochs": 30,
+  "step": 677,
+  "steps_per_epoch": 677,
+  "progress_pct": 63.3,
+  "last_loss": 4.8523,
+  "last_tau": 0.0707,
+  "elapsed_sec": 1307.0,
+  "elapsed_str": "0:21:46",
+  "eta_sec": 687.9,
+  "eta_str": "0:11:27",
+  "avg_epoch_sec": 68.8,
+  "updated_at": "2026-06-17 09:45:36"
+}

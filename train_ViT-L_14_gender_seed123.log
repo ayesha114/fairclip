@@ -1,0 +1,64 @@
+10:54:56 [INFO] ============================================================
+10:54:56 [INFO] FairCLIP Training
+10:54:56 [INFO] Attribute: gender
+10:54:56 [INFO] Backbone:  ViT-L/14
+10:54:56 [INFO] Epochs:    30
+10:54:56 [INFO] Batch:     16
+10:54:56 [INFO] Lambda:    0.003
+10:54:56 [INFO] Device:    cuda
+10:54:56 [INFO] Seed:      123
+10:54:56 [INFO] ============================================================
+10:54:56 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+10:54:56 [INFO] Loaded manifest fairface.csv: 97698 rows
+10:54:56 [INFO] Filtered to split='train': 86744 rows
+10:54:57 [INFO] Loaded manifest fairface.csv: 97698 rows
+10:54:57 [INFO] Filtered to split='val': 10954 rows
+10:54:57 [INFO] Using 14 samples/group × 2 groups = 28 effective batch size
+10:54:57 [INFO]   Group 0: 45986 samples (53.0%)
+10:54:57 [INFO]   Group 1: 40758 samples (47.0%)
+10:54:57 [INFO] DemographicBalancedSampler: 2 groups, 14/group, 2911 batches/epoch, effective batch size 28
+10:54:57 [INFO] Train: 86744 samples
+10:54:57 [INFO] Val:   10954 samples
+10:54:57 [INFO] ============================================================
+10:54:57 [INFO] Initializing FairCLIP
+10:54:57 [INFO]   Backbone: ViT-L/14
+10:54:57 [INFO]   Bias directions: 10
+10:54:57 [INFO]   Lambda fair: img=0.003, txt=0.003
+10:54:57 [INFO]   Temperature: base=0.07, alpha=0.5
+10:54:57 [INFO] ============================================================
+10:54:57 [INFO] Loading CLIP backbone: ViT-L/14
+10:54:57 [INFO] Embedding dimension: 768
+10:54:57 [INFO] Device: cuda
+10:55:02 [INFO] Loaded OpenAI CLIP successfully
+10:55:02 [INFO] Backbone frozen — CLIP weights will not be updated
+10:55:02 [INFO] BiasSubspaceDiscoverer initialized with 10 bias directions
+10:55:02 [INFO] FairnessAwareLoss initialized: λ_img=0.003, λ_txt=0.003
+10:55:02 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+10:55:02 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+10:55:02 [INFO] This runs once before training starts.
+10:55:02 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+10:57:01 [INFO]   Processed 5120 / 86744 samples
+10:58:57 [INFO]   Processed 10240 / 86744 samples
+11:01:04 [INFO]   Processed 15360 / 86744 samples
+11:03:15 [INFO]   Processed 20480 / 86744 samples
+11:05:30 [INFO]   Processed 25600 / 86744 samples
+11:07:44 [INFO]   Processed 30720 / 86744 samples
+11:09:57 [INFO]   Processed 35840 / 86744 samples
+11:12:06 [INFO]   Processed 40960 / 86744 samples
+11:14:16 [INFO]   Processed 46080 / 86744 samples
+11:16:22 [INFO]   Processed 51200 / 86744 samples
+11:18:29 [INFO]   Processed 56320 / 86744 samples
+11:20:39 [INFO]   Processed 61440 / 86744 samples
+11:22:51 [INFO]   Processed 66560 / 86744 samples
+11:25:01 [INFO]   Processed 71680 / 86744 samples
+11:27:18 [INFO]   Processed 76800 / 86744 samples
+11:29:25 [INFO]   Processed 81920 / 86744 samples
+11:31:34 [INFO]   Processed 87040 / 86744 samples
+11:33:44 [INFO]   Processed 92160 / 86744 samples
+11:35:57 [INFO]   Processed 97280 / 86744 samples
+11:38:08 [INFO]   Processed 102400 / 86744 samples
+11:40:04 [INFO]   Processed 107520 / 86744 samples
+11:42:15 [INFO]   Processed 112640 / 86744 samples
+11:44:26 [INFO]   Processed 117760 / 86744 samples
+11:46:37 [INFO]   Processed 122880 / 86744 samples
+11:48:50 [INFO]   Processed 128000 / 86744 samples

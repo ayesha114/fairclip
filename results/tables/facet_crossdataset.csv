@@ -1,0 +1,5 @@
+attribute,method,N,Acc,DPG,MaxSkew,NDKL
+gender,Baseline,43485,0.713,0.462,0.153,0.014
+gender,FairCLIP,43485,0.823,0.484,0.07,0.015
+age,Baseline,38899,0.1,0.098,0.676,0.073
+age,FairCLIP,38899,0.275,0.129,0.135,0.042

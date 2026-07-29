@@ -1,0 +1,2 @@
+model,dataset,backbone,attribute,text_source,seed,lambda_fair,best_epoch,tau_min,tau_max,accuracy,f1_macro,f1_weighted,precision_macro,recall_macro,DPG,RBS,RBS_normalized,EOD,MaxSkew@50,NDKL@50,ABLE,beats_zhang
+fairclip,fairface,ViT-B/32,gender,coco,42,0.01,14,0.0706,0.0728,0.6275333211612196,0.5961410839375691,0.5896652786163838,0.733614845805585,0.6457039837443622,0.02387229054865453,0.017450297251343727,0.10291909221029587,0.0,0.5171934551791315,0.2035987159128071,61.14610185479877,"{'MaxSkew': False, 'NDKL': False, 'ABLE': False}"

@@ -1,0 +1,121 @@
+17:03:46 [INFO] ============================================================
+17:03:46 [INFO] FairCLIP Training
+17:03:46 [INFO] Attribute: race
+17:03:46 [INFO] Backbone:  ViT-L/14
+17:03:46 [INFO] Epochs:    30
+17:03:46 [INFO] Batch:     16
+17:03:46 [INFO] Lambda:    2.0
+17:03:46 [INFO] Device:    cuda
+17:03:46 [INFO] Seed:      456
+17:03:46 [INFO] ============================================================
+17:03:46 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+17:03:46 [INFO] Loaded manifest fairface.csv: 97698 rows
+17:03:46 [INFO] Filtered to split='train': 86744 rows
+17:03:46 [INFO] Loaded manifest fairface.csv: 97698 rows
+17:03:46 [INFO] Filtered to split='val': 10954 rows
+17:03:46 [INFO] Using 14 samples/group × 7 groups = 98 effective batch size
+17:03:46 [INFO]   Group 0: 16527 samples (19.1%)
+17:03:46 [INFO]   Group 1: 12233 samples (14.1%)
+17:03:46 [INFO]   Group 2: 13367 samples (15.4%)
+17:03:46 [INFO]   Group 3: 12287 samples (14.2%)
+17:03:46 [INFO]   Group 4: 10795 samples (12.4%)
+17:03:46 [INFO]   Group 5: 12319 samples (14.2%)
+17:03:46 [INFO]   Group 6: 9216 samples (10.6%)
+17:03:46 [INFO] DemographicBalancedSampler: 7 groups, 14/group, 658 batches/epoch, effective batch size 98
+17:03:46 [INFO] Train: 86744 samples
+17:03:46 [INFO] Val:   10954 samples
+17:03:46 [INFO] ============================================================
+17:03:46 [INFO] Initializing FairCLIP
+17:03:46 [INFO]   Backbone: ViT-L/14
+17:03:46 [INFO]   Bias directions: 5
+17:03:46 [INFO]   Lambda fair: img=2.0, txt=2.0
+17:03:46 [INFO]   Temperature: base=0.07, alpha=0.5
+17:03:46 [INFO] ============================================================
+17:03:46 [INFO] Loading CLIP backbone: ViT-L/14
+17:03:46 [INFO] Embedding dimension: 768
+17:03:46 [INFO] Device: cuda
+17:03:51 [INFO] Loaded OpenAI CLIP successfully
+17:03:51 [INFO] Backbone frozen — CLIP weights will not be updated
+17:03:51 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+17:03:51 [INFO] FairnessAwareLoss initialized: λ_img=2.0, λ_txt=2.0
+17:03:51 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+17:03:51 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+17:03:51 [INFO] This runs once before training starts.
+17:03:51 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 660, in <module>
+    main()
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 474, in main
+    fit_bias_subspace(model, train_ds, args)
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 246, in fit_bias_subspace
+    image_embs = model.backbone.encode_images(images)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/clip_backbone.py", line 197, in encode_images
+    features = self.clip_model.encode_image(images)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 341, in encode_image
+    return self.visual(image.type(self.dtype))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 232, in forward
+    x = self.transformer(x)
+        ^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 203, in forward
+    return self.resblocks(x)
+           ^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/container.py", line 217, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 190, in forward
+    x = x + self.attention(self.ln_1(x))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 187, in attention
+    return self.attn(x, x, x, need_weights=False, attn_mask=self.attn_mask)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/activation.py", line 1241, in forward
+    attn_output, attn_output_weights = F.multi_head_attention_forward(
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/functional.py", line 5336, in multi_head_attention_forward
+    q, k, v = _in_projection_packed(query, key, value, in_proj_weight, in_proj_bias)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/functional.py", line 4857, in _in_projection_packed
+    proj = linear(q, w, b)
+           ^^^^^^^^^^^^^^^
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 386.00 MiB. GPU 0 has a total capacity of 7.78 GiB of which 317.75 MiB is free. Process 11357 has 552.00 MiB memory in use. Process 59369 has 4.00 GiB memory in use. Including non-PyTorch memory, this process has 2.08 GiB memory in use. Of the allocated memory 1.92 GiB is allocated by PyTorch, and 62.27 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)

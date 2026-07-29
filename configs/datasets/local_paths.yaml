@@ -3,30 +3,30 @@
 # =============================================================================
 
 fairface:
-  root: "/home/ayeshakalsoom/thesis/datasets/fairface/images"
-  train_csv: "/home/ayeshakalsoom/thesis/datasets/fairface/images/labels/train/train_labels.csv"
-  val_csv: "/home/ayeshakalsoom/thesis/datasets/fairface/images/labels/val/val_labels.csv"
+  root: "/home/ayeshakalsoom/Downloads/thesis/datasets/fairface/images"
+  train_csv: "/home/ayeshakalsoom/Downloads/thesis/datasets/fairface/images/labels/train/train_labels.csv"
+  val_csv: "/home/ayeshakalsoom/Downloads/thesis/datasets/fairface/images/labels/val/val_labels.csv"
   manifest: "results/manifests/fairface.csv"
   image_size: 224
 
 utkface:
-  root: "/home/ayeshakalsoom/thesis/datasets/utkface"
+  root: "/home/ayeshakalsoom/Downloads/thesis/datasets/utkface"
   manifest: "results/manifests/utkface.csv"
   image_size: 224
 
 coco:
-  root: "/home/ayeshakalsoom/thesis/datasets/coco"
+  root: "/home/ayeshakalsoom/Downloads/thesis/datasets/coco"
   manifest_train: "results/manifests/coco_train.csv"
   manifest_val: "results/manifests/coco_val.csv"
   image_size: 224
 
 facet:
-  root: "/home/ayeshakalsoom/thesis/datasets/facet"
+  root: "/home/ayeshakalsoom/Downloads/thesis/datasets/facet"
   manifest: "results/manifests/facet.csv"
   image_size: 224
 
 flickr30k:
-  root: "/home/ayeshakalsoom/thesis/datasets/Flickr"
+  root: "/home/ayeshakalsoom/Downloads/thesis/datasets/Flickr"
   manifest: "results/manifests/flickr30k.csv"
   image_size: 224
   enabled: true

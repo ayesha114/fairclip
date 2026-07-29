@@ -1,0 +1,6 @@
+frozen+proj ViT-B_16 gender: TR@5=80.6 IR@5=77.1
+frozen+proj ViT-B_16 age: TR@5=79.5 IR@5=76.3
+frozen+proj ViT-B_16 race: TR@5=82.0 IR@5=78.1
+frozen+proj ViT-L_14 gender: TR@5=80.2 IR@5=79.5
+frozen+proj ViT-L_14 age: TR@5=80.5 IR@5=78.1
+frozen+proj ViT-L_14 race: TR@5=82.1 IR@5=79.9

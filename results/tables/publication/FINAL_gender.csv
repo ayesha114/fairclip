@@ -1,0 +1,13 @@
+Backbone,Attribute,Method,Acc,F1,DPG,EOD,RBS,MaxSkew,NDKL,ABLE
+ViT-B/32,gender,Baseline,0.944,0.971,0.002,0.0,0.1295,0.28,0.072,83.95
+ViT-B/32,gender,FairCLIP,0.973,0.986,0.011,0.0,0.5469,0.029,0.012,97.22
+ViT-B/32,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.09,0.03,74.24
+ViT-B/16,gender,Baseline,0.931,0.964,0.066,0.0,0.13,0.188,0.044,87.68
+ViT-B/16,gender,FairCLIP,0.979,0.989,0.001,0.0,0.5887,0.045,0.012,96.74
+ViT-B/16,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.08,0.025,78.35
+ViT-L/14,gender,Baseline,0.949,0.974,0.044,0.0,0.1288,0.155,0.037,90.04
+ViT-L/14,gender,FairCLIP,0.979,0.99,0.013,0.0,0.6117,0.09,0.027,94.55
+ViT-L/14,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.106,0.035,82.04
+ViT-H/14,gender,Baseline,0.966,0.983,0.024,0.0,0.1631,0.103,0.018,93.28
+ViT-H/14,gender,FairCLIP,0.978,0.989,0.007,0.0,0.6191,0.056,0.017,96.17
+ViT-H/14,gender,Zhang et al. (published),N/R,N/R,N/R,N/R,N/R,0.138,0.051,82.11

@@ -1,0 +1,4 @@
+Attribute,Acc_mean,Acc_std,DPG_mean,DPG_std,MaxSkew_mean,MaxSkew_std,NDKL_mean,NDKL_std,Zhang_MaxSkew,Zhang_NDKL
+gender,0.973,0.0,0.005,0.004,0.032,0.025,0.013,0.001,0.09,0.03
+age,0.577,0.003,0.438,0.031,0.234,0.04,0.078,0.007,0.572,0.364
+race,0.75,0.001,0.313,0.015,0.174,0.039,0.076,0.007,0.353,0.125

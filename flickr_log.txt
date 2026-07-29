@@ -1,0 +1,66 @@
+Traceback (most recent call last):
+  File "/home/ayeshakalsoom/Downloads/thesis/eval_flickr.py", line 23, in <module>
+    r = evaluate_retrieval(m, dataset="flickr30k", max_samples=1000, device=dev)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/evaluation/retrieval.py", line 128, in evaluate_retrieval
+    img_embs, txt_embs = model.encode_and_debias(images, captions)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/fairclip.py", line 289, in encode_and_debias
+    debiased_img = self.bias_remover.remove_image_bias(img_embs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/bias_removal.py", line 128, in remove_image_bias
+    raise RuntimeError(
+RuntimeError: Call set_bias_subspace() before remove_image_bias().
+RESULT fairclip_ViT-B_32_gender: TR@5=55.6 IR@5=39.3 TR@1=11.7 IR@1=11.1
+RESULT fairclip_ViT-B_32_age: TR@5=75.2 IR@5=69.8 TR@1=15.6 IR@1=17.7
+RESULT fairclip_ViT-B_32_race: TR@5=28.8 IR@5=28.5 TR@1=5.8 IR@1=7.1
+Traceback (most recent call last):
+  File "/home/ayeshakalsoom/Downloads/thesis/eval_flickr.py", line 23, in <module>
+    r = evaluate_retrieval(m, dataset="flickr30k", max_samples=1000, device=dev)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/evaluation/retrieval.py", line 128, in evaluate_retrieval
+    img_embs, txt_embs = model.encode_and_debias(images, captions)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/fairclip.py", line 289, in encode_and_debias
+    debiased_img = self.bias_remover.remove_image_bias(img_embs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/bias_removal.py", line 128, in remove_image_bias
+    raise RuntimeError(
+RuntimeError: Call set_bias_subspace() before remove_image_bias().
+RESULT fairclip_ViT-B_16_gender: TR@5=27.8 IR@5=3.1 TR@1=5.5 IR@1=0.7
+RESULT fairclip_ViT-B_16_age: TR@5=79.5 IR@5=70.8 TR@1=16.9 IR@1=17.7
+RESULT fairclip_ViT-B_16_race: TR@5=27.6 IR@5=25.5 TR@1=5.5 IR@1=6.7
+Traceback (most recent call last):
+  File "/home/ayeshakalsoom/Downloads/thesis/eval_flickr.py", line 23, in <module>
+    r = evaluate_retrieval(m, dataset="flickr30k", max_samples=1000, device=dev)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/evaluation/retrieval.py", line 128, in evaluate_retrieval
+    img_embs, txt_embs = model.encode_and_debias(images, captions)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/fairclip.py", line 289, in encode_and_debias
+    debiased_img = self.bias_remover.remove_image_bias(img_embs)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/bias_removal.py", line 128, in remove_image_bias
+    raise RuntimeError(
+RuntimeError: Call set_bias_subspace() before remove_image_bias().
+RESULT fairclip_ViT-L_14_gender: TR@5=46.9 IR@5=2.0 TR@1=10.4 IR@1=0.4
+RESULT fairclip_ViT-L_14_age: TR@5=79.5 IR@5=76.6 TR@1=16.6 IR@1=18.7
+RESULT fairclip_ViT-L_14_race: TR@5=29.5 IR@5=30.9 TR@1=5.8 IR@1=8.9

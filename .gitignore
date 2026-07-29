@@ -90,3 +90,10 @@ paper/main.pdf  # commit final PDF separately, not from build
 *.gz
 !docs/**/*.zip
 datasets/
+
+# --- Allow result figures (needed for reproducibility) ---
+!results/figures/
+!results/figures/*.png
+# --- Extra checkpoint dirs (large, never commit) ---
+results/checkpoints_*/
+results/OLD_may16_DO_NOT_USE/

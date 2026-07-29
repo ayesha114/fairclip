@@ -1,0 +1,13 @@
+Backbone,Attribute,Baseline_Acc,FairCLIP_Acc,Baseline_F1,FairCLIP_F1,Baseline_DPG,FairCLIP_DPG,DPG_reduction_%,Zhang
+ViT-B/32,gender,0.944,0.973,0.971,0.986,0.002,0.011,-390.9,N/R (no classification)
+ViT-B/32,age,0.437,0.575,0.608,0.73,0.818,0.395,51.6,N/R (no classification)
+ViT-B/32,race,0.628,0.748,0.772,0.856,0.432,0.302,30.2,N/R (no classification)
+ViT-B/16,gender,0.931,0.979,0.964,0.989,0.066,0.001,97.9,N/R (no classification)
+ViT-B/16,age,0.311,0.579,0.475,0.733,0.9,0.434,51.8,N/R (no classification)
+ViT-B/16,race,0.26,0.769,0.412,0.869,0.626,0.322,48.5,N/R (no classification)
+ViT-L/14,gender,0.949,0.979,0.974,0.99,0.044,0.013,70.0,N/R (no classification)
+ViT-L/14,age,0.335,0.587,0.502,0.74,0.798,0.45,43.6,N/R (no classification)
+ViT-L/14,race,0.341,0.781,0.509,0.877,0.732,0.314,57.1,N/R (no classification)
+ViT-H/14,gender,0.966,0.978,0.982,0.989,0.024,0.007,71.3,N/R (no classification)
+ViT-H/14,age,0.548,0.542,0.708,0.703,0.538,0.417,22.4,N/R (no classification)
+ViT-H/14,race,0.307,0.772,0.47,0.871,0.594,0.316,46.8,N/R (no classification)

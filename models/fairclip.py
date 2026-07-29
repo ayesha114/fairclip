@@ -180,7 +180,10 @@ class FairCLIP(nn.Module):
         self.bias_discoverer.text_bias_directions = txt_dirs
 
         # Step V: Align text bias directions to image bias directions
-        aligned_txt_dirs = self.procrustes.fit_transform(img_dirs, txt_dirs)
+        if getattr(self, "ablate_procrustes", False):
+            aligned_txt_dirs = txt_dirs
+        else:
+            aligned_txt_dirs = self.procrustes.fit_transform(img_dirs, txt_dirs)
 
         log.info(
             f"Procrustes alignment quality: "
@@ -236,10 +239,19 @@ class FairCLIP(nn.Module):
         # Step III: Extract features using CLIP (with gradients)
         image_embs = self.backbone.encode_images_grad(images)
         text_embs = self.backbone.encode_text_grad(texts)
+        # Step VIII applied DURING training (per methodology): project out
+        # bias subspace before the loss so the model cannot learn to encode
+        # demographic clustering in the first place. Differentiable.
+        if self._bias_subspace_fitted and not getattr(self, "ablate_train_proj", False):
+            image_embs = self.bias_remover.remove_image_bias(image_embs)
+            text_embs = self.bias_remover.remove_text_bias(text_embs)
 
         # Step VII: Compute adaptive temperature for this batch
         # Uses current group disparity to scale τ
-        tau = self.temperature_controller(image_embs.detach(), labels)
+        if getattr(self, "ablate_adaptive_temp", False):
+            tau = 0.07
+        else:
+            tau = self.temperature_controller(image_embs.detach(), labels)
 
         # Step VI: Compute fairness-aware contrastive loss
         # Loss = InfoNCE(τ) + λ_img × GroupVariance(images) + λ_txt × GroupVariance(texts)
@@ -280,11 +292,13 @@ class FairCLIP(nn.Module):
 
         if images is not None:
             img_embs = self.backbone.encode_images(images)
-            debiased_img = self.bias_remover.remove_image_bias(img_embs)
+            debiased_img = (self.bias_remover.remove_image_bias(img_embs)
+                            if self._bias_subspace_fitted else img_embs)
 
         if texts is not None:
             txt_embs = self.backbone.encode_text(texts)
-            debiased_txt = self.bias_remover.remove_text_bias(txt_embs)
+            debiased_txt = (self.bias_remover.remove_text_bias(txt_embs)
+                            if self._bias_subspace_fitted else txt_embs)
 
         return debiased_img, debiased_txt
 
@@ -319,7 +333,7 @@ class FairCLIP(nn.Module):
 
     def load(self, path: str) -> "FairCLIP":
         """Load a saved FairCLIP model state. Handles both old and new formats."""
-        checkpoint = torch.load(path, map_location=self.device)
+        checkpoint = torch.load(path, map_location="cpu")  # CPU load avoids OOM on ViT-H/14
 
         # New format (disaster recovery format)
         if "model_state" in checkpoint:

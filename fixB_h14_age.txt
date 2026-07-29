@@ -1,0 +1,87 @@
+18:09:18 [INFO] ============================================================
+18:09:18 [INFO] FairCLIP Training
+18:09:18 [INFO] Attribute: age
+18:09:18 [INFO] Backbone:  ViT-H/14
+18:09:18 [INFO] Epochs:    30
+18:09:18 [INFO] Batch:     8
+18:09:18 [INFO] Lambda:    0.25
+18:09:18 [INFO] Device:    cuda
+18:09:18 [INFO] Seed:      42
+18:09:18 [INFO] ============================================================
+18:09:18 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+18:09:18 [INFO] Loaded manifest fairface.csv: 97698 rows
+18:09:18 [INFO] Filtered to split='train': 86744 rows
+18:09:18 [INFO] Loaded manifest fairface.csv: 97698 rows
+18:09:18 [INFO] Filtered to split='val': 10954 rows
+18:09:18 [INFO] Using 14 samples/group × 9 groups = 126 effective batch size
+18:09:18 [INFO]   Group 0: 1792 samples (2.1%)
+18:09:18 [INFO]   Group 1: 10408 samples (12.0%)
+18:09:18 [INFO]   Group 2: 9103 samples (10.5%)
+18:09:18 [INFO]   Group 3: 25598 samples (29.5%)
+18:09:18 [INFO]   Group 4: 19250 samples (22.2%)
+18:09:18 [INFO]   Group 5: 10744 samples (12.4%)
+18:09:18 [INFO]   Group 6: 6228 samples (7.2%)
+18:09:18 [INFO]   Group 7: 2779 samples (3.2%)
+18:09:18 [INFO]   Group 8: 842 samples (1.0%)
+18:09:18 [INFO] DemographicBalancedSampler: 9 groups, 14/group, 60 batches/epoch, effective batch size 126
+18:09:18 [INFO] Train: 86744 samples
+18:09:18 [INFO] Val:   10954 samples
+18:09:18 [INFO] ============================================================
+18:09:18 [INFO] Initializing FairCLIP
+18:09:18 [INFO]   Backbone: ViT-H/14
+18:09:18 [INFO]   Bias directions: 5
+18:09:18 [INFO]   Lambda fair: img=0.25, txt=0.25
+18:09:18 [INFO]   Temperature: base=0.07, alpha=0.5
+18:09:18 [INFO] ============================================================
+18:09:18 [INFO] Loading CLIP backbone: ViT-H/14
+18:09:18 [INFO] Embedding dimension: 1024
+18:09:18 [INFO] Device: cuda
+18:09:18 [INFO] Parsing model identifier. Schema: None, Identifier: ViT-H-14
+18:09:18 [INFO] Loaded built-in ViT-H-14 model config.
+18:09:19 [INFO] HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+18:09:19 [INFO] HTTP Request: HEAD https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K/resolve/main/open_clip_model.safetensors "HTTP/1.1 302 Found"
+18:09:19 [INFO] Instantiating model architecture: CLIP
+18:09:25 [INFO] Loading full pretrained weights from: /home/ayeshakalsoom/.cache/huggingface/hub/models--laion--CLIP-ViT-H-14-laion2B-s32B-b79K/snapshots/1c2b8495b28150b8a4922ee1c8edee224c284c0c/open_clip_model.safetensors
+18:09:25 [INFO] Final image preprocessing configuration set: {'size': (224, 224), 'mode': 'RGB', 'mean': (0.48145466, 0.4578275, 0.40821073), 'std': (0.26862954, 0.26130258, 0.27577711), 'interpolation': 'bicubic', 'resize_mode': 'shortest', 'fill_color': 0}
+18:09:25 [INFO] Model ViT-H-14 creation process complete.
+18:09:25 [INFO] Loaded OpenCLIP successfully
+18:09:25 [INFO] Gradient checkpointing ENABLED (memory saving)
+18:09:25 [INFO] Parsing tokenizer identifier. Schema: None, Identifier: ViT-H-14
+18:09:25 [INFO] Attempting to load config from built-in: ViT-H-14
+18:09:25 [INFO] Using default SimpleTokenizer.
+18:09:25 [INFO] Backbone frozen — CLIP weights will not be updated
+18:09:25 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+18:09:25 [INFO] FairnessAwareLoss initialized: λ_img=0.25, λ_txt=0.25
+18:09:25 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+18:09:25 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+18:09:25 [INFO] This runs once before training starts.
+18:09:25 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+18:15:04 [INFO]   Processed 5120 / 86744 samples
+18:20:41 [INFO]   Processed 10240 / 86744 samples
+18:26:19 [INFO]   Processed 15360 / 86744 samples
+18:31:57 [INFO]   Processed 20480 / 86744 samples
+18:37:35 [INFO]   Processed 25600 / 86744 samples
+18:43:12 [INFO]   Processed 30720 / 86744 samples
+18:48:50 [INFO]   Processed 35840 / 86744 samples
+18:54:27 [INFO]   Processed 40960 / 86744 samples
+19:00:05 [INFO]   Processed 46080 / 86744 samples
+19:05:41 [INFO]   Processed 51200 / 86744 samples
+19:11:18 [INFO]   Processed 56320 / 86744 samples
+19:16:56 [INFO]   Processed 61440 / 86744 samples
+19:22:32 [INFO]   Processed 66560 / 86744 samples
+19:28:09 [INFO]   Processed 71680 / 86744 samples
+19:33:46 [INFO]   Processed 76800 / 86744 samples
+19:39:24 [INFO]   Processed 81920 / 86744 samples
+19:45:01 [INFO]   Processed 87040 / 86744 samples
+19:50:39 [INFO]   Processed 92160 / 86744 samples
+19:56:16 [INFO]   Processed 97280 / 86744 samples
+20:01:53 [INFO]   Processed 102400 / 86744 samples
+20:07:30 [INFO]   Processed 107520 / 86744 samples
+20:13:08 [INFO]   Processed 112640 / 86744 samples
+20:18:46 [INFO]   Processed 117760 / 86744 samples
+20:24:23 [INFO]   Processed 122880 / 86744 samples
+20:30:01 [INFO]   Processed 128000 / 86744 samples
+20:35:38 [INFO]   Processed 133120 / 86744 samples
+20:41:16 [INFO]   Processed 138240 / 86744 samples
+20:46:54 [INFO]   Processed 143360 / 86744 samples
+20:52:31 [INFO]   Processed 148480 / 86744 samples

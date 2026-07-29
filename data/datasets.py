@@ -283,7 +283,7 @@ class FACETDataset(Dataset):
             "image": self.transform(image),
             "age": int(row.get("age_idx", -1)),
             "gender": int(row.get("gender_idx", -1)),
-            "race": int(row.get("race_idx", -1)),
+            "race": int(row.get("race_idx", row.get("race_idx_7", row.get("race_idx_5", -1)))),
             "image_path": row["image_path"],
             "index": idx,
         }

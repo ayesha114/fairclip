@@ -1,0 +1,68 @@
+================================================================
+FairCLIP — ALL TEXT PROMPTS USED (Training + Evaluation)
+Ayesha Kalsoom (25I-7805) | Supervisor: Dr. Afia Zafar
+================================================================
+
+WHY PROMPTS ARE NEEDED:
+FairFace images have demographic LABELS but no captions. CLIP needs
+image-text PAIRS for contrastive learning. So each face image is paired
+with a text prompt describing its demographic group. This lets the
+fairness-aware contrastive loss (Step VI) pull demographic groups closer
+while preserving image-text alignment.
+
+WHERE EACH PROMPT SET LIVES IN CODE:
+  - training/train.py            -> ATTRIBUTE_PROMPTS  (training image-text pairs)
+  - evaluation/eval_all.py       -> TEXT_PROMPTS       (zero-shot classification)
+  - evaluation/metrics/all_metrics.py -> OCCUPATION_PROMPTS (fairness probes)
+
+================================================================
+A) TRAINING / CLASSIFICATION PROMPTS (one per demographic class)
+================================================================
+
+GENDER (2 classes):
+  Male   -> "A photo of a Male person"
+  Female -> "A photo of a Female person"
+
+AGE (9 classes):
+  "A photo of a 0-2 year old person"
+  "A photo of a 3-9 year old person"
+  "A photo of a 10-19 year old person"
+  "A photo of a 20-29 year old person"
+  "A photo of a 30-39 year old person"
+  "A photo of a 40-49 year old person"
+  "A photo of a 50-59 year old person"
+  "A photo of a 60-69 year old person"
+  "A photo of an elderly person"
+
+RACE (7 classes) — NEUTRAL skin-tone wording (NOT racial names):
+  "A photo of a person with light skin tone"
+  "A photo of a person with dark skin tone"
+  "A photo of a person with olive skin tone"
+  "A photo of a person with yellow skin tone"
+  "A photo of a person with tan skin tone"
+  "A photo of a person with brown skin tone"
+  "A photo of a person with warm skin tone"
+  (Reason: explicit racial names reinforce stereotypes during training;
+   neutral skin-tone wording avoids injecting racial language.)
+
+================================================================
+B) FAIRNESS PROBE PROMPTS (used ONLY to MEASURE bias, not for training)
+================================================================
+These are demographic-NEUTRAL. Any skew in which images get retrieved
+for these queries reveals MODEL bias. Three categories:
+
+OCCUPATION / STATUS bias (doctor=male, nurse=female):
+  doctor, nurse, engineer, teacher, scientist, chef, lawyer, farmer,
+  cleaner, manager, secretary, pilot, construction worker, artist,
+  librarian, ceo
+
+CHARACTER / TRAIT bias (e.g. black=criminal stereotype):
+  criminal, trustworthy person, intelligent person, dangerous person,
+  kind person, violent person
+
+SOCIAL STATUS / RIGHTS bias (wealthy vs poor, powerful vs weak):
+  wealthy person, poor person, educated person, powerful person,
+  respected person, suspicious person
+
+  (each written as: "a photo of a <word>")
+================================================================

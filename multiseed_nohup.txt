@@ -1,0 +1,14 @@
+nohup: ignoring input
+SKIP (exists): ViT-B_16 gender seed123
+SKIP (exists): ViT-B_16 age seed123
+SKIP (exists): ViT-B_16 race seed123
+SKIP (exists): ViT-B_16 gender seed456
+SKIP (exists): ViT-B_16 age seed456
+SKIP (exists): ViT-B_16 race seed456
+TRAIN: ViT-L_14 gender seed123 lam=0.003 nbd=10 bs=16 Tue Jul 28 04:51:14 PM PKT 2026
+./run_multiseed_night.sh: line 13: 56267 Killed                  python -m training.train --dataset fairface --attribute "$attr" --backbone "$bb" --epochs 30 --patience 3 --batch_size "$bs" --lambda_fair "$lam" --n_bias_dirs "$nbd" --seed "$seed" > "ms_train_${bbt}_${attr}_s${seed}.txt" 2>&1
+FAIL (no checkpoint): ViT-L_14 gender seed123
+TRAIN: ViT-L_14 age seed123 lam=0.5 nbd=5 bs=16 Tue Jul 28 04:56:38 PM PKT 2026
+./run_multiseed_night.sh: line 13: 57452 Killed                  python -m training.train --dataset fairface --attribute "$attr" --backbone "$bb" --epochs 30 --patience 3 --batch_size "$bs" --lambda_fair "$lam" --n_bias_dirs "$nbd" --seed "$seed" > "ms_train_${bbt}_${attr}_s${seed}.txt" 2>&1
+FAIL (no checkpoint): ViT-L_14 age seed123
+TRAIN: ViT-L_14 race seed123 lam=2.0 nbd=5 bs=16 Tue Jul 28 05:02:14 PM PKT 2026
