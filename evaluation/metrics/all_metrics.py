@@ -60,47 +60,62 @@ def compute_convergence_speed(accuracy_history, target_accuracy=0.7):
 
 def compute_dpg_full(predictions, attribute_labels):
     """
-    DPG = max pairwise gap in positive prediction rates between groups.
+    Demographic Parity Gap (proposal 12.2.1), multi-class via one-vs-rest.
+    DPG = |P(Yhat=1|A=a1) - P(Yhat=1|A=a2)|  averaged over each class c
+    treated as the positive class. predictions = predicted class ids.
     Lower = fairer.
     """
-    unique_groups = [g for g in attribute_labels.unique() if g.item() != -1]
-    if len(unique_groups) < 2:
+    groups = [g for g in attribute_labels.unique() if g.item() != -1]
+    if len(groups) < 2:
         return 0.0
-    rates = []
-    for group in unique_groups:
-        mask = attribute_labels == group
-        if mask.sum() == 0:
-            continue
-        rates.append(predictions[mask].float().mean().item())
-    if len(rates) < 2:
+    classes = predictions.unique()
+    gaps = []
+    for c in classes:
+        # positive = predicted as class c
+        rates = []
+        for g in groups:
+            mask = attribute_labels == g
+            if mask.sum() == 0:
+                continue
+            rates.append((predictions[mask] == c).float().mean().item())
+        if len(rates) >= 2:
+            gaps.append(max(rates) - min(rates))
+    if not gaps:
         return 0.0
-    return float(max(rates) - min(rates))
+    return float(sum(gaps) / len(gaps))
 
 
 def compute_eod_full(predictions, true_labels, attribute_labels):
     """
-    EOD = |TPR_a1 - TPR_a2| + |FPR_a1 - FPR_a2|
+    Equalized Odds Difference (proposal 12.2.2), multi-class one-vs-rest.
+    For each class c: TPR = P(pred=c | true=c), FPR = P(pred=c | true!=c),
+    measured per group; EOD_c = TPR-gap + FPR-gap across groups.
+    Final EOD = mean over classes. predictions & true_labels = class ids.
     Lower = fairer.
     """
-    unique_groups = [g for g in attribute_labels.unique() if g.item() != -1]
-    if len(unique_groups) < 2:
+    groups = [g for g in attribute_labels.unique() if g.item() != -1]
+    if len(groups) < 2:
         return 0.0
-    tprs, fprs = [], []
-    for group in unique_groups:
-        mask = attribute_labels == group
-        if mask.sum() == 0:
-            continue
-        g_preds = predictions[mask].float()
-        g_true  = true_labels[mask].float()
-        pos = g_true == 1
-        neg = g_true == 0
-        tpr = (g_preds[pos] == 1).float().mean().item() if pos.sum() > 0 else 0.0
-        fpr = (g_preds[neg] == 1).float().mean().item() if neg.sum() > 0 else 0.0
-        tprs.append(tpr)
-        fprs.append(fpr)
-    if len(tprs) < 2:
+    classes = true_labels.unique()
+    eods = []
+    for c in classes:
+        tprs, fprs = [], []
+        for g in groups:
+            mask = attribute_labels == g
+            if mask.sum() == 0:
+                continue
+            gp = predictions[mask]
+            gt = true_labels[mask]
+            pos = gt == c
+            neg = gt != c
+            tpr = (gp[pos] == c).float().mean().item() if pos.sum() > 0 else 0.0
+            fpr = (gp[neg] == c).float().mean().item() if neg.sum() > 0 else 0.0
+            tprs.append(tpr); fprs.append(fpr)
+        if len(tprs) >= 2:
+            eods.append((max(tprs) - min(tprs)) + (max(fprs) - min(fprs)))
+    if not eods:
         return 0.0
-    return float(abs(max(tprs) - min(tprs)) + abs(max(fprs) - min(fprs)))
+    return float(sum(eods) / len(eods))
 
 
 def compute_facet_bias_score(bias_values_per_facet):
@@ -151,6 +166,30 @@ def compute_maxskew_correct(image_embeddings, group_labels, k=5):
             skews.append(abs(np.log(p_group / p_uniform)))
 
     return float(np.max(skews)) if skews else 0.0
+
+
+
+def compute_eod_multiclass(predictions, true_labels, attribute_labels):
+    """
+    Correct EOD for multi-class demographic classification.
+    For each demographic group g: TPR_g = fraction of group-g samples whose
+    predicted class == their true class (per-group accuracy on the ground truth).
+    EOD = max_g TPR_g - min_g TPR_g  (equal-opportunity gap across groups).
+    Lower = fairer.
+    """
+    groups = [g for g in attribute_labels.unique() if g.item() != -1]
+    if len(groups) < 2:
+        return 0.0
+    tprs = []
+    for g in groups:
+        mask = attribute_labels == g
+        if mask.sum() == 0:
+            continue
+        correct = (predictions[mask] == true_labels[mask]).float().mean().item()
+        tprs.append(correct)
+    if len(tprs) < 2:
+        return 0.0
+    return float(max(tprs) - min(tprs))
 
 
 def compute_ndkl_correct(image_embeddings, group_labels, k=10):
@@ -379,12 +418,12 @@ def compute_all_metrics(
         results["convergence_epoch"] = compute_convergence_speed(accuracy_history)
 
     # --- Fairness metrics ---
-    results["dpg"] = round(compute_dpg_full(preds_correct, valid_labels), 4)
+    results["dpg"] = round(compute_dpg_full(top1_pred, valid_labels), 4)
     
     # Representation Bias Score — directly measures embedding-space bias
     # This is what PCA/SVD (Step IV) and bias removal (Step VIII) minimize
     results["rbs"] = round(compute_rbs(valid_img, valid_labels), 4)
-    results["eod"] = round(compute_eod_full(preds_correct, true_ones, valid_labels), 4)
+    results["eod"] = round(compute_eod_full(top1_pred, clipped_labels, valid_labels), 4)
 
     # --- MaxSkew and NDKL (image-to-image retrieval fairness) ---
     log.info("Computing MaxSkew (image-to-image retrieval)...")
