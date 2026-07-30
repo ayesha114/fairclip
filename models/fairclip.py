@@ -72,6 +72,7 @@ class FairCLIP(nn.Module):
         n_bias_directions: int = 5,
         lambda_fair_image: float = 0.1,
         lambda_fair_text: float = 0.1,
+        lambda_retrieval: float = 0.0,
         tau_base: float = 0.07,
         alpha_temperature: float = 0.5,
     ):
@@ -115,6 +116,7 @@ class FairCLIP(nn.Module):
 
         # Step VI — Fairness-aware contrastive loss
         self.loss_fn = FairnessAwareLoss(
+            lambda_retrieval=lambda_retrieval,
             lambda_fair_image=lambda_fair_image,
             lambda_fair_text=lambda_fair_text,
         )

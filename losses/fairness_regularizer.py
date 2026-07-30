@@ -184,6 +184,47 @@ class GroupVariancePenalty(nn.Module):
         return variance
 
 
+
+class RetrievalSkewPenalty(nn.Module):
+    """
+    Retrieval-fairness penalty (targets MaxSkew during training).
+
+    For each text query, compute the soft retrieval distribution over images
+    (softmax of query-image similarities). Then compute, per demographic group,
+    the total retrieved probability mass. A fair retrieval gives each group a
+    mass equal to its population proportion. We penalize the squared deviation
+    from population proportion (a differentiable surrogate for MaxSkew/NDKL).
+    """
+    def __init__(self, temperature: float = 0.07):
+        super().__init__()
+        self.temperature = temperature
+
+    def forward(self, image_embeddings, text_embeddings, labels):
+        valid = labels != -1
+        if valid.sum() == 0:
+            return torch.tensor(0.0, device=image_embeddings.device)
+        img = image_embeddings[valid]
+        lab = labels[valid]
+        groups = lab.unique()
+        if len(groups) < 2:
+            return torch.tensor(0.0, device=image_embeddings.device)
+        # population proportion per group
+        pop = torch.stack([(lab == g).float().mean() for g in groups])  # [K]
+        # soft retrieval distribution: for each text query -> over images
+        sims = (text_embeddings[valid] @ img.T) / self.temperature  # [N, N]
+        attn = torch.softmax(sims, dim=1)  # each query's mass over images [N,N]
+        # retrieved mass per group, averaged over queries
+        masses = []
+        for g in groups:
+            gmask = (lab == g).float()  # [N]
+            masses.append((attn * gmask.unsqueeze(0)).sum(dim=1).mean())
+        retrieved = torch.stack(masses)  # [K]
+        retrieved = retrieved / retrieved.sum().clamp(min=1e-8)
+        # squared deviation from population proportion
+        penalty = ((retrieved - pop) ** 2).sum()
+        return penalty
+
+
 class FairnessAwareLoss(nn.Module):
     """
     Combined training loss for FairCLIP.
@@ -204,6 +245,7 @@ class FairnessAwareLoss(nn.Module):
         self,
         lambda_fair_image: float = 0.1,
         lambda_fair_text: float = 0.1,
+        lambda_retrieval: float = 0.0,
     ):
         """
         Args:
@@ -221,6 +263,8 @@ class FairnessAwareLoss(nn.Module):
         # Sub-components
         self.infonce = InfoNCELoss()
         self.group_variance = GroupVariancePenalty()
+        self.lambda_retrieval = lambda_retrieval
+        self.retrieval_skew = RetrievalSkewPenalty()
 
         log.info(
             f"FairnessAwareLoss initialized: "
@@ -265,10 +309,13 @@ class FairnessAwareLoss(nn.Module):
         loss_fair_txt = self.group_variance(text_embeddings, demographic_labels)
 
         # Combine: weighted sum
+        loss_retrieval = (self.retrieval_skew(image_embeddings, text_embeddings, demographic_labels)
+                          if self.lambda_retrieval > 0 else torch.tensor(0.0, device=image_embeddings.device))
         total_loss = (
             loss_clip
             + self.lambda_fair_image * loss_fair_img
             + self.lambda_fair_text * loss_fair_txt
+            + self.lambda_retrieval * loss_retrieval
         )
 
         # Return individual components for logging and monitoring
@@ -276,6 +323,7 @@ class FairnessAwareLoss(nn.Module):
             "infonce": loss_clip.item(),
             "fairness_image": loss_fair_img.item(),
             "fairness_text": loss_fair_txt.item(),
+            "retrieval_skew": loss_retrieval.item(),
             "total": total_loss.item(),
         }
 

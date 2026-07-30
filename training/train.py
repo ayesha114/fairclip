@@ -106,6 +106,8 @@ def parse_args():
     parser.add_argument("--batch_size", type=int,   default=64)
     parser.add_argument("--lambda_fair",type=float, default=0.1,
                         help="Fairness loss weight (λ)")
+    parser.add_argument("--lambda_retrieval", type=float, default=0.0,
+                        help="Retrieval-skew loss weight")
     parser.add_argument("--n_bias_dirs",type=int,   default=5,
                         help="Number of PCA bias directions")
     parser.add_argument("--tau_base",   type=float, default=0.07,
@@ -456,6 +458,7 @@ def main():
         n_bias_directions=args.n_bias_dirs,
         lambda_fair_image=args.lambda_fair,
         lambda_fair_text=args.lambda_fair,
+        lambda_retrieval=args.lambda_retrieval,
         tau_base=args.tau_base,
         alpha_temperature=args.alpha_temp,
     )
