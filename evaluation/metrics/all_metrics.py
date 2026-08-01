@@ -371,6 +371,65 @@ def compute_rbs(image_embeddings, group_labels):
     return float(sum(deviations) / len(deviations))
 
 # =============================================================================
+
+def compute_dpg_occupation(image_embs, occ_text_embs, group_labels):
+    """
+    Occupation-based Demographic Parity Gap (proposal + notes line 82):
+    For each occupation/probe c, predict whether each image matches it (argmax
+    over probes), then measure the gap in that prediction rate across groups.
+    DPG = mean_c [ max_g P(pred=c | g) - min_g P(pred=c | g) ].
+    Fair model => same occupation-prediction rate across demographics => low DPG.
+    """
+    groups = [g for g in group_labels.unique() if g.item() != -1]
+    if len(groups) < 2 or occ_text_embs is None:
+        return 0.0
+    sim = image_embs.float() @ occ_text_embs.float().T   # [N, n_probes]
+    pred = sim.argmax(dim=1)                              # predicted probe per image
+    n_probes = occ_text_embs.shape[0]
+    gaps = []
+    for c in range(n_probes):
+        rates = []
+        for g in groups:
+            mask = group_labels == g
+            if mask.sum() == 0:
+                continue
+            rates.append((pred[mask] == c).float().mean().item())
+        if len(rates) >= 2:
+            gaps.append(max(rates) - min(rates))
+    return float(sum(gaps) / len(gaps)) if gaps else 0.0
+
+
+def compute_eod_occupation(image_embs, occ_text_embs, group_labels):
+    """
+    Occupation-based Equalized Odds Difference.
+    For each probe c: TPR = P(pred=c | truly-nearest c), FPR = P(pred=c | not).
+    Since probes have no ground-truth per image, we use the top-1 assignment as
+    the reference and measure TPR/FPR-style gaps across groups on the predicted
+    probe distribution. Reports mean over probes of (TPR-gap + FPR-gap).
+    """
+    groups = [g for g in group_labels.unique() if g.item() != -1]
+    if len(groups) < 2 or occ_text_embs is None:
+        return 0.0
+    sim = image_embs.float() @ occ_text_embs.float().T
+    pred = sim.argmax(dim=1)
+    n_probes = occ_text_embs.shape[0]
+    eods = []
+    for c in range(n_probes):
+        tprs, fprs = [], []
+        for g in groups:
+            mask = group_labels == g
+            if mask.sum() == 0:
+                continue
+            gp = pred[mask]
+            # among this group: rate predicted as c (analog of positive rate)
+            pos_rate = (gp == c).float().mean().item()
+            neg_rate = (gp != c).float().mean().item()
+            tprs.append(pos_rate); fprs.append(neg_rate)
+        if len(tprs) >= 2:
+            eods.append((max(tprs) - min(tprs)) + (max(fprs) - min(fprs)))
+    return float(sum(eods) / len(eods)) if eods else 0.0
+
+
 # Master function: compute ALL metrics
 # =============================================================================
 
@@ -418,12 +477,12 @@ def compute_all_metrics(
         results["convergence_epoch"] = compute_convergence_speed(accuracy_history)
 
     # --- Fairness metrics ---
-    results["dpg"] = round(compute_dpg_full(top1_pred, valid_labels), 4)
+    results["dpg"] = round(compute_dpg_occupation(valid_img, _occ_text_embs, valid_labels), 4)
     
     # Representation Bias Score — directly measures embedding-space bias
     # This is what PCA/SVD (Step IV) and bias removal (Step VIII) minimize
     results["rbs"] = round(compute_rbs(valid_img, valid_labels), 4)
-    results["eod"] = round(compute_eod_full(top1_pred, clipped_labels, valid_labels), 4)
+    results["eod"] = round(compute_eod_occupation(valid_img, _occ_text_embs, valid_labels), 4)
 
     # --- MaxSkew and NDKL (image-to-image retrieval fairness) ---
     log.info("Computing MaxSkew (image-to-image retrieval)...")
