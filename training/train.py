@@ -472,7 +472,9 @@ def main():
         model._bias_subspace_fitted = True  # skip fitting requirement
         import torch as _t
         d = model.get_embedding_dim()
-        model.bias_remover.set_bias_subspace(_t.zeros(d,1), _t.zeros(d,1))
+        _pl = _t.randn(d,1); _pl = _pl / _pl.norm()
+        model.bias_remover.set_bias_subspace(_pl.clone(), _pl.clone())
+        model.backbone.clip_model = model.backbone.clip_model.float()  # match fit_bias_subspace: ensure float32 for stability
     else:
         fit_bias_subspace(model, train_ds, args)
 
