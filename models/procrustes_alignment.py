@@ -131,7 +131,7 @@ class ProcrustesAligner:
         # M has shape [k, k]
         # M[i,j] = dot product of reference direction i with source direction j
         # High M[i,j] means reference direction i is similar to source direction j
-        M = reference.T.float() @ source.float()  # [k, k]
+        M = source.T.float() @ reference.float()  # [k, k] (source->reference)
 
         # Step 2: SVD decomposition of M
         # M = U * diag(S) * V^T
@@ -142,8 +142,7 @@ class ProcrustesAligner:
         # Step 3: Compute rotation matrix R = V * U^T
         # This is the Kabsch algorithm step
         # R is guaranteed to be orthogonal (R^T R = I)
-        V = Vt.T
-        R = V @ U.T  # [k, k]
+        R = U @ Vt  # [k, k] Kabsch: source @ R aligns to reference
 
         # Handle reflection: if det(R) = -1, we have a reflection, not a rotation
         # We want a pure rotation, so flip the sign if needed
@@ -153,9 +152,9 @@ class ProcrustesAligner:
                 f"Procrustes found reflection (det={det_R:.4f}), "
                 f"correcting to pure rotation"
             )
-            # Flip the sign of the last column of V
-            V[:, -1] *= -1
-            R = V @ U.T
+            # Flip sign of last column of U for pure rotation
+            U[:, -1] *= -1
+            R = U @ Vt
             det_R = np.linalg.det(R)
             log.info(f"Corrected det(R) = {det_R:.4f}")
 
