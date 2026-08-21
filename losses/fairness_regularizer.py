@@ -199,7 +199,13 @@ class RetrievalSkewPenalty(nn.Module):
         super().__init__()
         self.temperature = temperature
 
+    def set_neutral_queries(self, neutral_embs):
+        """Cache precomputed neutral-query embeddings [Q, D] (unit-normalized)."""
+        self.neutral_embs = neutral_embs
+
     def forward(self, image_embeddings, text_embeddings, labels):
+        # Use NEUTRAL queries retrieving over the BATCH images (matches eval MaxSkew),
+        # NOT in-batch text-image pairs (which are ~balanced -> zero penalty).
         valid = labels != -1
         if valid.sum() == 0:
             return torch.tensor(0.0, device=image_embeddings.device)
@@ -208,20 +214,25 @@ class RetrievalSkewPenalty(nn.Module):
         groups = lab.unique()
         if len(groups) < 2:
             return torch.tensor(0.0, device=image_embeddings.device)
-        # population proportion per group
-        pop = torch.stack([(lab == g).float().mean() for g in groups])  # [K]
-        # soft retrieval distribution: for each text query -> over images
-        sims = (text_embeddings[valid] @ img.T) / self.temperature  # [N, N]
-        attn = torch.softmax(sims, dim=1)  # each query's mass over images [N,N]
-        # retrieved mass per group, averaged over queries
-        masses = []
-        for g in groups:
-            gmask = (lab == g).float()  # [N]
-            masses.append((attn * gmask.unsqueeze(0)).sum(dim=1).mean())
-        retrieved = torch.stack(masses)  # [K]
-        retrieved = retrieved / retrieved.sum().clamp(min=1e-8)
-        # squared deviation from population proportion
-        penalty = ((retrieved - pop) ** 2).sum()
+        neu = getattr(self, "neutral_embs", None)
+        if neu is None:
+            return torch.tensor(0.0, device=image_embeddings.device)
+        neu = neu.to(img.device).float()
+        pop = torch.stack([(lab == g).float().mean() for g in groups])   # [K]
+        group_masks = torch.stack([(lab == g).float() for g in groups], dim=0)  # [K, N]
+        # Sharpened retrieval: emphasize TOP images per query (differentiable proxy for top-k)
+        # Low softmax temperature -> mass concentrates on top matches (like top-k retrieval).
+        sims = (neu @ img.T)                                # [Q, N] raw cosine
+        sharp_t = 0.01                                     # sharp -> approximates top-k selection
+        attn = torch.softmax(sims / sharp_t, dim=1)        # [Q, N] near-top-k mass
+        per_query = attn @ group_masks.T                   # [Q, K] retrieved group proportion
+        per_query = per_query / per_query.sum(dim=1, keepdim=True).clamp(min=1e-8)
+        # Skew per group per query: log(retrieved / desired). Worst (max) over groups = MaxSkew.
+        eps = 1e-6
+        skew = (per_query + eps).log() - (pop + eps).log().unsqueeze(0)   # [Q, K] signed skew
+        per_query_maxskew = skew.max(dim=1).values          # [Q] worst-group over-retrieval
+        # Penalize mean worst-skew across queries (directly minimizes MaxSkew)
+        penalty = per_query_maxskew.clamp(min=0).mean()
         return penalty
 
 

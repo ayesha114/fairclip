@@ -196,6 +196,17 @@ class FairCLIP(nn.Module):
         self.bias_remover.set_bias_subspace(img_dirs, aligned_txt_dirs)
 
         self._bias_subspace_fitted = True
+        # Wire neutral queries into retrieval-skew loss (training-time MaxSkew)
+        try:
+            from evaluation.metrics.all_metrics import ZHANG_NEUTRAL_QUERIES
+            with torch.no_grad():
+                _neu = self.backbone.encode_text(ZHANG_NEUTRAL_QUERIES)
+                _neu = _neu / _neu.norm(dim=-1, keepdim=True)
+            if hasattr(self.loss_fn, "retrieval_skew"):
+                self.loss_fn.retrieval_skew.set_neutral_queries(_neu.detach())
+                log.info(f"Retrieval-skew loss wired with {_neu.shape[0]} neutral queries")
+        except Exception as _e:
+            log.warning(f"Could not wire neutral queries: {_e}")
         log.info("Bias subspace fitted and ready for training")
 
     # =========================================================================
@@ -355,7 +366,7 @@ class FairCLIP(nn.Module):
             self.procrustes.rotation_matrix = checkpoint["procrustes_rotation"]
             self._bias_subspace_fitted = checkpoint["bias_fitted"]
 
-        if self._bias_subspace_fitted:
+        if self._bias_subspace_fitted and self.bias_discoverer.image_bias_directions is not None:
             self.bias_remover.set_bias_subspace(
                 self.bias_discoverer.image_bias_directions,
                 self.bias_discoverer.text_bias_directions,
