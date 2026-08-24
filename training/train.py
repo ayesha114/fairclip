@@ -389,6 +389,7 @@ def train_one_epoch(
                 f"InfoNCE: {info['infonce']:.4f} | "
                 f"Fair_img: {info['fairness_image']:.4f} | "
                 f"Fair_txt: {info['fairness_text']:.4f} | "
+                f"Retr: {info.get('retrieval_skew',0):.4f} | "
                 f"τ: {info['temperature']:.4f} | "
                 f"Time: {elapsed:.1f}s"
             )
@@ -592,7 +593,7 @@ def main():
 
         # Refit bias subspace every 5 epochs to keep directions fresh
         # This fixes the stale bias direction problem
-        if epoch % 5 == 0:
+        if False and epoch % 5 == 0:  # refit disabled (redundant + causes H/14 hang/slowness)
             log.info(f"Refitting bias subspace at epoch {epoch}...")
             fit_bias_subspace(model, train_ds, args)
 
