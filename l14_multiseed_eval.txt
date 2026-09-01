@@ -1,0 +1,42 @@
+=== L/14 gender seed123 ===
+07:37:34 [INFO] Computing MaxSkew (image-to-image retrieval)...
+07:37:34 [INFO]   Accuracy    : 0.9790
+07:37:34 [INFO]   DPG         : 0.9586  (↓ fairer)
+07:37:34 [INFO]   EOD         : 1.0000  (↓ fairer)
+07:37:34 [INFO]   MaxSkew@5   : 0.5882  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg  eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== L/14 age seed123 ===
+07:45:22 [INFO] Computing MaxSkew (image-to-image retrieval)...
+07:45:22 [INFO]   Accuracy    : 0.5768
+07:45:22 [INFO]   DPG         : 0.6278  (↓ fairer)
+07:45:22 [INFO]   EOD         : 0.8314  (↓ fairer)
+07:45:22 [INFO]   MaxSkew@5   : 1.8026  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== L/14 race seed123 ===
+07:53:08 [INFO] Computing MaxSkew (image-to-image retrieval)...
+07:53:08 [INFO]   Accuracy    : 0.7672
+07:53:08 [INFO]   DPG         : 0.7646  (↓ fairer)
+07:53:08 [INFO]   EOD         : 0.8901  (↓ fairer)
+07:53:08 [INFO]   MaxSkew@5   : 1.9575  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== L/14 gender seed456 ===
+08:00:47 [INFO] Computing MaxSkew (image-to-image retrieval)...
+08:00:47 [INFO]   Accuracy    : 0.9793
+08:00:47 [INFO]   DPG         : 0.9592  (↓ fairer)
+08:00:47 [INFO]   EOD         : 1.0000  (↓ fairer)
+08:00:47 [INFO]   MaxSkew@5   : 0.5578  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg  eod  rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== L/14 age seed456 ===
+08:08:36 [INFO] Computing MaxSkew (image-to-image retrieval)...
+08:08:36 [INFO]   Accuracy    : 0.5672
+08:08:36 [INFO]   DPG         : 0.6263  (↓ fairer)
+08:08:36 [INFO]   EOD         : 0.8329  (↓ fairer)
+08:08:36 [INFO]   MaxSkew@5   : 1.8791  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== L/14 race seed456 ===
+08:16:17 [INFO] Computing MaxSkew (image-to-image retrieval)...
+08:16:17 [INFO]   Accuracy    : 0.7669
+08:16:17 [INFO]   DPG         : 0.7647  (↓ fairer)
+08:16:17 [INFO]   EOD         : 0.8904  (↓ fairer)
+08:16:17 [INFO]   MaxSkew@5   : 1.9607  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10

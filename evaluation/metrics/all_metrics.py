@@ -597,8 +597,8 @@ def maxskew_ndkl_textquery(occ_text_embs, image_embs, group_labels,
         skews = []
         for g in unique:
             p_ret = max((labels_k == g).sum().item() / ks, 1.0 / ks)
-            skews.append(abs(np.log(p_ret) - np.log(desired[g.item()])))
-        ms_list.append(max(skews))
+            skews.append(np.log(p_ret) - np.log(desired[g.item()]))
+        ms_list.append(max(skews))  # Geyik: max SIGNED skew (most over-represented), not abs
 
         # NDKL: rank-discounted KL of cumulative dist vs desired
         kn = min(k_ndkl, sim.shape[1])
@@ -649,8 +649,8 @@ def maxskew_ndkl_zhang(neutral_text_embs, image_embs, group_labels,
         skews = []
         for g in unique:
             p_ret = max((labels_k == g).sum().item() / ks, 1.0 / ks)
-            skews.append(abs(np.log(p_ret) - np.log(desired[g.item()])))
-        ms_list.append(max(skews))
+            skews.append(np.log(p_ret) - np.log(desired[g.item()]))
+        ms_list.append(max(skews))  # Geyik: max SIGNED skew (most over-represented), not abs
         kn = min(k_ndkl, N)
         discount = np.array([1.0 / np.log2(i + 2) for i in range(kn)])
         Z = discount.sum()

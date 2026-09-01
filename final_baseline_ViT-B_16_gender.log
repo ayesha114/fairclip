@@ -1,0 +1,57 @@
+08:43:38 [INFO] ============================================================
+08:43:38 [INFO] FairCLIP Complete Evaluation
+08:43:38 [INFO]   Backbone : ViT-B/16
+08:43:38 [INFO]   Baseline : True
+08:43:38 [INFO]   Attribute: gender
+08:43:38 [INFO] ============================================================
+08:43:38 [INFO] ============================================================
+08:43:38 [INFO] Initializing FairCLIP
+08:43:38 [INFO]   Backbone: ViT-B/16
+08:43:38 [INFO]   Bias directions: 5
+08:43:38 [INFO]   Lambda fair: img=0.1, txt=0.1
+08:43:38 [INFO]   Temperature: base=0.07, alpha=0.5
+08:43:38 [INFO] ============================================================
+08:43:38 [INFO] Loading CLIP backbone: ViT-B/16
+08:43:38 [INFO] Embedding dimension: 512
+08:43:38 [INFO] Device: cuda
+08:43:40 [INFO] Loaded OpenAI CLIP successfully
+08:43:40 [INFO] Backbone frozen — CLIP weights will not be updated
+08:43:40 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+08:43:40 [INFO] FairnessAwareLoss initialized: λ_img=0.1, λ_txt=0.1
+08:43:40 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+08:43:40 [INFO] 
+=======================================================
+08:43:40 [INFO] Attribute: GENDER | Backbone: ViT-B/16
+08:43:40 [INFO] =======================================================
+08:43:40 [INFO] Loaded manifest fairface.csv: 97698 rows
+08:43:40 [INFO] Filtered to split='val': 10954 rows
+08:43:40 [INFO] Dataset: fairface
+08:43:40 [INFO] Samples: 10954
+08:44:19 [INFO] Valid samples: 10954/10954
+08:44:19 [INFO] Computing MaxSkew (image-to-image retrieval)...
+08:44:19 [INFO]   Balanced eval: 2 groups × 200 samples = 400 total
+08:44:19 [INFO] Computing ABLE...
+08:44:19 [INFO] Computing Recall@K...
+08:44:19 [INFO]   Accuracy    : 0.9309
+08:44:19 [INFO]   F1-Score    : 0.9642
+08:44:19 [INFO]   Precision   : 1.0000
+08:44:19 [INFO]   Recall      : 0.9309
+08:44:19 [INFO]   DPG         : 0.0238  (↓ fairer)
+08:44:19 [INFO]   RBS         : 0.0170  (↓ fairer — embedding bias)
+08:44:19 [INFO]   EOD         : 0.0475  (↓ fairer)
+08:44:19 [INFO]   MaxSkew@5   : 1.2727  (↓ fairer)
+08:44:19 [INFO]   NDKL        : 0.3542  (↓ fairer)
+08:44:19 [INFO]   ABLE        : 43.0600  (↑ better)
+08:44:19 [INFO]   TR@1        : 100.00%
+08:44:19 [INFO]   TR@5        : 100.00%
+08:44:19 [INFO]   IR@1        : 100.00%
+08:44:19 [INFO]   IR@5        : 100.00%
+08:44:19 [INFO] 
+Facet Bias Score (all attributes): 1.2727  (↓ better)
+08:44:19 [INFO] 
+Saved: results/tables/eval_Baseline_CLIP_ViT-B_16_gender.csv
+08:44:19 [INFO] 
+                method backbone attribute  accuracy  precision  recall     f1    dpg    eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+Baseline_CLIP_ViT-B_16 ViT-B/16    gender    0.9309        1.0  0.9309 0.9642 0.0238 0.0475 0.017            1.2727     1.2727 0.3542 43.06        0.9309      1.2727 100.0 100.0  100.0 100.0 100.0  100.0
+08:44:19 [INFO] 
+Evaluation complete.

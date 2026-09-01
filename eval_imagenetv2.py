@@ -20,19 +20,41 @@ def main():
     args = ap.parse_args()
     dev = "cuda" if torch.cuda.is_available() else "cpu"
 
-    m = FairCLIP(model_name=args.backbone, device=dev)
+    Bi = Bt = None
     if not args.baseline and args.model_path:
-        m.load(args.model_path)
+        _t = FairCLIP(model_name=args.backbone, device=dev)
+        _t.load(args.model_path)
+        _bi = _t.bias_discoverer.image_bias_directions
+        _bt = _t.bias_discoverer.text_bias_directions
+        if _bi is not None: Bi = _bi.detach().float().to(dev)
+        if _bt is not None: Bt = _bt.detach().float().to(dev)
+        del _t; torch.cuda.empty_cache()
+    m = FairCLIP(model_name=args.backbone, device=dev)   # FROZEN baseline encoder
     m.eval()
+
+    def _proj(e, B):
+        if B is None: return e
+        d = e - (e @ B) @ B.T
+        return d / d.norm(dim=-1, keepdim=True).clamp(min=1e-8)
 
     # ImageNet class names for zero-shot prompts
     from imagenet_classes import IMAGENET_CLASSES
     prompts = [f"a photo of a {c}" for c in IMAGENET_CLASSES]
     with torch.no_grad():
-        txt = m.encode_text(prompts)  # [1000, D]
+        _cb = 50 if args.backbone in ("ViT-L/14","ViT-H/14") else 250
+        _parts = []
+        for _i in range(0, len(prompts), _cb):
+            _e = m.encode_text(prompts[_i:_i+_cb])
+            _parts.append(_e.float().cpu())
+            torch.cuda.empty_cache()
+        txt = torch.cat(_parts).to(dev)
         txt = txt / txt.norm(dim=-1, keepdim=True)
+        txt = _proj(txt.float(), Bt)
+        torch.cuda.empty_cache()
 
-    _, preprocess = clip_lib.load(args.backbone, device=dev)
+    preprocess = getattr(m.backbone, "preprocess", None)
+    if preprocess is None:
+        _, preprocess = clip_lib.load(args.backbone, device=dev)
 
     top1 = top5 = total = 0
     class_dirs = sorted(os.listdir(IMAGENETV2_DIR), key=lambda x: int(x))
@@ -47,6 +69,7 @@ def main():
                     continue
                 feat = m.encode_images(image)
                 feat = feat / feat.norm(dim=-1, keepdim=True)
+                feat = _proj(feat.float(), Bi)
                 sims = (feat @ txt.T).squeeze(0)
                 top5_pred = sims.topk(5).indices.tolist()
                 true = int(d)

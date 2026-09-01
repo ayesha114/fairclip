@@ -1,0 +1,9 @@
+nohup: ignoring input
+SKIP ViT-B/16 race
+SKIP ViT-B/16 age
+SKIP ViT-L/14 race
+SKIP ViT-L/14 age
+SKIP ViT-H/14 race
+TRAIN ViT-H/14 age Sun Aug 23 10:12:09 AM PKT 2026
+DONE ViT-H/14 age Sun Aug 23 10:15:15 PM PKT 2026
+ALL DONE Sun Aug 23 10:15:15 PM PKT 2026

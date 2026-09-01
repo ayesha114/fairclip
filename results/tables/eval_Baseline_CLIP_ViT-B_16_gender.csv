@@ -1,2 +1,2 @@
 method,backbone,attribute,accuracy,precision,recall,f1,dpg,eod,rbs,facet_bias_score,maxskew_5,ndkl,able,vl_alignment,bias_level,TR@1,TR@5,TR@10,IR@1,IR@5,IR@10
-Baseline_CLIP_ViT-B_16,ViT-B/16,gender,0.9309,1.0,0.9309,0.9642,0.0662,0.0662,0.017,1.2727,1.2727,0.3542,43.06,0.9309,1.2727,100.0,100.0,100.0,100.0,100.0,100.0
+Baseline_CLIP_ViT-B_16,ViT-B/16,gender,0.9309,1.0,0.9309,0.9642,0.0238,0.0475,0.017,1.2727,1.2727,0.3542,43.06,0.9309,1.2727,100.0,100.0,100.0,100.0,100.0,100.0

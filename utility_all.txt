@@ -1,0 +1,117 @@
+=== ViT-B/32 gender ===
+19:14:33 [INFO] Computing ABLE...
+19:14:33 [INFO]   Accuracy    : 0.9734
+19:14:33 [INFO]   F1-Score    : 0.9865
+19:14:33 [INFO]   ABLE        : 89.7500  (↑ better)
+19:14:33 [INFO]   TR@5        : 100.00%
+19:14:33 [INFO]   IR@5        : 100.00%
+Saved: results/tables/eval_FairCLIP_ViT-B_32_gender.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-B/32 age ===
+19:15:10 [INFO] Computing ABLE...
+19:15:10 [INFO]   Accuracy    : 0.4743
+19:15:10 [INFO]   F1-Score    : 0.6434
+19:15:10 [INFO]   ABLE        : 41.1800  (↑ better)
+19:15:10 [INFO]   TR@5        : 66.67%
+19:15:10 [INFO]   IR@5        : 55.56%
+Saved: results/tables/eval_FairCLIP_ViT-B_32_age.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg   eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-B/32 race ===
+19:15:47 [INFO] Computing ABLE...
+19:15:47 [INFO]   Accuracy    : 0.7257
+19:15:47 [INFO]   F1-Score    : 0.8410
+19:15:47 [INFO]   ABLE        : 42.0800  (↑ better)
+19:15:47 [INFO]   TR@5        : 85.71%
+19:15:47 [INFO]   IR@5        : 71.43%
+Saved: results/tables/eval_FairCLIP_ViT-B_32_race.csv
+           method backbone attribute  accuracy  precision  recall    f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-B/16 gender ===
+19:17:58 [INFO] Computing ABLE...
+19:17:58 [INFO]   Accuracy    : 0.9793
+19:17:58 [INFO]   F1-Score    : 0.9895
+19:17:58 [INFO]   ABLE        : 82.4500  (↑ better)
+19:17:58 [INFO]   TR@5        : 100.00%
+19:17:58 [INFO]   IR@5        : 100.00%
+Saved: results/tables/eval_FairCLIP_ViT-B_16_gender.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5  ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-B/16 age ===
+19:20:09 [INFO] Computing ABLE...
+19:20:09 [INFO]   Accuracy    : 0.5698
+19:20:09 [INFO]   F1-Score    : 0.7260
+19:20:09 [INFO]   ABLE        : 27.5800  (↑ better)
+19:20:09 [INFO]   TR@5        : 55.56%
+19:20:09 [INFO]   IR@5        : 55.56%
+Saved: results/tables/eval_FairCLIP_ViT-B_16_age.csv
+           method backbone attribute  accuracy  precision  recall    f1   dpg    eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-B/16 race ===
+19:22:20 [INFO] Computing ABLE...
+19:22:20 [INFO]   Accuracy    : 0.7584
+19:22:20 [INFO]   F1-Score    : 0.8626
+19:22:20 [INFO]   ABLE        : 41.3100  (↑ better)
+19:22:20 [INFO]   TR@5        : 42.86%
+19:22:20 [INFO]   IR@5        : 57.14%
+Saved: results/tables/eval_FairCLIP_ViT-B_16_race.csv
+           method backbone attribute  accuracy  precision  recall     f1  dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-L/14 gender ===
+19:31:49 [INFO] Computing ABLE...
+19:31:49 [INFO]   Accuracy    : 0.9775
+19:31:49 [INFO]   F1-Score    : 0.9886
+19:31:49 [INFO]   ABLE        : 75.4200  (↑ better)
+19:31:49 [INFO]   TR@5        : 100.00%
+19:31:49 [INFO]   IR@5        : 100.00%
+Saved: results/tables/eval_FairCLIP_ViT-L_14_gender.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5  ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-L/14 age ===
+19:41:16 [INFO] Computing ABLE...
+19:41:16 [INFO]   Accuracy    : 0.4228
+19:41:16 [INFO]   F1-Score    : 0.5943
+19:41:16 [INFO]   ABLE        : 33.2600  (↑ better)
+19:41:16 [INFO]   TR@5        : 66.67%
+19:41:16 [INFO]   IR@5        : 44.44%
+Saved: results/tables/eval_FairCLIP_ViT-L_14_age.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg   eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-L/14 race ===
+19:50:41 [INFO] Computing ABLE...
+19:50:41 [INFO]   Accuracy    : 0.7692
+19:50:41 [INFO]   F1-Score    : 0.8696
+19:50:41 [INFO]   ABLE        : 44.7700  (↑ better)
+19:50:41 [INFO]   TR@5        : 85.71%
+19:50:41 [INFO]   IR@5        : 85.71%
+Saved: results/tables/eval_FairCLIP_ViT-L_14_race.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-H/14 gender ===
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+19:50:44 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+19:50:50 [INFO] Gradient checkpointing ENABLED (memory saving)
+20:17:31 [INFO] Computing ABLE...
+20:17:31 [INFO]   Accuracy    : 0.9770
+20:17:31 [INFO]   F1-Score    : 0.9884
+20:17:31 [INFO]   ABLE        : 78.7400  (↑ better)
+20:17:31 [INFO]   TR@5        : 100.00%
+20:17:31 [INFO]   IR@5        : 100.00%
+Saved: results/tables/eval_FairCLIP_ViT-H_14_gender.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5  ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-H/14 age ===
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+20:17:34 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+20:17:41 [INFO] Gradient checkpointing ENABLED (memory saving)
+20:44:20 [INFO] Computing ABLE...
+20:44:20 [INFO]   Accuracy    : 0.5856
+20:44:20 [INFO]   F1-Score    : 0.7387
+20:44:20 [INFO]   ABLE        : 6.4300  (↑ better)
+20:44:20 [INFO]   TR@5        : 77.78%
+20:44:20 [INFO]   IR@5        : 66.67%
+Saved: results/tables/eval_FairCLIP_ViT-H_14_age.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod   rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== ViT-H/14 race ===
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+20:44:24 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+20:44:30 [INFO] Gradient checkpointing ENABLED (memory saving)
+21:11:09 [INFO] Computing ABLE...
+21:11:09 [INFO]   Accuracy    : 0.7542
+21:11:09 [INFO]   F1-Score    : 0.8598
+21:11:09 [INFO]   ABLE        : 42.1500  (↑ better)
+21:11:09 [INFO]   TR@5        : 71.43%
+21:11:09 [INFO]   IR@5        : 85.71%
+Saved: results/tables/eval_FairCLIP_ViT-H_14_race.csv
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10

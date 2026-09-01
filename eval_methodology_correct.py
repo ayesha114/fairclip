@@ -1,0 +1,91 @@
+"""
+Correct methodology evaluation (Step IV + VIII, done at the RIGHT time).
+Fit bias subspace on TRAINED model's train embeddings once, apply once to val.
+No iteration, no leakage.
+"""
+import argparse, torch
+from omegaconf import OmegaConf
+from torch.utils.data import DataLoader
+from models.fairclip import FairCLIP
+from data.datasets import FaceDataset, collate_dict
+from evaluation.metrics.all_metrics import (
+    compute_dpg_occupation, compute_eod_occupation, compute_rbs, OCCUPATION_PROMPTS)
+
+
+def encode_split(m, cfg, attr, split, dev, bb, cap=None):
+    ds = FaceDataset(cfg.fairface.manifest, split=split, train=False)
+    ebs = 16 if bb in ("ViT-L/14", "ViT-H/14") else 64
+    ld = DataLoader(ds, batch_size=ebs, shuffle=False, collate_fn=collate_dict, num_workers=2)
+    E, L = [], []
+    with torch.no_grad():
+        for b in ld:
+            E.append(m.backbone.encode_images(b["image"].to(dev)).cpu())
+            L.append(b[attr].clone().detach())
+            if cap and sum(x.shape[0] for x in E) >= cap:
+                break
+    E = torch.cat(E).float(); L = torch.cat(L)
+    if cap:
+        E, L = E[:cap], L[:cap]
+    E = E / E.norm(dim=-1, keepdim=True)
+    return E, L
+
+
+def fit_subspace(embs, labels, k):
+    groups = sorted([g.item() for g in labels.unique() if g.item() != -1])
+    centroids = torch.stack([embs[labels == g].mean(0) for g in groups])
+    centered = centroids - centroids.mean(0, keepdim=True)
+    U, S, Vt = torch.linalg.svd(centered, full_matrices=False)
+    # cap directions at (num_groups - 1): the max meaningful rank of the
+    # centroid subspace. Using more over-projects and collapses the metric.
+    k_eff = min(k, len(groups) - 1)
+    return Vt.T[:, :k_eff]
+
+
+def project_out(embs, B):
+    d = embs - (embs @ B) @ B.T
+    return d / d.norm(dim=-1, keepdim=True).clamp(min=1e-8)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--attribute", required=True)
+    ap.add_argument("--backbone", default="ViT-B/32")
+    ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--n_dirs", type=int, default=5)
+    ap.add_argument("--baseline", action="store_true")
+    ap.add_argument("--train_cap", type=int, default=20000)
+    ap.add_argument("--model_path", default=None)
+    a = ap.parse_args()
+
+    cfg = OmegaConf.load("configs/datasets/local_paths.yaml")
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    bb = a.backbone.replace("/", "_")
+
+    m = FairCLIP(model_name=a.backbone, device=dev)
+    if not a.baseline:
+        ck = a.model_path if a.model_path else f"results/checkpoints/fairface/{bb}/{a.attribute}/seed{a.seed}/best_model.pt"
+        m.load(ck)
+    m.eval()
+
+    va, val = encode_split(m, cfg, a.attribute, "val", dev, a.backbone)
+    occ = m.backbone.encode_text(OCCUPATION_PROMPTS).cpu().float()
+    occ = occ / occ.norm(dim=-1, keepdim=True)
+
+    if a.baseline:
+        img, occ_use = va, occ
+        tag = "BASELINE"
+    else:
+        tr, trl = encode_split(m, cfg, a.attribute, "train", dev, a.backbone, cap=a.train_cap)
+        B = fit_subspace(tr, trl, a.n_dirs)
+        img = project_out(va, B)
+        occ_use = project_out(occ, B)
+        tag = "FairCLIP(1fit,1apply)"
+
+    dpg = compute_dpg_occupation(img, occ_use, val)
+    eod = compute_eod_occupation(img, occ_use, val)
+    rbs = compute_rbs(img, val)
+    print(f"{tag} {a.backbone} {a.attribute}: DPG={dpg:.4f} EOD={eod:.4f} RBS={rbs:.2e}")
+
+
+if __name__ == "__main__":
+    main()

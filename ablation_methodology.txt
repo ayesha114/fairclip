@@ -1,0 +1,11 @@
+=== FULL FairCLIP reference ===
+FairCLIP(1fit,1apply) ViT-B/32 race: DPG=0.0112 EOD=0.0225 RBS=0.0000
+=== no_fairloss ===
+FairCLIP(1fit,1apply) ViT-B/32 race: DPG=0.0229 EOD=0.0458 RBS=0.0028
+=== no_temp ===
+FairCLIP(1fit,1apply) ViT-B/32 race: DPG=0.0124 EOD=0.0248 RBS=0.0000
+=== no_trainproj ===
+FairCLIP(1fit,1apply) ViT-B/32 race: DPG=0.0143 EOD=0.0287 RBS=0.0000
+=== no_procrustes ===
+FairCLIP(1fit,1apply) ViT-B/32 race: DPG=0.0111 EOD=0.0222 RBS=0.0000
+=== no_subspace ===

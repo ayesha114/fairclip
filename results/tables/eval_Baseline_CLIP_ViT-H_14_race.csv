@@ -1,2 +1,2 @@
 method,backbone,attribute,accuracy,precision,recall,f1,dpg,eod,rbs,facet_bias_score,maxskew_5,ndkl,able,vl_alignment,bias_level,TR@1,TR@5,TR@10,IR@1,IR@5,IR@10
-Baseline_CLIP_ViT-H_14,ViT-H/14,race,0.3074,1.0,0.3074,0.4702,0.5942,0.5942,0.053,1.3077,1.3077,0.5471,28.77,0.3074,1.3077,14.29,71.43,100.0,14.29,57.14,100.0
+Baseline_CLIP_ViT-H_14,ViT-H/14,race,0.3074,1.0,0.3074,0.4702,0.0352,0.0704,0.053,1.3077,1.3077,0.5471,28.77,0.3074,1.3077,14.29,71.43,100.0,14.29,57.14,100.0

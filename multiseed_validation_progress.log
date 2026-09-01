@@ -1,2 +1,5 @@
-START Wed Jul 29 10:54:53 AM PKT 2026
-TRAIN: ViT-L_14 gender seed123 lam=0.003 nbd=10 bs=16 Wed Jul 29 10:54:53 AM PKT 2026
+START Thu Jul 30 07:32:50 PM PKT 2026
+ABORT: another training.train process is running. Kill it first.
+DONE train: ViT-L_14 race seed456
+DONE eval:  ViT-L_14 race seed456
+ALL DONE Thu Jul 30 11:53:46 PM PKT 2026

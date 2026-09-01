@@ -1,0 +1,196 @@
+21:43:02 [INFO] ============================================================
+21:43:02 [INFO] FairCLIP Training
+21:43:02 [INFO] Attribute: age
+21:43:02 [INFO] Backbone:  ViT-H/14
+21:43:02 [INFO] Epochs:    30
+21:43:02 [INFO] Batch:     64
+21:43:02 [INFO] Lambda:    0.5
+21:43:02 [INFO] Device:    cuda
+21:43:02 [INFO] Seed:      456
+21:43:02 [INFO] ============================================================
+21:43:02 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+21:43:02 [INFO] Loaded manifest fairface.csv: 97698 rows
+21:43:02 [INFO] Filtered to split='train': 86744 rows
+21:43:02 [INFO] Loaded manifest fairface.csv: 97698 rows
+21:43:02 [INFO] Filtered to split='val': 10954 rows
+21:43:02 [INFO] Using 14 samples/group × 9 groups = 126 effective batch size
+21:43:02 [INFO]   Group 0: 1792 samples (2.1%)
+21:43:02 [INFO]   Group 1: 10408 samples (12.0%)
+21:43:02 [INFO]   Group 2: 9103 samples (10.5%)
+21:43:02 [INFO]   Group 3: 25598 samples (29.5%)
+21:43:02 [INFO]   Group 4: 19250 samples (22.2%)
+21:43:02 [INFO]   Group 5: 10744 samples (12.4%)
+21:43:02 [INFO]   Group 6: 6228 samples (7.2%)
+21:43:02 [INFO]   Group 7: 2779 samples (3.2%)
+21:43:02 [INFO]   Group 8: 842 samples (1.0%)
+21:43:02 [INFO] DemographicBalancedSampler: 9 groups, 14/group, 60 batches/epoch, effective batch size 126
+21:43:02 [INFO] Train: 86744 samples
+21:43:02 [INFO] Val:   10954 samples
+21:43:02 [INFO] ============================================================
+21:43:02 [INFO] Initializing FairCLIP
+21:43:02 [INFO]   Backbone: ViT-H/14
+21:43:02 [INFO]   Bias directions: 8
+21:43:02 [INFO]   Lambda fair: img=0.5, txt=0.5
+21:43:02 [INFO]   Temperature: base=0.07, alpha=0.5
+21:43:02 [INFO] ============================================================
+21:43:02 [INFO] Loading CLIP backbone: ViT-H/14
+21:43:02 [INFO] Embedding dimension: 1024
+21:43:02 [INFO] Device: cuda
+21:43:02 [INFO] Parsing model identifier. Schema: None, Identifier: ViT-H-14
+21:43:02 [INFO] Loaded built-in ViT-H-14 model config.
+21:43:03 [INFO] HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+21:43:03 [INFO] HTTP Request: HEAD https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K/resolve/main/open_clip_model.safetensors "HTTP/1.1 302 Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+21:43:03 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+21:43:03 [INFO] Instantiating model architecture: CLIP
+21:43:09 [INFO] Loading full pretrained weights from: /home/ayeshakalsoom/.cache/huggingface/hub/models--laion--CLIP-ViT-H-14-laion2B-s32B-b79K/snapshots/1c2b8495b28150b8a4922ee1c8edee224c284c0c/open_clip_model.safetensors
+21:43:09 [INFO] Final image preprocessing configuration set: {'size': (224, 224), 'mode': 'RGB', 'mean': (0.48145466, 0.4578275, 0.40821073), 'std': (0.26862954, 0.26130258, 0.27577711), 'interpolation': 'bicubic', 'resize_mode': 'shortest', 'fill_color': 0}
+21:43:09 [INFO] Model ViT-H-14 creation process complete.
+21:43:09 [INFO] Loaded OpenCLIP successfully
+21:43:09 [INFO] Gradient checkpointing ENABLED (memory saving)
+21:43:09 [INFO] Parsing tokenizer identifier. Schema: None, Identifier: ViT-H-14
+21:43:09 [INFO] Attempting to load config from built-in: ViT-H-14
+21:43:09 [INFO] Using default SimpleTokenizer.
+21:43:09 [INFO] Backbone frozen — CLIP weights will not be updated
+21:43:09 [INFO] BiasSubspaceDiscoverer initialized with 8 bias directions
+21:43:09 [INFO] FairnessAwareLoss initialized: λ_img=0.5, λ_txt=0.5
+21:43:09 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+21:43:09 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+21:43:09 [INFO] This runs once before training starts.
+21:43:09 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+21:48:46 [INFO]   Processed 5120 / 86744 samples
+21:54:23 [INFO]   Processed 10240 / 86744 samples
+21:59:59 [INFO]   Processed 15360 / 86744 samples
+22:05:35 [INFO]   Processed 20480 / 86744 samples
+22:11:11 [INFO]   Processed 25600 / 86744 samples
+22:16:48 [INFO]   Processed 30720 / 86744 samples
+22:22:25 [INFO]   Processed 35840 / 86744 samples
+22:28:02 [INFO]   Processed 40960 / 86744 samples
+22:33:39 [INFO]   Processed 46080 / 86744 samples
+22:39:16 [INFO]   Processed 51200 / 86744 samples
+22:44:52 [INFO]   Processed 56320 / 86744 samples
+22:50:28 [INFO]   Processed 61440 / 86744 samples
+22:56:05 [INFO]   Processed 66560 / 86744 samples
+23:01:41 [INFO]   Processed 71680 / 86744 samples
+23:07:18 [INFO]   Processed 76800 / 86744 samples
+23:12:55 [INFO]   Processed 81920 / 86744 samples
+23:18:31 [INFO]   Processed 87040 / 86744 samples
+23:24:07 [INFO]   Processed 92160 / 86744 samples
+23:29:44 [INFO]   Processed 97280 / 86744 samples
+23:35:21 [INFO]   Processed 102400 / 86744 samples
+23:40:57 [INFO]   Processed 107520 / 86744 samples
+23:46:35 [INFO]   Processed 112640 / 86744 samples
+23:52:12 [INFO]   Processed 117760 / 86744 samples
+23:57:49 [INFO]   Processed 122880 / 86744 samples
+00:03:26 [INFO]   Processed 128000 / 86744 samples
+00:09:03 [INFO]   Processed 133120 / 86744 samples
+00:14:39 [INFO]   Processed 138240 / 86744 samples
+00:20:16 [INFO]   Processed 143360 / 86744 samples
+00:25:51 [INFO]   Processed 148480 / 86744 samples
+00:31:28 [INFO]   Processed 153600 / 86744 samples
+00:37:04 [INFO]   Processed 158720 / 86744 samples
+00:42:40 [INFO]   Processed 163840 / 86744 samples
+00:48:17 [INFO]   Processed 168960 / 86744 samples
+00:53:14 [INFO] Fitting bias subspace for attribute: age
+00:53:14 [INFO] Fitting image bias subspace for attribute: age
+00:53:14 [INFO]   Input: 86744 embeddings, dim=1024
+00:53:14 [INFO]   Group 0: 1792 samples, centroid norm=0.7440
+00:53:14 [INFO]   Group 1: 10408 samples, centroid norm=0.7197
+00:53:14 [INFO]   Group 2: 9103 samples, centroid norm=0.6784
+00:53:14 [INFO]   Group 3: 25598 samples, centroid norm=0.6560
+00:53:14 [INFO]   Group 4: 19250 samples, centroid norm=0.6552
+00:53:14 [INFO]   Group 5: 10744 samples, centroid norm=0.6598
+00:53:14 [INFO]   Group 6: 6228 samples, centroid norm=0.6636
+00:53:14 [INFO]   Group 7: 2779 samples, centroid norm=0.6657
+00:53:14 [INFO]   Group 8: 842 samples, centroid norm=0.6926
+00:53:14 [INFO]   Bias direction 1: singular value=0.5825, explained variance=48.7%
+00:53:14 [INFO]   Bias direction 2: singular value=0.4923, explained variance=34.8%
+00:53:14 [INFO]   Bias direction 3: singular value=0.2556, explained variance=9.4%
+00:53:14 [INFO]   Bias direction 4: singular value=0.1906, explained variance=5.2%
+00:53:14 [INFO]   Bias direction 5: singular value=0.0904, explained variance=1.2%
+00:53:14 [INFO]   Bias direction 6: singular value=0.0590, explained variance=0.5%
+00:53:14 [INFO]   Bias direction 7: singular value=0.0299, explained variance=0.1%
+00:53:14 [INFO]   Bias direction 8: singular value=0.0109, explained variance=0.0%
+00:53:14 [INFO] Image bias subspace discovered: torch.Size([1024, 8])
+00:53:14 [INFO] Fitting text bias subspace for attribute: age
+00:53:14 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+00:53:14 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+00:53:14 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+00:53:14 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+00:53:14 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+00:53:14 [INFO]   Bias direction 1: singular value=0.4401, explained variance=37.0%
+00:53:14 [INFO]   Bias direction 2: singular value=0.3887, explained variance=28.9%
+00:53:14 [INFO]   Bias direction 3: singular value=0.3222, explained variance=19.9%
+00:53:14 [INFO]   Bias direction 4: singular value=0.2726, explained variance=14.2%
+00:53:14 [INFO] Text bias subspace discovered: torch.Size([1024, 4])
+00:53:14 [INFO] Computing Procrustes alignment...
+00:53:14 [INFO]   Reference shape: torch.Size([1024, 4])
+00:53:14 [INFO]   Source shape: torch.Size([1024, 4])
+00:53:14 [INFO] Alignment complete:
+00:53:14 [INFO]   Rotation matrix shape: torch.Size([4, 4])
+00:53:14 [INFO]   Alignment error: 1.178666 (lower is better)
+00:53:14 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+00:53:14 [INFO]   Direction 1 cosine similarity after alignment: 0.4754
+00:53:14 [INFO]   Direction 2 cosine similarity after alignment: 0.2637
+00:53:14 [INFO]   Direction 3 cosine similarity after alignment: 0.1795
+00:53:14 [INFO]   Direction 4 cosine similarity after alignment: 0.2849
+00:53:14 [INFO] Procrustes alignment quality: {'alignment_error': 1.178666353225708, 'rotation_det': 1.000000238418579, 'is_orthogonal': True}
+00:53:14 [INFO] Bias subspace set: image_dirs=torch.Size([1024, 4]), text_dirs=torch.Size([1024, 4])
+00:53:14 [INFO] Retrieval-skew loss wired with 8 neutral queries
+00:53:14 [INFO] Bias subspace fitted and ready for training
+00:53:14 [INFO] Bias subspace fitted successfully
+00:53:15 [INFO] GPU cache cleared after fitting. Free now: 3.60 GB
+00:53:15 [INFO] GPU cache cleared after fitting. Free now: 3.60 GB
+00:53:15 [INFO] GPU memory after fitting: 4.01GB used
+00:53:15 [INFO] Trainable parameters: 66,906,624 (last 2 layers only)
+00:53:16 [INFO] Loaded 50000 COCO captions for race contrastive training
+00:53:16 [INFO] Starting training...
+00:53:16 [INFO] No checkpoint found — starting fresh.
+00:53:16 [INFO] 
+Epoch 1/30
+00:56:34 [INFO] Epoch 1 | Step 50/60 | Loss: 4.6374 | InfoNCE: 4.5575 | Fair_img: 0.0541 | Fair_txt: 0.1057 | Retr: 0.0000 | τ: 0.0819 | Time: 198.8s
+01:10:57 [INFO] Epoch 1 Summary: train_loss=4.7863 | val_loss=3.8632 | lr=9.97e-06
+01:10:57 [INFO]   Temperature: mean=0.0870 min=0.0785 max=0.0981
+01:11:00 [INFO]   Checkpoint saved: latest.pt (epoch 1)
+01:11:01 [INFO]   New best model saved (epoch 1)
+01:11:01 [INFO] 
+Epoch 2/30
+01:14:20 [INFO] Epoch 2 | Step 50/60 | Loss: 4.3505 | InfoNCE: 4.1753 | Fair_img: 0.1551 | Fair_txt: 0.1953 | Retr: 0.0000 | τ: 0.0900 | Time: 198.5s
+01:28:43 [INFO] Epoch 2 Summary: train_loss=4.3827 | val_loss=3.7042 | lr=9.89e-06
+01:28:43 [INFO]   Temperature: mean=0.0931 min=0.0845 max=0.1042
+01:28:46 [INFO]   Checkpoint saved: latest.pt (epoch 2)
+01:28:49 [INFO]   New best model saved (epoch 2)
+01:28:49 [INFO] 
+Epoch 3/30
+01:32:07 [INFO] Epoch 3 | Step 50/60 | Loss: 4.2354 | InfoNCE: 4.0542 | Fair_img: 0.1624 | Fair_txt: 0.2000 | Retr: 0.0000 | τ: 0.0907 | Time: 198.2s
+01:46:30 [INFO] Epoch 3 Summary: train_loss=4.2497 | val_loss=3.6878 | lr=9.76e-06
+01:46:30 [INFO]   Temperature: mean=0.0946 min=0.0892 max=0.1063
+01:46:34 [INFO]   Checkpoint saved: latest.pt (epoch 3)
+01:46:36 [INFO]   New best model saved (epoch 3)
+01:46:36 [INFO] 
+Epoch 4/30
+01:49:54 [INFO] Epoch 4 | Step 50/60 | Loss: 4.1041 | InfoNCE: 3.9165 | Fair_img: 0.1657 | Fair_txt: 0.2096 | Retr: 0.0000 | τ: 0.0910 | Time: 198.3s
+02:04:18 [INFO] Epoch 4 Summary: train_loss=4.1277 | val_loss=3.7106 | lr=9.57e-06
+02:04:18 [INFO]   Temperature: mean=0.0958 min=0.0900 max=0.1089
+02:04:21 [INFO]   Checkpoint saved: latest.pt (epoch 4)
+02:04:21 [INFO]   No improvement for 1/3 epochs
+02:04:21 [INFO] 
+Epoch 5/30
+02:07:40 [INFO] Epoch 5 | Step 50/60 | Loss: 3.9632 | InfoNCE: 3.7722 | Fair_img: 0.1652 | Fair_txt: 0.2170 | Retr: 0.0000 | τ: 0.0910 | Time: 198.4s
+02:22:02 [INFO] Epoch 5 Summary: train_loss=3.9792 | val_loss=3.7446 | lr=9.33e-06
+02:22:02 [INFO]   Temperature: mean=0.0965 min=0.0904 max=0.1109
+02:22:06 [INFO]   Checkpoint saved: latest.pt (epoch 5)
+02:22:06 [INFO]   No improvement for 2/3 epochs
+02:22:06 [INFO] 
+Epoch 6/30
+02:25:25 [INFO] Epoch 6 | Step 50/60 | Loss: 3.7647 | InfoNCE: 3.5732 | Fair_img: 0.1581 | Fair_txt: 0.2249 | Retr: 0.0000 | τ: 0.0906 | Time: 198.4s
+02:39:47 [INFO] Epoch 6 Summary: train_loss=3.8026 | val_loss=3.7816 | lr=9.05e-06
+02:39:47 [INFO]   Temperature: mean=0.0965 min=0.0902 max=0.1115
+02:39:51 [INFO]   Checkpoint saved: latest.pt (epoch 6)
+02:39:51 [INFO]   No improvement for 3/3 epochs
+02:39:51 [INFO] Early stopping triggered at epoch 6!
+02:39:51 [INFO] Best val loss: 3.6878 (epoch 3)
+02:39:51 [INFO] 
+Training complete!
+02:39:51 [INFO] Best val loss: 3.6878
+02:39:51 [INFO] Checkpoints saved to: results/checkpoints_procfix/fairface/ViT-H_14/age/seed456

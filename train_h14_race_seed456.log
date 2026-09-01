@@ -1,0 +1,251 @@
+22:54:28 [INFO] ============================================================
+22:54:28 [INFO] FairCLIP Training
+22:54:28 [INFO] Attribute: race
+22:54:28 [INFO] Backbone:  ViT-H/14
+22:54:28 [INFO] Epochs:    30
+22:54:28 [INFO] Batch:     8
+22:54:28 [INFO] Lambda:    1.0
+22:54:28 [INFO] Device:    cuda
+22:54:28 [INFO] Seed:      456
+22:54:28 [INFO] ============================================================
+22:54:28 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+22:54:28 [INFO] Loaded manifest fairface.csv: 97698 rows
+22:54:28 [INFO] Filtered to split='train': 86744 rows
+22:54:28 [INFO] Loaded manifest fairface.csv: 97698 rows
+22:54:28 [INFO] Filtered to split='val': 10954 rows
+22:54:28 [INFO] Using 14 samples/group × 7 groups = 98 effective batch size
+22:54:28 [INFO]   Group 0: 16527 samples (19.1%)
+22:54:28 [INFO]   Group 1: 12233 samples (14.1%)
+22:54:28 [INFO]   Group 2: 13367 samples (15.4%)
+22:54:28 [INFO]   Group 3: 12287 samples (14.2%)
+22:54:28 [INFO]   Group 4: 10795 samples (12.4%)
+22:54:28 [INFO]   Group 5: 12319 samples (14.2%)
+22:54:28 [INFO]   Group 6: 9216 samples (10.6%)
+22:54:28 [INFO] DemographicBalancedSampler: 7 groups, 14/group, 658 batches/epoch, effective batch size 98
+22:54:28 [INFO] Train: 86744 samples
+22:54:28 [INFO] Val:   10954 samples
+22:54:28 [INFO] ============================================================
+22:54:28 [INFO] Initializing FairCLIP
+22:54:28 [INFO]   Backbone: ViT-H/14
+22:54:28 [INFO]   Bias directions: 5
+22:54:28 [INFO]   Lambda fair: img=1.0, txt=1.0
+22:54:28 [INFO]   Temperature: base=0.07, alpha=0.5
+22:54:28 [INFO] ============================================================
+22:54:28 [INFO] Loading CLIP backbone: ViT-H/14
+22:54:28 [INFO] Embedding dimension: 1024
+22:54:28 [INFO] Device: cuda
+22:54:28 [INFO] Parsing model identifier. Schema: None, Identifier: ViT-H-14
+22:54:28 [INFO] Loaded built-in ViT-H-14 model config.
+22:54:29 [INFO] HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+22:54:30 [INFO] HTTP Request: HEAD https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K/resolve/main/open_clip_model.safetensors "HTTP/1.1 302 Found"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+22:54:30 [WARNING] Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+22:54:30 [INFO] Instantiating model architecture: CLIP
+22:54:36 [INFO] Loading full pretrained weights from: /home/ayeshakalsoom/.cache/huggingface/hub/models--laion--CLIP-ViT-H-14-laion2B-s32B-b79K/snapshots/1c2b8495b28150b8a4922ee1c8edee224c284c0c/open_clip_model.safetensors
+22:54:36 [INFO] Final image preprocessing configuration set: {'size': (224, 224), 'mode': 'RGB', 'mean': (0.48145466, 0.4578275, 0.40821073), 'std': (0.26862954, 0.26130258, 0.27577711), 'interpolation': 'bicubic', 'resize_mode': 'shortest', 'fill_color': 0}
+22:54:36 [INFO] Model ViT-H-14 creation process complete.
+22:54:36 [INFO] Loaded OpenCLIP successfully
+22:54:36 [INFO] Gradient checkpointing ENABLED (memory saving)
+22:54:36 [INFO] Parsing tokenizer identifier. Schema: None, Identifier: ViT-H-14
+22:54:36 [INFO] Attempting to load config from built-in: ViT-H-14
+22:54:36 [INFO] Using default SimpleTokenizer.
+22:54:36 [INFO] Backbone frozen — CLIP weights will not be updated
+22:54:36 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+22:54:36 [INFO] FairnessAwareLoss initialized: λ_img=1.0, λ_txt=1.0
+22:54:36 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+22:54:36 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+22:54:36 [INFO] This runs once before training starts.
+22:54:36 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+23:00:15 [INFO]   Processed 5120 / 86744 samples
+23:05:52 [INFO]   Processed 10240 / 86744 samples
+23:11:31 [INFO]   Processed 15360 / 86744 samples
+23:17:07 [INFO]   Processed 20480 / 86744 samples
+23:22:45 [INFO]   Processed 25600 / 86744 samples
+23:28:21 [INFO]   Processed 30720 / 86744 samples
+23:33:58 [INFO]   Processed 35840 / 86744 samples
+23:39:35 [INFO]   Processed 40960 / 86744 samples
+23:45:11 [INFO]   Processed 46080 / 86744 samples
+23:50:47 [INFO]   Processed 51200 / 86744 samples
+23:56:24 [INFO]   Processed 56320 / 86744 samples
+00:02:01 [INFO]   Processed 61440 / 86744 samples
+00:07:36 [INFO]   Processed 66560 / 86744 samples
+00:13:13 [INFO]   Processed 71680 / 86744 samples
+00:18:49 [INFO]   Processed 76800 / 86744 samples
+00:24:26 [INFO]   Processed 81920 / 86744 samples
+00:30:02 [INFO]   Processed 87040 / 86744 samples
+00:35:38 [INFO]   Processed 92160 / 86744 samples
+00:41:14 [INFO]   Processed 97280 / 86744 samples
+00:46:50 [INFO]   Processed 102400 / 86744 samples
+00:52:27 [INFO]   Processed 107520 / 86744 samples
+00:58:04 [INFO]   Processed 112640 / 86744 samples
+01:03:41 [INFO]   Processed 117760 / 86744 samples
+01:09:17 [INFO]   Processed 122880 / 86744 samples
+01:14:54 [INFO]   Processed 128000 / 86744 samples
+01:20:30 [INFO]   Processed 133120 / 86744 samples
+01:26:06 [INFO]   Processed 138240 / 86744 samples
+01:31:43 [INFO]   Processed 143360 / 86744 samples
+01:37:19 [INFO]   Processed 148480 / 86744 samples
+01:42:55 [INFO]   Processed 153600 / 86744 samples
+01:48:31 [INFO]   Processed 158720 / 86744 samples
+01:54:07 [INFO]   Processed 163840 / 86744 samples
+01:59:44 [INFO]   Processed 168960 / 86744 samples
+02:04:41 [INFO] Fitting bias subspace for attribute: race
+02:04:41 [INFO] Fitting image bias subspace for attribute: race
+02:04:41 [INFO]   Input: 86744 embeddings, dim=1024
+02:04:41 [INFO]   Group 0: 16527 samples, centroid norm=0.6307
+02:04:41 [INFO]   Group 1: 12233 samples, centroid norm=0.6701
+02:04:41 [INFO]   Group 2: 13367 samples, centroid norm=0.6650
+02:04:41 [INFO]   Group 3: 12287 samples, centroid norm=0.7043
+02:04:41 [INFO]   Group 4: 10795 samples, centroid norm=0.7084
+02:04:41 [INFO]   Group 5: 12319 samples, centroid norm=0.7091
+02:04:41 [INFO]   Group 6: 9216 samples, centroid norm=0.6720
+02:04:41 [INFO]   Bias direction 1: singular value=0.3791, explained variance=39.0%
+02:04:41 [INFO]   Bias direction 2: singular value=0.3157, explained variance=27.0%
+02:04:41 [INFO]   Bias direction 3: singular value=0.2684, explained variance=19.5%
+02:04:41 [INFO]   Bias direction 4: singular value=0.1546, explained variance=6.5%
+02:04:41 [INFO]   Bias direction 5: singular value=0.1355, explained variance=5.0%
+02:04:41 [INFO] Image bias subspace discovered: torch.Size([1024, 5])
+02:04:41 [INFO] Fitting text bias subspace for attribute: race
+02:04:41 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Group 5: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Group 6: 1 samples, centroid norm=1.0000
+02:04:41 [INFO]   Bias direction 1: singular value=0.6674, explained variance=32.0%
+02:04:41 [INFO]   Bias direction 2: singular value=0.5421, explained variance=21.1%
+02:04:41 [INFO]   Bias direction 3: singular value=0.4787, explained variance=16.5%
+02:04:41 [INFO]   Bias direction 4: singular value=0.4472, explained variance=14.4%
+02:04:41 [INFO]   Bias direction 5: singular value=0.3926, explained variance=11.1%
+02:04:41 [INFO] Text bias subspace discovered: torch.Size([1024, 5])
+02:04:41 [INFO] Computing Procrustes alignment...
+02:04:41 [INFO]   Reference shape: torch.Size([1024, 5])
+02:04:41 [INFO]   Source shape: torch.Size([1024, 5])
+02:04:41 [WARNING] Procrustes found reflection (det=-1.0000), correcting to pure rotation
+02:04:41 [INFO] Corrected det(R) = 1.0000
+02:04:41 [INFO] Alignment complete:
+02:04:41 [INFO]   Rotation matrix shape: torch.Size([5, 5])
+02:04:41 [INFO]   Alignment error: 1.044401 (lower is better)
+02:04:41 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+02:04:41 [INFO]   Direction 1 cosine similarity after alignment: 0.7117
+02:04:41 [INFO]   Direction 2 cosine similarity after alignment: 0.3084
+02:04:41 [INFO]   Direction 3 cosine similarity after alignment: 0.5341
+02:04:41 [INFO]   Direction 4 cosine similarity after alignment: 0.0601
+02:04:41 [INFO]   Direction 5 cosine similarity after alignment: 0.5486
+02:04:41 [INFO] Procrustes alignment quality: {'alignment_error': 1.0444014072418213, 'rotation_det': 1.0000008344650269, 'is_orthogonal': True}
+02:04:41 [INFO] Bias subspace set: image_dirs=torch.Size([1024, 5]), text_dirs=torch.Size([1024, 5])
+02:04:41 [INFO] Bias subspace fitted and ready for training
+02:04:41 [INFO] Bias subspace fitted successfully
+02:04:41 [INFO] GPU cache cleared after fitting. Free now: 3.13 GB
+02:04:41 [INFO] GPU cache cleared after fitting. Free now: 3.13 GB
+02:04:42 [INFO] GPU memory after fitting: 4.01GB used
+02:04:42 [INFO] Trainable parameters: 66,906,624 (last 2 layers only)
+02:04:42 [INFO] Loaded 50000 COCO captions for race contrastive training
+02:04:42 [INFO] Starting training...
+02:04:42 [INFO] No checkpoint found — starting fresh.
+02:04:42 [INFO] 
+Epoch 1/30
+02:07:23 [INFO] Epoch 1 | Step 50/658 | Loss: 4.6209 | InfoNCE: 4.5755 | Fair_img: 0.0135 | Fair_txt: 0.0319 | τ: 0.0762 | Time: 160.8s
+02:10:03 [INFO] Epoch 1 | Step 100/658 | Loss: 4.4041 | InfoNCE: 4.2308 | Fair_img: 0.0705 | Fair_txt: 0.1027 | τ: 0.0837 | Time: 160.0s
+02:12:43 [INFO] Epoch 1 | Step 150/658 | Loss: 4.3571 | InfoNCE: 4.1612 | Fair_img: 0.0918 | Fair_txt: 0.1041 | τ: 0.0859 | Time: 160.0s
+02:15:23 [INFO] Epoch 1 | Step 200/658 | Loss: 4.1936 | InfoNCE: 3.9989 | Fair_img: 0.0935 | Fair_txt: 0.1012 | τ: 0.0860 | Time: 160.0s
+02:18:03 [INFO] Epoch 1 | Step 250/658 | Loss: 4.1827 | InfoNCE: 3.9902 | Fair_img: 0.0963 | Fair_txt: 0.0962 | τ: 0.0864 | Time: 160.0s
+02:20:43 [INFO] Epoch 1 | Step 300/658 | Loss: 4.1289 | InfoNCE: 3.9408 | Fair_img: 0.0938 | Fair_txt: 0.0943 | τ: 0.0860 | Time: 160.0s
+02:23:23 [INFO] Epoch 1 | Step 350/658 | Loss: 4.2796 | InfoNCE: 4.0982 | Fair_img: 0.0914 | Fair_txt: 0.0901 | τ: 0.0859 | Time: 160.0s
+02:26:03 [INFO] Epoch 1 | Step 400/658 | Loss: 4.1282 | InfoNCE: 3.9316 | Fair_img: 0.0960 | Fair_txt: 0.1006 | τ: 0.0864 | Time: 160.0s
+02:28:43 [INFO] Epoch 1 | Step 450/658 | Loss: 4.1934 | InfoNCE: 4.0154 | Fair_img: 0.0900 | Fair_txt: 0.0880 | τ: 0.0858 | Time: 160.0s
+02:31:23 [INFO] Epoch 1 | Step 500/658 | Loss: 4.2808 | InfoNCE: 4.1115 | Fair_img: 0.0818 | Fair_txt: 0.0874 | τ: 0.0851 | Time: 159.9s
+02:34:03 [INFO] Epoch 1 | Step 550/658 | Loss: 4.1800 | InfoNCE: 3.9818 | Fair_img: 0.0987 | Fair_txt: 0.0996 | τ: 0.0865 | Time: 160.0s
+02:36:43 [INFO] Epoch 1 | Step 600/658 | Loss: 4.1870 | InfoNCE: 4.0103 | Fair_img: 0.0883 | Fair_txt: 0.0884 | τ: 0.0856 | Time: 160.0s
+02:39:23 [INFO] Epoch 1 | Step 650/658 | Loss: 4.2161 | InfoNCE: 4.0335 | Fair_img: 0.0878 | Fair_txt: 0.0949 | τ: 0.0856 | Time: 159.9s
+02:56:58 [INFO] Epoch 1 Summary: train_loss=4.2713 | val_loss=1.6050 | lr=9.97e-06
+02:56:58 [INFO]   Temperature: mean=0.0890 min=0.0757 max=0.0957
+02:57:01 [INFO]   Checkpoint saved: latest.pt (epoch 1)
+02:57:02 [INFO]   New best model saved (epoch 1)
+02:57:02 [INFO] 
+Epoch 2/30
+02:59:43 [INFO] Epoch 2 | Step 50/658 | Loss: 4.3051 | InfoNCE: 4.1310 | Fair_img: 0.0801 | Fair_txt: 0.0941 | τ: 0.0849 | Time: 160.4s
+03:02:23 [INFO] Epoch 2 | Step 100/658 | Loss: 4.2594 | InfoNCE: 4.0579 | Fair_img: 0.0977 | Fair_txt: 0.1038 | τ: 0.0865 | Time: 160.0s
+03:05:03 [INFO] Epoch 2 | Step 150/658 | Loss: 4.2025 | InfoNCE: 4.0120 | Fair_img: 0.0979 | Fair_txt: 0.0927 | τ: 0.0865 | Time: 160.0s
+03:07:43 [INFO] Epoch 2 | Step 200/658 | Loss: 4.1400 | InfoNCE: 3.9466 | Fair_img: 0.0981 | Fair_txt: 0.0953 | τ: 0.0865 | Time: 160.0s
+03:10:23 [INFO] Epoch 2 | Step 250/658 | Loss: 4.1092 | InfoNCE: 3.9068 | Fair_img: 0.1059 | Fair_txt: 0.0965 | τ: 0.0872 | Time: 160.0s
+03:13:03 [INFO] Epoch 2 | Step 300/658 | Loss: 4.0846 | InfoNCE: 3.8919 | Fair_img: 0.0975 | Fair_txt: 0.0951 | τ: 0.0864 | Time: 160.0s
+03:15:43 [INFO] Epoch 2 | Step 350/658 | Loss: 4.1965 | InfoNCE: 4.0066 | Fair_img: 0.1022 | Fair_txt: 0.0876 | τ: 0.0869 | Time: 160.0s
+03:18:22 [INFO] Epoch 2 | Step 400/658 | Loss: 4.0874 | InfoNCE: 3.8828 | Fair_img: 0.1041 | Fair_txt: 0.1006 | τ: 0.0871 | Time: 160.0s
+03:21:02 [INFO] Epoch 2 | Step 450/658 | Loss: 4.1591 | InfoNCE: 3.9725 | Fair_img: 0.0931 | Fair_txt: 0.0934 | τ: 0.0861 | Time: 160.0s
+03:23:42 [INFO] Epoch 2 | Step 500/658 | Loss: 4.2287 | InfoNCE: 4.0420 | Fair_img: 0.0890 | Fair_txt: 0.0978 | τ: 0.0858 | Time: 160.0s
+03:26:22 [INFO] Epoch 2 | Step 550/658 | Loss: 4.1546 | InfoNCE: 3.9496 | Fair_img: 0.1028 | Fair_txt: 0.1022 | τ: 0.0869 | Time: 160.0s
+03:29:02 [INFO] Epoch 2 | Step 600/658 | Loss: 4.1446 | InfoNCE: 3.9482 | Fair_img: 0.0999 | Fair_txt: 0.0965 | τ: 0.0867 | Time: 160.1s
+03:31:42 [INFO] Epoch 2 | Step 650/658 | Loss: 4.1870 | InfoNCE: 3.9960 | Fair_img: 0.0932 | Fair_txt: 0.0978 | τ: 0.0862 | Time: 160.0s
+03:49:18 [INFO] Epoch 2 Summary: train_loss=4.1632 | val_loss=1.6027 | lr=9.89e-06
+03:49:18 [INFO]   Temperature: mean=0.0898 min=0.0832 max=0.0968
+03:49:22 [INFO]   Checkpoint saved: latest.pt (epoch 2)
+03:49:24 [INFO]   New best model saved (epoch 2)
+03:49:24 [INFO] 
+Epoch 3/30
+03:52:04 [INFO] Epoch 3 | Step 50/658 | Loss: 4.2607 | InfoNCE: 4.0752 | Fair_img: 0.0872 | Fair_txt: 0.0982 | τ: 0.0856 | Time: 160.4s
+03:54:44 [INFO] Epoch 3 | Step 100/658 | Loss: 4.2193 | InfoNCE: 4.0101 | Fair_img: 0.1043 | Fair_txt: 0.1049 | τ: 0.0871 | Time: 160.0s
+03:57:24 [INFO] Epoch 3 | Step 150/658 | Loss: 4.1789 | InfoNCE: 3.9731 | Fair_img: 0.1067 | Fair_txt: 0.0990 | τ: 0.0873 | Time: 160.0s
+04:00:04 [INFO] Epoch 3 | Step 200/658 | Loss: 4.1057 | InfoNCE: 3.8999 | Fair_img: 0.1077 | Fair_txt: 0.0980 | τ: 0.0873 | Time: 160.0s
+04:02:44 [INFO] Epoch 3 | Step 250/658 | Loss: 4.0872 | InfoNCE: 3.8695 | Fair_img: 0.1142 | Fair_txt: 0.1036 | τ: 0.0879 | Time: 160.0s
+04:05:24 [INFO] Epoch 3 | Step 300/658 | Loss: 4.0465 | InfoNCE: 3.8431 | Fair_img: 0.1025 | Fair_txt: 0.1009 | τ: 0.0869 | Time: 160.0s
+04:08:04 [INFO] Epoch 3 | Step 350/658 | Loss: 4.1760 | InfoNCE: 3.9684 | Fair_img: 0.1113 | Fair_txt: 0.0964 | τ: 0.0877 | Time: 160.0s
+04:10:44 [INFO] Epoch 3 | Step 400/658 | Loss: 4.0425 | InfoNCE: 3.8256 | Fair_img: 0.1116 | Fair_txt: 0.1054 | τ: 0.0877 | Time: 160.0s
+04:13:24 [INFO] Epoch 3 | Step 450/658 | Loss: 4.0947 | InfoNCE: 3.8941 | Fair_img: 0.1012 | Fair_txt: 0.0993 | τ: 0.0868 | Time: 160.0s
+04:16:04 [INFO] Epoch 3 | Step 500/658 | Loss: 4.1735 | InfoNCE: 3.9709 | Fair_img: 0.0979 | Fair_txt: 0.1047 | τ: 0.0866 | Time: 160.0s
+04:18:44 [INFO] Epoch 3 | Step 550/658 | Loss: 4.1250 | InfoNCE: 3.9037 | Fair_img: 0.1123 | Fair_txt: 0.1089 | τ: 0.0877 | Time: 160.0s
+04:21:24 [INFO] Epoch 3 | Step 600/658 | Loss: 4.0896 | InfoNCE: 3.8801 | Fair_img: 0.1063 | Fair_txt: 0.1031 | τ: 0.0873 | Time: 160.0s
+04:24:04 [INFO] Epoch 3 | Step 650/658 | Loss: 4.1530 | InfoNCE: 3.9475 | Fair_img: 0.0995 | Fair_txt: 0.1060 | τ: 0.0867 | Time: 160.0s
+04:41:40 [INFO] Epoch 3 Summary: train_loss=4.1292 | val_loss=1.6574 | lr=9.76e-06
+04:41:40 [INFO]   Temperature: mean=0.0911 min=0.0845 max=0.0989
+04:41:43 [INFO]   Checkpoint saved: latest.pt (epoch 3)
+04:41:43 [INFO]   No improvement for 1/5 epochs
+04:41:43 [INFO] 
+Epoch 4/30
+04:44:24 [INFO] Epoch 4 | Step 50/658 | Loss: 4.2230 | InfoNCE: 4.0239 | Fair_img: 0.0935 | Fair_txt: 0.1056 | τ: 0.0861 | Time: 160.4s
+04:47:04 [INFO] Epoch 4 | Step 100/658 | Loss: 4.1838 | InfoNCE: 3.9585 | Fair_img: 0.1136 | Fair_txt: 0.1117 | τ: 0.0879 | Time: 160.0s
+04:49:44 [INFO] Epoch 4 | Step 150/658 | Loss: 4.1460 | InfoNCE: 3.9193 | Fair_img: 0.1181 | Fair_txt: 0.1086 | τ: 0.0883 | Time: 160.0s
+04:52:24 [INFO] Epoch 4 | Step 200/658 | Loss: 4.0838 | InfoNCE: 3.8588 | Fair_img: 0.1182 | Fair_txt: 0.1068 | τ: 0.0882 | Time: 160.0s
+04:55:04 [INFO] Epoch 4 | Step 250/658 | Loss: 4.0421 | InfoNCE: 3.8013 | Fair_img: 0.1254 | Fair_txt: 0.1154 | τ: 0.0888 | Time: 160.0s
+04:57:44 [INFO] Epoch 4 | Step 300/658 | Loss: 3.9892 | InfoNCE: 3.7610 | Fair_img: 0.1141 | Fair_txt: 0.1141 | τ: 0.0879 | Time: 160.0s
+05:00:24 [INFO] Epoch 4 | Step 350/658 | Loss: 4.1442 | InfoNCE: 3.9139 | Fair_img: 0.1205 | Fair_txt: 0.1098 | τ: 0.0884 | Time: 160.0s
+05:03:04 [INFO] Epoch 4 | Step 400/658 | Loss: 3.9746 | InfoNCE: 3.7276 | Fair_img: 0.1266 | Fair_txt: 0.1204 | τ: 0.0889 | Time: 159.9s
+05:05:44 [INFO] Epoch 4 | Step 450/658 | Loss: 4.0518 | InfoNCE: 3.8244 | Fair_img: 0.1167 | Fair_txt: 0.1108 | τ: 0.0881 | Time: 160.1s
+05:08:24 [INFO] Epoch 4 | Step 500/658 | Loss: 4.0503 | InfoNCE: 3.8247 | Fair_img: 0.1064 | Fair_txt: 0.1192 | τ: 0.0873 | Time: 160.0s
+05:11:04 [INFO] Epoch 4 | Step 550/658 | Loss: 4.0856 | InfoNCE: 3.8313 | Fair_img: 0.1297 | Fair_txt: 0.1246 | τ: 0.0891 | Time: 159.9s
+05:13:43 [INFO] Epoch 4 | Step 600/658 | Loss: 4.0038 | InfoNCE: 3.7590 | Fair_img: 0.1262 | Fair_txt: 0.1186 | τ: 0.0889 | Time: 159.9s
+05:16:23 [INFO] Epoch 4 | Step 650/658 | Loss: 4.0891 | InfoNCE: 3.8583 | Fair_img: 0.1110 | Fair_txt: 0.1198 | τ: 0.0877 | Time: 159.9s
+05:33:59 [INFO] Epoch 4 Summary: train_loss=4.0715 | val_loss=1.7928 | lr=9.57e-06
+05:33:59 [INFO]   Temperature: mean=0.0951 min=0.0859 max=0.1052
+05:34:03 [INFO]   Checkpoint saved: latest.pt (epoch 4)
+05:34:03 [INFO]   No improvement for 2/5 epochs
+05:34:03 [INFO] 
+Epoch 5/30
+05:34:03 [INFO] Refitting bias subspace at epoch 5...
+05:34:03 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+05:34:03 [INFO] This runs once before training starts.
+05:34:03 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+05:39:38 [INFO]   Processed 5120 / 86744 samples
+05:45:13 [INFO]   Processed 10240 / 86744 samples
+05:50:49 [INFO]   Processed 15360 / 86744 samples
+05:56:24 [INFO]   Processed 20480 / 86744 samples
+06:02:00 [INFO]   Processed 25600 / 86744 samples
+06:07:35 [INFO]   Processed 30720 / 86744 samples
+06:13:10 [INFO]   Processed 35840 / 86744 samples
+06:18:45 [INFO]   Processed 40960 / 86744 samples
+06:24:21 [INFO]   Processed 46080 / 86744 samples
+06:29:57 [INFO]   Processed 51200 / 86744 samples
+06:35:32 [INFO]   Processed 56320 / 86744 samples
+06:41:09 [INFO]   Processed 61440 / 86744 samples
+06:46:44 [INFO]   Processed 66560 / 86744 samples
+06:52:20 [INFO]   Processed 71680 / 86744 samples
+06:57:55 [INFO]   Processed 76800 / 86744 samples
+07:03:30 [INFO]   Processed 81920 / 86744 samples
+07:09:05 [INFO]   Processed 87040 / 86744 samples
+07:14:41 [INFO]   Processed 92160 / 86744 samples
+07:20:16 [INFO]   Processed 97280 / 86744 samples
+07:25:51 [INFO]   Processed 102400 / 86744 samples
+07:31:27 [INFO]   Processed 107520 / 86744 samples
+07:37:02 [INFO]   Processed 112640 / 86744 samples
+07:42:38 [INFO]   Processed 117760 / 86744 samples

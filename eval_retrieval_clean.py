@@ -25,17 +25,20 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--attribute",required=True); ap.add_argument("--backbone",default="ViT-B/32")
     ap.add_argument("--dataset",default="fairface"); ap.add_argument("--seed",type=int,default=42)
-    ap.add_argument("--rounds",type=int,default=8); ap.add_argument("--n_dirs",type=int,default=5)
+    ap.add_argument("--rounds",type=int,default=8); ap.add_argument("--n_dirs",type=int,default=5); ap.add_argument("--model_path",default=None)
     ap.add_argument("--train_cap",type=int,default=20000)
     a=ap.parse_args()
     cfg=OmegaConf.load("configs/datasets/local_paths.yaml")
     dev="cuda" if torch.cuda.is_available() else "cpu"
     bb=a.backbone.replace("/","_")
-    for p in [f"results/checkpoints/{a.dataset}/{bb}/{a.attribute}/seed{a.seed}/best_model.pt",
+    if a.model_path:
+        ckpt=a.model_path
+    else:
+     for p in [f"results/checkpoints/{a.dataset}/{bb}/{a.attribute}/seed{a.seed}/best_model.pt",
               f"results/checkpoints/{bb}/{a.attribute}/seed{a.seed}/best_model.pt",
               f"results/checkpoints_fix1/{a.dataset}/{bb}/{a.attribute}/seed{a.seed}/best_model.pt"]:
         if os.path.exists(p): ckpt=p; break
-    else: raise FileNotFoundError("no checkpoint")
+     else: raise FileNotFoundError("no checkpoint")
     m=FairCLIP(model_name=a.backbone,device=dev); m.load(ckpt); m.eval()
     neu=m.backbone.encode_text(ZHANG_NEUTRAL_QUERIES).cpu().float(); neu=neu/neu.norm(dim=-1,keepdim=True)
     print(f"[{a.attribute} {a.backbone}] encoding train+val...",flush=True)

@@ -1,0 +1,21 @@
+nohup: ignoring input
+SKIP ViT-B/32 gender 42
+SKIP ViT-B/32 age 42
+SKIP ViT-B/32 race 42
+SKIP ViT-B/16 gender 42
+SKIP ViT-B/16 age 42
+SKIP ViT-B/16 race 42
+SKIP ViT-L/14 gender 42
+SKIP ViT-L/14 age 42
+SKIP ViT-L/14 race 42
+TRAIN ViT-H/14 gender seed42 Mon Aug 10 12:27:48 AM PKT 2026
+DONE ViT-H/14 gender seed42 Mon Aug 10 12:27:57 AM PKT 2026
+TRAIN ViT-H/14 age seed42 Mon Aug 1./retrain_all_procfix.sh: line 7:  5905 Killed                  python -m training.train --dataset fairface --attribute $attr --backbone $bb --epochs 30 --patience 8 --batch_size 64 --lambda_fair $lf --n_bias_dirs 8 --seed $seed --output_dir "results/checkpoints_procfix" > "train_procfix_${bbs}_${attr}_${seed}.log" 2>&1
+DONE ViT-H/14 gender seed42 Mon Aug 10 12:42:56 AM PKT 2026
+TRAIN ViT-H/14 age seed42 Mon Aug 10 12:42:56 AM PKT 2026
+./retrain_all_procfix.sh: line 7:  7756 Killed                  python -m training.train --dataset fairface --attribute $attr --backbone $bb --epochs 30 --patience 8 --batch_size 64 --lambda_fair $lf --n_bias_dirs 8 --seed $seed --output_dir "results/checkpoints_procfix" > "train_procfix_${bbs}_${attr}_${seed}.log" 2>&1
+DONE ViT-H/14 age seed42 Mon Aug 10 01:12:54 AM PKT 2026
+TRAIN ViT-H/14 race seed42 Mon Aug 10 01:12:54 AM PKT 2026
+./retrain_all_procfix.sh: line 7:  8266 Killed                  python -m training.train --dataset fairface --attribute $attr --backbone $bb --epochs 30 --patience 8 --batch_size 64 --lambda_fair $lf --n_bias_dirs 8 --seed $seed --output_dir "results/checkpoints_procfix" > "train_procfix_${bbs}_${attr}_${seed}.log" 2>&1
+DONE ViT-H/14 race seed42 Mon Aug 10 01:45:03 AM PKT 2026
+ALL DONE Mon Aug 10 01:45:03 AM PKT 2026

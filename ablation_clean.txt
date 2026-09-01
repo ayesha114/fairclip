@@ -1,0 +1,12 @@
+=== FULL FairCLIP (reference) ===
+FairCLIP(iter) ViT-B/32 race: DPG=0.0158 EOD=0.0316 RBS=0.0009
+=== no_fairloss ===
+FairCLIP(iter) ViT-B/32 race: DPG=0.0165 EOD=0.0331 RBS=0.0010
+=== no_temp ===
+FairCLIP(iter) ViT-B/32 race: DPG=0.0180 EOD=0.0359 RBS=0.0011
+=== no_trainproj ===
+FairCLIP(iter) ViT-B/32 race: DPG=0.0166 EOD=0.0332 RBS=0.0010
+=== no_procrustes ===
+FairCLIP(iter) ViT-B/32 race: DPG=0.0160 EOD=0.0320 RBS=0.0009
+=== no_subspace ===
+    m=FairCLIP(model_name=a.backbone,device=dev);m.load(ck)

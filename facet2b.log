@@ -1,0 +1,36 @@
+nohup: ignoring input
+SKIP ('ViT-B_32', 'gender', 'Baseline', '42')
+SKIP ('ViT-B_32', 'gender', 'FairCLIP', '42')
+SKIP ('ViT-B_32', 'gender', 'FairCLIP', '123')
+SKIP ('ViT-B_32', 'gender', 'FairCLIP', '456')
+SKIP ('ViT-B_32', 'age', 'Baseline', '42')
+SKIP ('ViT-B_32', 'age', 'FairCLIP', '42')
+SKIP ('ViT-B_32', 'age', 'FairCLIP', '123')
+SKIP ('ViT-B_32', 'age', 'FairCLIP', '456')
+SKIP ('ViT-B_16', 'gender', 'Baseline', '42')
+SKIP ('ViT-B_16', 'gender', 'FairCLIP', '42')
+SKIP ('ViT-B_16', 'gender', 'FairCLIP', '123')
+SKIP ('ViT-B_16', 'gender', 'FairCLIP', '456')
+SKIP ('ViT-B_16', 'age', 'Baseline', '42')
+SKIP ('ViT-B_16', 'age', 'FairCLIP', '42')
+SKIP ('ViT-B_16', 'age', 'FairCLIP', '123')
+SKIP ('ViT-B_16', 'age', 'FairCLIP', '456')
+SKIP ('ViT-L_14', 'gender', 'Baseline', '42')
+SKIP ('ViT-L_14', 'gender', 'FairCLIP', '42')
+SKIP ('ViT-L_14', 'gender', 'FairCLIP', '123')
+DONE ('ViT-L_14', 'gender', 'FairCLIP', '456') [43485, 0.852, 0.796, 0.593, 0.149, 0.045]
+DONE ('ViT-L_14', 'age', 'Baseline', '42') [38899, 0.097, 0.147, 0.105, 0.51, 0.091]
+DONE ('ViT-L_14', 'age', 'FairCLIP', '42') [38899, 0.175, 0.25, 0.158, 0.208, 0.034]
+DONE ('ViT-L_14', 'age', 'FairCLIP', '123') [38899, 0.162, 0.233, 0.16, 0.143, 0.031]
+DONE ('ViT-L_14', 'age', 'FairCLIP', '456') [38899, 0.168, 0.239, 0.158, 0.157, 0.034]
+DONE ('ViT-H_14', 'gender', 'Baseline', '42') [43485, 0.847, 0.794, 0.606, 0.139, 0.02]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ('ViT-H_14', 'gender', 'FairCLIP', '42') [43485, 0.847, 0.792, 0.593, 0.041, 0.021]
+DONE ('ViT-H_14', 'gender', 'FairCLIP', '123') [43485, 0.833, 0.785, 0.617, 0.114, 0.063]
+DONE ('ViT-H_14', 'gender', 'FairCLIP', '456') [43485, 0.848, 0.775, 0.519, 0.079, 0.036]
+DONE ('ViT-H_14', 'age', 'Baseline', '42') [38899, 0.043, 0.088, 0.126, 0.466, 0.049]
+DONE ('ViT-H_14', 'age', 'FairCLIP', '42') [38899, 0.245, 0.276, 0.145, 0.093, 0.02]
+DONE ('ViT-H_14', 'age', 'FairCLIP', '123') [38899, 0.269, 0.29, 0.147, 0.064, 0.02]
+DONE ('ViT-H_14', 'age', 'FairCLIP', '456') [38899, 0.251, 0.283, 0.143, 0.098, 0.021]
+FACET FINISHED

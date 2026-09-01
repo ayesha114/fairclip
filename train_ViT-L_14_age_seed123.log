@@ -1,123 +1,154 @@
-17:03:09 [INFO] ============================================================
-17:03:09 [INFO] FairCLIP Training
-17:03:09 [INFO] Attribute: age
-17:03:09 [INFO] Backbone:  ViT-L/14
-17:03:09 [INFO] Epochs:    30
-17:03:09 [INFO] Batch:     16
-17:03:09 [INFO] Lambda:    0.5
-17:03:09 [INFO] Device:    cuda
-17:03:09 [INFO] Seed:      123
-17:03:09 [INFO] ============================================================
-17:03:09 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
-17:03:09 [INFO] Loaded manifest fairface.csv: 97698 rows
-17:03:09 [INFO] Filtered to split='train': 86744 rows
-17:03:09 [INFO] Loaded manifest fairface.csv: 97698 rows
-17:03:09 [INFO] Filtered to split='val': 10954 rows
-17:03:09 [INFO] Using 14 samples/group × 9 groups = 126 effective batch size
-17:03:09 [INFO]   Group 0: 1792 samples (2.1%)
-17:03:09 [INFO]   Group 1: 10408 samples (12.0%)
-17:03:09 [INFO]   Group 2: 9103 samples (10.5%)
-17:03:09 [INFO]   Group 3: 25598 samples (29.5%)
-17:03:09 [INFO]   Group 4: 19250 samples (22.2%)
-17:03:09 [INFO]   Group 5: 10744 samples (12.4%)
-17:03:09 [INFO]   Group 6: 6228 samples (7.2%)
-17:03:09 [INFO]   Group 7: 2779 samples (3.2%)
-17:03:09 [INFO]   Group 8: 842 samples (1.0%)
-17:03:09 [INFO] DemographicBalancedSampler: 9 groups, 14/group, 60 batches/epoch, effective batch size 126
-17:03:09 [INFO] Train: 86744 samples
-17:03:09 [INFO] Val:   10954 samples
-17:03:09 [INFO] ============================================================
-17:03:09 [INFO] Initializing FairCLIP
-17:03:09 [INFO]   Backbone: ViT-L/14
-17:03:09 [INFO]   Bias directions: 5
-17:03:09 [INFO]   Lambda fair: img=0.5, txt=0.5
-17:03:09 [INFO]   Temperature: base=0.07, alpha=0.5
-17:03:09 [INFO] ============================================================
-17:03:09 [INFO] Loading CLIP backbone: ViT-L/14
-17:03:09 [INFO] Embedding dimension: 768
-17:03:09 [INFO] Device: cuda
-17:03:15 [INFO] Loaded OpenAI CLIP successfully
-17:03:15 [INFO] Backbone frozen — CLIP weights will not be updated
-17:03:15 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
-17:03:15 [INFO] FairnessAwareLoss initialized: λ_img=0.5, λ_txt=0.5
-17:03:15 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
-17:03:15 [INFO] Fitting bias subspace on training data (Steps IV + V)...
-17:03:15 [INFO] This runs once before training starts.
-17:03:15 [INFO] Extracting CLIP embeddings for bias subspace fitting...
-Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 660, in <module>
-    main()
-  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 474, in main
-    fit_bias_subspace(model, train_ds, args)
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 246, in fit_bias_subspace
-    image_embs = model.backbone.encode_images(images)
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
-    return func(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/thesis/models/clip_backbone.py", line 197, in encode_images
-    features = self.clip_model.encode_image(images)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 341, in encode_image
-    return self.visual(image.type(self.dtype))
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 232, in forward
-    x = self.transformer(x)
-        ^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 203, in forward
-    return self.resblocks(x)
-           ^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/container.py", line 217, in forward
-    input = module(input)
-            ^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 190, in forward
-    x = x + self.attention(self.ln_1(x))
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/clip/model.py", line 187, in attention
-    return self.attn(x, x, x, need_weights=False, attn_mask=self.attn_mask)[0]
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/activation.py", line 1241, in forward
-    attn_output, attn_output_weights = F.multi_head_attention_forward(
-                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/functional.py", line 5336, in multi_head_attention_forward
-    q, k, v = _in_projection_packed(query, key, value, in_proj_weight, in_proj_bias)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/functional.py", line 4857, in _in_projection_packed
-    proj = linear(q, w, b)
-           ^^^^^^^^^^^^^^^
-torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 386.00 MiB. GPU 0 has a total capacity of 7.78 GiB of which 317.75 MiB is free. Process 11357 has 552.00 MiB memory in use. Process 59369 has 4.00 GiB memory in use. Including non-PyTorch memory, this process has 2.08 GiB memory in use. Of the allocated memory 1.92 GiB is allocated by PyTorch, and 62.27 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+14:30:28 [INFO] ============================================================
+14:30:28 [INFO] FairCLIP Training
+14:30:28 [INFO] Attribute: age
+14:30:28 [INFO] Backbone:  ViT-L/14
+14:30:28 [INFO] Epochs:    30
+14:30:28 [INFO] Batch:     16
+14:30:28 [INFO] Lambda:    0.5
+14:30:28 [INFO] Device:    cuda
+14:30:28 [INFO] Seed:      123
+14:30:28 [INFO] ============================================================
+14:30:28 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+14:30:28 [INFO] Loaded manifest fairface.csv: 97698 rows
+14:30:28 [INFO] Filtered to split='train': 86744 rows
+14:30:28 [INFO] Loaded manifest fairface.csv: 97698 rows
+14:30:28 [INFO] Filtered to split='val': 10954 rows
+14:30:28 [INFO] Using 14 samples/group × 9 groups = 126 effective batch size
+14:30:28 [INFO]   Group 0: 1792 samples (2.1%)
+14:30:28 [INFO]   Group 1: 10408 samples (12.0%)
+14:30:28 [INFO]   Group 2: 9103 samples (10.5%)
+14:30:28 [INFO]   Group 3: 25598 samples (29.5%)
+14:30:28 [INFO]   Group 4: 19250 samples (22.2%)
+14:30:28 [INFO]   Group 5: 10744 samples (12.4%)
+14:30:28 [INFO]   Group 6: 6228 samples (7.2%)
+14:30:28 [INFO]   Group 7: 2779 samples (3.2%)
+14:30:28 [INFO]   Group 8: 842 samples (1.0%)
+14:30:28 [INFO] DemographicBalancedSampler: 9 groups, 14/group, 60 batches/epoch, effective batch size 126
+14:30:28 [INFO] Train: 86744 samples
+14:30:28 [INFO] Val:   10954 samples
+14:30:28 [INFO] ============================================================
+14:30:28 [INFO] Initializing FairCLIP
+14:30:28 [INFO]   Backbone: ViT-L/14
+14:30:28 [INFO]   Bias directions: 5
+14:30:28 [INFO]   Lambda fair: img=0.5, txt=0.5
+14:30:28 [INFO]   Temperature: base=0.07, alpha=0.5
+14:30:28 [INFO] ============================================================
+14:30:28 [INFO] Loading CLIP backbone: ViT-L/14
+14:30:28 [INFO] Embedding dimension: 768
+14:30:28 [INFO] Device: cuda
+14:30:33 [INFO] Loaded OpenAI CLIP successfully
+14:30:33 [INFO] Backbone frozen — CLIP weights will not be updated
+14:30:33 [INFO] BiasSubspaceDiscoverer initialized with 5 bias directions
+14:30:33 [INFO] FairnessAwareLoss initialized: λ_img=0.5, λ_txt=0.5
+14:30:33 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+14:30:33 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+14:30:33 [INFO] This runs once before training starts.
+14:30:33 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+14:32:27 [INFO]   Processed 5120 / 86744 samples
+14:34:22 [INFO]   Processed 10240 / 86744 samples
+14:36:19 [INFO]   Processed 15360 / 86744 samples
+14:38:16 [INFO]   Processed 20480 / 86744 samples
+14:40:03 [INFO]   Processed 25600 / 86744 samples
+14:41:50 [INFO]   Processed 30720 / 86744 samples
+14:43:38 [INFO]   Processed 35840 / 86744 samples
+14:45:27 [INFO]   Processed 40960 / 86744 samples
+14:47:20 [INFO]   Processed 46080 / 86744 samples
+14:49:07 [INFO]   Processed 51200 / 86744 samples
+14:50:56 [INFO]   Processed 56320 / 86744 samples
+14:52:45 [INFO]   Processed 61440 / 86744 samples
+14:54:33 [INFO]   Processed 66560 / 86744 samples
+14:56:22 [INFO]   Processed 71680 / 86744 samples
+14:58:11 [INFO]   Processed 76800 / 86744 samples
+14:59:59 [INFO]   Processed 81920 / 86744 samples
+15:01:47 [INFO]   Processed 87040 / 86744 samples
+15:03:35 [INFO]   Processed 92160 / 86744 samples
+15:05:23 [INFO]   Processed 97280 / 86744 samples
+15:07:12 [INFO]   Processed 102400 / 86744 samples
+15:09:01 [INFO]   Processed 107520 / 86744 samples
+15:10:51 [INFO]   Processed 112640 / 86744 samples
+15:12:40 [INFO]   Processed 117760 / 86744 samples
+15:14:29 [INFO]   Processed 122880 / 86744 samples
+15:16:17 [INFO]   Processed 128000 / 86744 samples
+15:18:05 [INFO]   Processed 133120 / 86744 samples
+15:19:53 [INFO]   Processed 138240 / 86744 samples
+15:21:41 [INFO]   Processed 143360 / 86744 samples
+15:23:29 [INFO]   Processed 148480 / 86744 samples
+15:25:17 [INFO]   Processed 153600 / 86744 samples
+15:27:05 [INFO]   Processed 158720 / 86744 samples
+15:28:52 [INFO]   Processed 163840 / 86744 samples
+15:30:41 [INFO]   Processed 168960 / 86744 samples
+15:32:25 [INFO] Fitting bias subspace for attribute: age
+15:32:25 [INFO] Fitting image bias subspace for attribute: age
+15:32:25 [INFO]   Input: 86744 embeddings, dim=768
+15:32:25 [INFO]   Group 0: 1792 samples, centroid norm=0.8348
+15:32:25 [INFO]   Group 1: 10408 samples, centroid norm=0.8184
+15:32:25 [INFO]   Group 2: 9103 samples, centroid norm=0.7936
+15:32:25 [INFO]   Group 3: 25598 samples, centroid norm=0.7772
+15:32:25 [INFO]   Group 4: 19250 samples, centroid norm=0.7742
+15:32:25 [INFO]   Group 5: 10744 samples, centroid norm=0.7732
+15:32:25 [INFO]   Group 6: 6228 samples, centroid norm=0.7730
+15:32:25 [INFO]   Group 7: 2779 samples, centroid norm=0.7749
+15:32:25 [INFO]   Group 8: 842 samples, centroid norm=0.7930
+15:32:25 [INFO]   Bias direction 1: singular value=0.4532, explained variance=48.3%
+15:32:25 [INFO]   Bias direction 2: singular value=0.3830, explained variance=34.5%
+15:32:25 [INFO]   Bias direction 3: singular value=0.1987, explained variance=9.3%
+15:32:25 [INFO]   Bias direction 4: singular value=0.1567, explained variance=5.8%
+15:32:25 [INFO]   Bias direction 5: singular value=0.0788, explained variance=1.5%
+15:32:25 [INFO] Image bias subspace discovered: torch.Size([768, 5])
+15:32:25 [INFO] Fitting text bias subspace for attribute: age
+15:32:25 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+15:32:25 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+15:32:25 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+15:32:25 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+15:32:25 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+15:32:25 [INFO]   Bias direction 1: singular value=0.3860, explained variance=42.2%
+15:32:25 [INFO]   Bias direction 2: singular value=0.3028, explained variance=26.0%
+15:32:25 [INFO]   Bias direction 3: singular value=0.2623, explained variance=19.5%
+15:32:25 [INFO]   Bias direction 4: singular value=0.2085, explained variance=12.3%
+15:32:25 [INFO] Text bias subspace discovered: torch.Size([768, 4])
+15:32:25 [INFO] Computing Procrustes alignment...
+15:32:25 [INFO]   Reference shape: torch.Size([768, 4])
+15:32:25 [INFO]   Source shape: torch.Size([768, 4])
+15:32:25 [INFO] Alignment complete:
+15:32:25 [INFO]   Rotation matrix shape: torch.Size([4, 4])
+15:32:25 [INFO]   Alignment error: 1.237037 (lower is better)
+15:32:25 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+15:32:25 [INFO]   Direction 1 cosine similarity after alignment: 0.3256
+15:32:25 [INFO]   Direction 2 cosine similarity after alignment: 0.1317
+15:32:25 [INFO]   Direction 3 cosine similarity after alignment: 0.2937
+15:32:25 [INFO]   Direction 4 cosine similarity after alignment: 0.1803
+15:32:25 [INFO] Procrustes alignment quality: {'alignment_error': 1.2370373010635376, 'rotation_det': 0.9999997019767761, 'is_orthogonal': True}
+15:32:25 [INFO] Bias subspace set: image_dirs=torch.Size([768, 4]), text_dirs=torch.Size([768, 4])
+15:32:25 [INFO] Bias subspace fitted and ready for training
+15:32:25 [INFO] Bias subspace fitted successfully
+15:32:25 [INFO] GPU cache cleared after fitting. Free now: 5.72 GB
+15:32:25 [INFO] GPU cache cleared after fitting. Free now: 5.72 GB
+15:32:25 [INFO] GPU memory after fitting: 1.77GB used
+15:32:25 [INFO] Trainable parameters: 40,744,448 (last 2 layers only)
+15:32:26 [INFO] Loaded 50000 COCO captions for race contrastive training
+15:32:26 [INFO] Starting training...
+15:32:26 [INFO] No checkpoint found — starting fresh.
+15:32:26 [INFO] 
+Epoch 1/30
+15:34:19 [INFO] Epoch 1 | Step 50/60 | Loss: 4.6325 | InfoNCE: 4.5613 | Fair_img: 0.0595 | Fair_txt: 0.0829 | τ: 0.0823 | Time: 112.7s
+15:43:19 [INFO] Epoch 1 Summary: train_loss=4.7580 | val_loss=2.5404 | lr=9.97e-06
+15:43:19 [INFO]   Temperature: mean=0.0941 min=0.0773 max=0.1025
+15:43:20 [INFO]   Checkpoint saved: latest.pt (epoch 1)
+15:43:20 [INFO]   New best model saved (epoch 1)
+15:43:20 [INFO] 
+Epoch 2/30
+15:45:10 [INFO] Epoch 2 | Step 50/60 | Loss: 4.3627 | InfoNCE: 4.2036 | Fair_img: 0.1583 | Fair_txt: 0.1598 | τ: 0.0902 | Time: 109.9s
+15:54:06 [INFO] Epoch 2 Summary: train_loss=4.3883 | val_loss=2.4285 | lr=9.89e-06
+15:54:06 [INFO]   Temperature: mean=0.0998 min=0.0852 max=0.1076
+15:54:08 [INFO]   Checkpoint saved: latest.pt (epoch 2)
+15:54:10 [INFO]   New best model saved (epoch 2)
+15:54:10 [INFO] 
+Epoch 3/30
+15:55:59 [INFO] Epoch 3 | Step 50/60 | Loss: 4.2228 | InfoNCE: 4.0506 | Fair_img: 0.1732 | Fair_txt: 0.1711 | τ: 0.0913 | Time: 109.6s
+16:04:55 [INFO] Epoch 3 Summary: train_loss=4.2491 | val_loss=2.4411 | lr=9.76e-06
+16:04:55 [INFO]   Temperature: mean=0.1024 min=0.0896 max=0.1108
+16:04:57 [INFO]   Checkpoint saved: latest.pt (epoch 3)
+16:04:57 [INFO]   No improvement for 1/3 epochs
+16:04:57 [INFO] 
+Epoch 4/30
+16:06:53 [INFO] Epoch 4 | Step 50/60 | Loss: 4.1029 | InfoNCE: 3.9226 | Fair_img: 0.1776 | Fair_txt: 0.1831 | τ: 0.0917 | Time: 115.7s

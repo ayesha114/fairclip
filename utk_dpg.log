@@ -1,0 +1,70 @@
+nohup: ignoring input
+DONE base ViT-B/32 gender
+DONE ViT-B/32 gender s42
+DONE ViT-B/32 gender s123
+DONE ViT-B/32 gender s456
+DONE base ViT-B/32 age
+DONE ViT-B/32 age s42
+DONE ViT-B/32 age s123
+DONE ViT-B/32 age s456
+DONE base ViT-B/32 race
+DONE ViT-B/32 race s42
+DONE ViT-B/32 race s123
+DONE ViT-B/32 race s456
+DONE base ViT-B/16 gender
+DONE ViT-B/16 gender s42
+DONE ViT-B/16 gender s123
+DONE ViT-B/16 gender s456
+DONE base ViT-B/16 age
+DONE ViT-B/16 age s42
+DONE ViT-B/16 age s123
+DONE ViT-B/16 age s456
+DONE base ViT-B/16 race
+DONE ViT-B/16 race s42
+DONE ViT-B/16 race s123
+DONE ViT-B/16 race s456
+DONE base ViT-L/14 gender
+DONE ViT-L/14 gender s42
+DONE ViT-L/14 gender s123
+DONE ViT-L/14 gender s456
+DONE base ViT-L/14 age
+DONE ViT-L/14 age s42
+DONE ViT-L/14 age s123
+DONE ViT-L/14 age s456
+DONE base ViT-L/14 race
+DONE ViT-L/14 race s42
+DONE ViT-L/14 race s123
+DONE ViT-L/14 race s456
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE base ViT-H/14 gender
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 gender s42
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 gender s123
+DONE ViT-H/14 gender s456
+DONE base ViT-H/14 age
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 age s42
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 age s123
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 age s456
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE base ViT-H/14 race
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 race s42
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 race s123
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 race s456
+UTK DPG FINISHED

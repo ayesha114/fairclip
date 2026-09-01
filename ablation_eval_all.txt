@@ -1,0 +1,33 @@
+=== no_fairloss ===
+21:04:25 [INFO] Computing MaxSkew (image-to-image retrieval)...
+21:04:25 [INFO]   Accuracy    : 0.7444
+21:04:25 [INFO]   DPG         : 0.1323  (↓ fairer)
+21:04:25 [INFO]   RBS         : 0.2828  (↓ fairer — embedding bias)
+21:04:25 [INFO]   EOD         : 0.2647  (↓ fairer)
+21:04:25 [INFO]   MaxSkew@5   : 1.9184  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== no_temp ===
+21:05:01 [INFO] Computing MaxSkew (image-to-image retrieval)...
+21:05:01 [INFO]   Accuracy    : 0.7412
+21:05:01 [INFO]   DPG         : 0.1281  (↓ fairer)
+21:05:01 [INFO]   RBS         : 0.0569  (↓ fairer — embedding bias)
+21:05:01 [INFO]   EOD         : 0.2563  (↓ fairer)
+21:05:01 [INFO]   MaxSkew@5   : 1.8809  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod    rbs  facet_bias_score  maxskew_5  ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== no_trainproj ===
+21:05:37 [INFO] Computing MaxSkew (image-to-image retrieval)...
+21:05:37 [INFO]   Accuracy    : 0.7306
+21:05:37 [INFO]   DPG         : 0.1113  (↓ fairer)
+21:05:37 [INFO]   RBS         : 0.0290  (↓ fairer — embedding bias)
+21:05:37 [INFO]   EOD         : 0.2226  (↓ fairer)
+21:05:37 [INFO]   MaxSkew@5   : 1.9137  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1    dpg    eod   rbs  facet_bias_score  maxskew_5  ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== no_procrustes ===
+21:06:13 [INFO] Computing MaxSkew (image-to-image retrieval)...
+21:06:13 [INFO]   Accuracy    : 0.7274
+21:06:13 [INFO]   DPG         : 0.1230  (↓ fairer)
+21:06:13 [INFO]   RBS         : 0.0597  (↓ fairer — embedding bias)
+21:06:13 [INFO]   EOD         : 0.2460  (↓ fairer)
+21:06:13 [INFO]   MaxSkew@5   : 1.9591  (↓ fairer)
+           method backbone attribute  accuracy  precision  recall     f1   dpg   eod    rbs  facet_bias_score  maxskew_5   ndkl  able  vl_alignment  bias_level  TR@1  TR@5  TR@10  IR@1  IR@5  IR@10
+=== no_subspace ===

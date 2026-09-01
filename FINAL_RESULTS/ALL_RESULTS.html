@@ -1,0 +1,74 @@
+<html><head><meta charset="utf-8"><style>
+body{font-family:sans-serif;font-size:12px;padding:14px}h2{margin:22px 0 6px}
+table{border-collapse:collapse;margin-bottom:8px}td,th{border:1px solid #bbb;padding:3px 6px;text-align:center}
+th{background:#eee}.w{background:#c6f0c6;font-weight:bold}.l{background:#f8c4c4;font-weight:bold}
+.g{background:#f6f6f6;text-align:left;font-weight:bold}</style></head><body>
+<h1>FairCLIP — Complete Results</h1><p>✔ = beats · ✘ = does not beat</p>
+<h2>Table 1 — FairFace (in-domain, seed 42) vs Zhang et al. & Baseline</h2><table>
+<tr><th>Backbone</th><th>Attr</th><th>Acc B→F</th><th>vsB</th><th>MaxSkew B→F (Z)</th><th>vsB</th><th>vsZ</th><th>NDKL B→F (Z)</th><th>vsB</th><th>vsZ</th><th>ABLE B→F (Z)</th><th>vsB</th><th>vsZ</th></tr>
+<tr><td>ViT-B/32</td><td>gender</td><td>0.944 → <b>0.973</b></td><td class="w">✔</td><td>0.280 → <b>0.029</b> (0.090)</td><td class="w">✔</td><td class="w">✔</td><td>0.072 → <b>0.012</b> (0.030)</td><td class="w">✔</td><td class="w">✔</td><td>83.94 → <b>97.23</b> (74.24)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/32</td><td>age</td><td>0.433 → <b>0.455</b></td><td class="w">✔</td><td>2.021 → <b>0.181</b> (0.572)</td><td class="w">✔</td><td class="w">✔</td><td>0.177 → <b>0.072</b> (0.364)</td><td class="w">✔</td><td class="w">✔</td><td>20.29 → <b>58.92</b> (59.60)</td><td class="w">✔</td><td class="l">✘</td></tr>
+<tr><td>ViT-B/32</td><td>race</td><td>0.633 → <b>0.666</b></td><td class="w">✔</td><td>0.774 → <b>0.214</b> (0.353)</td><td class="w">✔</td><td class="w">✔</td><td>0.170 → <b>0.066</b> (0.125)</td><td class="w">✔</td><td class="w">✔</td><td>53.36 → <b>72.97</b> (69.14)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>gender</td><td>0.931 → <b>0.979</b></td><td class="w">✔</td><td>0.188 → <b>0.045</b> (0.080)</td><td class="w">✔</td><td class="w">✔</td><td>0.044 → <b>0.012</b> (0.025)</td><td class="w">✔</td><td class="w">✔</td><td>87.69 → <b>96.74</b> (78.35)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>age</td><td>0.355 → <b>0.521</b></td><td class="w">✔</td><td>2.043 → <b>0.302</b> (0.608)</td><td class="w">✔</td><td class="w">✔</td><td>0.208 → <b>0.080</b> (0.294)</td><td class="w">✔</td><td class="w">✔</td><td>18.99 → <b>61.10</b> (60.61)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>race</td><td>0.616 → <b>0.660</b></td><td class="w">✔</td><td>0.984 → <b>0.340</b> (0.353)</td><td class="w">✔</td><td class="w">✔</td><td>0.157 → <b>0.093</b> (0.125)</td><td class="w">✔</td><td class="w">✔</td><td>46.52 → <b>68.52</b> (69.14)</td><td class="w">✔</td><td class="l">✘</td></tr>
+<tr><td>ViT-L/14</td><td>gender</td><td>0.949 → <b>0.979</b></td><td class="w">✔</td><td>0.155 → <b>0.094</b> (0.106)</td><td class="w">✔</td><td class="w">✔</td><td>0.037 → <b>0.040</b> (0.035)</td><td class="l">✘</td><td class="l">✘</td><td>90.04 → <b>94.31</b> (82.04)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>age</td><td>0.473 → <b>0.578</b></td><td class="w">✔</td><td>2.077 → <b>0.298</b> (0.579)</td><td class="w">✔</td><td class="w">✔</td><td>0.180 → <b>0.058</b> (0.332)</td><td class="w">✔</td><td class="w">✔</td><td>19.81 → <b>64.98</b> (64.25)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>race</td><td>0.619 → <b>0.713</b></td><td class="w">✔</td><td>0.573 → <b>0.100</b> (0.353)</td><td class="w">✔</td><td class="w">✔</td><td>0.157 → <b>0.060</b> (0.125)</td><td class="w">✔</td><td class="w">✔</td><td>58.99 → <b>79.76</b> (69.14)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>gender</td><td>0.966 → <b>0.978</b></td><td class="w">✔</td><td>0.103 → <b>0.056</b> (0.138)</td><td class="w">✔</td><td class="w">✔</td><td>0.018 → <b>0.017</b> (0.051)</td><td class="w">✔</td><td class="w">✔</td><td>93.27 → <b>96.13</b> (82.11)</td><td class="w">✔</td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>age</td><td>0.443 → <b>0.490</b></td><td class="w">✔</td><td>1.928 → <b>0.192</b> (0.515)</td><td class="w">✔</td><td class="w">✔</td><td>0.154 → <b>0.056</b> (0.289)</td><td class="w">✔</td><td class="w">✔</td><td>21.90 → <b>61.51</b> (67.62)</td><td class="w">✔</td><td class="l">✘</td></tr>
+<tr><td>ViT-H/14</td><td>race</td><td>0.696 → <b>0.742</b></td><td class="w">✔</td><td>0.483 → <b>0.132</b> (0.353)</td><td class="w">✔</td><td class="w">✔</td><td>0.104 → <b>0.066</b> (0.125)</td><td class="w">✔</td><td class="w">✔</td><td>65.42 → <b>80.35</b> (69.14)</td><td class="w">✔</td><td class="w">✔</td></tr>
+</table>
+<p><b>vs Baseline:</b> Acc 12/12 · MaxSkew 12/12 · NDKL 11/12 · ABLE 12/12<br><b>vs Zhang:</b> MaxSkew 12/12 · NDKL 11/12 · ABLE 9/12</p>
+<h2>Table 2 — FairFace: DPG / EOD / RBS (occupation-based) + Flickr retrieval</h2><table>
+<tr><th>Backbone</th><th>Attr</th><th>DPG B→F</th><th>vsB</th><th>EOD F</th><th>RBS F</th><th>TR@5 B→F</th><th>Δ</th><th>≤1pt</th></tr>
+<tr><td>ViT-B/32</td><td>gender</td><td>0.0315 → <b>0.0029</b></td><td class="w">✔</td><td>0.0059</td><td>6.87e-05</td><td>78.4 → <b>76.7</b></td><td>-1.7</td><td class="l">✘</td></tr>
+<tr><td>ViT-B/32</td><td>age</td><td>0.0817 → <b>0.0326</b></td><td class="w">✔</td><td>0.0651</td><td>3.86e-04</td><td>78.4 → <b>77.6</b></td><td>-0.8</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/32</td><td>race</td><td>0.0417 → <b>0.0089</b></td><td class="w">✔</td><td>0.0179</td><td>4.56e-05</td><td>78.4 → <b>77.9</b></td><td>-0.5</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>gender</td><td>— → <b>0.0031</b></td><td>—</td><td>0.0061</td><td>8.12e-05</td><td>81.5 → <b>80.6</b></td><td>-0.9</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>age</td><td>0.0791 → <b>0.0340</b></td><td class="w">✔</td><td>0.0680</td><td>5.13e-04</td><td>81.5 → <b>79.5</b></td><td>-2.0</td><td class="l">✘</td></tr>
+<tr><td>ViT-B/16</td><td>race</td><td>0.0463 → <b>0.0101</b></td><td class="w">✔</td><td>0.0202</td><td>4.15e-05</td><td>81.5 → <b>81.6</b></td><td>+0.1</td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>gender</td><td>0.0184 → <b>0.0045</b></td><td class="w">✔</td><td>0.0089</td><td>1.48e-04</td><td>82.1 → <b>80.2</b></td><td>-1.9</td><td class="l">✘</td></tr>
+<tr><td>ViT-L/14</td><td>age</td><td>0.0683 → <b>0.0286</b></td><td class="w">✔</td><td>0.0572</td><td>4.54e-04</td><td>82.1 → <b>80.5</b></td><td>-1.6</td><td class="l">✘</td></tr>
+<tr><td>ViT-L/14</td><td>race</td><td>0.0364 → <b>0.0135</b></td><td class="w">✔</td><td>0.0270</td><td>4.57e-05</td><td>82.1 → <b>81.6</b></td><td>-0.5</td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>gender</td><td>— → <b>0.0025</b></td><td>—</td><td>0.0050</td><td>4.14e-04</td><td>89.1 → <b>88.6</b></td><td>-0.5</td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>age</td><td>— → <b>0.0274</b></td><td>—</td><td>0.0549</td><td>7.91e-04</td><td>89.1 → <b>88.0</b></td><td>-1.1</td><td class="l">✘</td></tr>
+<tr><td>ViT-H/14</td><td>race</td><td>— → <b>0.0082</b></td><td>—</td><td>0.0164</td><td>3.02e-05</td><td>89.1 → <b>88.8</b></td><td>-0.3</td><td class="w">✔</td></tr>
+</table>
+<p><b>DPG vs Baseline:</b> 8/8 · <b>Retrieval within 1 pt:</b> 7/12 (all 12 within 2 pts)</p>
+<h2>Table 3 — UTKFace cross-dataset (3 seeds, mean±std)</h2><table>
+<tr><th>Backbone</th><th>Attr</th><th>DPG B→F</th><th>vsB</th><th>RBS B→F</th><th>vsB</th><th>MaxSkew B→F</th><th>vsB</th><th>ABLE B→F</th><th>vsB</th></tr>
+<tr><td>ViT-B/32</td><td>gender</td><td>0.0424 → <b>0.0121±0.0043</b></td><td class="w">✔</td><td>2.6e-02 → <b>6.7e-03</b></td><td class="w">✔</td><td>0.169 → <b>0.080±0.030</b></td><td class="w">✔</td><td>90.15 → <b>94.64±1.42</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-B/32</td><td>age</td><td>0.0878 → <b>0.0531±0.0029</b></td><td class="w">✔</td><td>8.0e-02 → <b>2.7e-02</b></td><td class="w">✔</td><td>0.581 → <b>0.204±0.025</b></td><td class="w">✔</td><td>46.76 → <b>61.25±0.83</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-B/32</td><td>race</td><td>0.0563 → <b>0.0333±0.0024</b></td><td class="w">✔</td><td>5.4e-02 → <b>2.1e-03</b></td><td class="w">✔</td><td>0.160 → <b>0.105±0.040</b></td><td class="w">✔</td><td>77.91 → <b>80.57±1.61</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>gender</td><td>0.0354 → <b>0.0085±0.0069</b></td><td class="w">✔</td><td>2.6e-02 → <b>2.9e-03</b></td><td class="w">✔</td><td>0.177 → <b>0.048±0.016</b></td><td class="w">✔</td><td>89.83 → <b>96.34±0.72</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>age</td><td>0.0888 → <b>0.0515±0.0065</b></td><td class="w">✔</td><td>7.5e-02 → <b>2.8e-02</b></td><td class="w">✔</td><td>0.566 → <b>0.151±0.038</b></td><td class="w">✔</td><td>48.70 → <b>68.59±2.17</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>race</td><td>0.0562 → <b>0.0225±0.0051</b></td><td class="w">✔</td><td>5.5e-02 → <b>4.2e-03</b></td><td class="w">✔</td><td>0.246 → <b>0.085±0.050</b></td><td class="w">✔</td><td>68.17 → <b>84.91±5.50</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>gender</td><td>0.0269 → <b>0.0030±0.0026</b></td><td class="w">✔</td><td>2.4e-02 → <b>1.4e-03</b></td><td class="w">✔</td><td>0.077 → <b>0.062±0.035</b></td><td class="w">✔</td><td>94.75 → <b>95.70±1.71</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>age</td><td>0.0819 → <b>0.0634±0.0028</b></td><td class="w">✔</td><td>6.7e-02 → <b>3.6e-02</b></td><td class="w">✔</td><td>0.511 → <b>0.200±0.029</b></td><td class="w">✔</td><td>50.53 → <b>68.37±0.95</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>race</td><td>0.0491 → <b>0.0401±0.0038</b></td><td class="w">✔</td><td>4.1e-02 → <b>2.3e-03</b></td><td class="w">✔</td><td>0.271 → <b>0.080±0.025</b></td><td class="w">✔</td><td>65.05 → <b>81.22±5.73</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>gender</td><td>0.0220 → <b>0.0003±0.0002</b></td><td class="w">✔</td><td>3.3e-02 → <b>8.6e-04</b></td><td class="w">✔</td><td>0.109 → <b>0.139±0.103</b></td><td class="l">✘</td><td>93.37 → <b>91.90±4.95</b></td><td class="l">✘</td></tr>
+<tr><td>ViT-H/14</td><td>age</td><td>0.0928 → <b>0.0486±0.0023</b></td><td class="w">✔</td><td>1.0e-01 → <b>3.5e-02</b></td><td class="w">✔</td><td>0.610 → <b>0.200±0.016</b></td><td class="w">✔</td><td>49.89 → <b>61.04±0.79</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>race</td><td>0.0437 → <b>0.0266±0.0032</b></td><td class="w">✔</td><td>6.1e-02 → <b>4.3e-03</b></td><td class="w">✔</td><td>0.202 → <b>0.139±0.002</b></td><td class="w">✔</td><td>81.63 → <b>86.24±0.14</b></td><td class="w">✔</td></tr>
+</table>
+<p><b>vs Baseline:</b> DPG 12/12 · RBS 12/12 · MaxSkew 11/12 · ABLE 11/12</p>
+<h2>Table 4 — FACET cross-dataset (3 seeds; no race labels in FACET)</h2><table>
+<tr><th>Backbone</th><th>Attr</th><th>Acc B→F</th><th>vsB</th><th>MaxSkew B→F</th><th>vsB</th><th>NDKL B→F</th><th>vsB</th></tr>
+<tr><td>ViT-B/32</td><td>gender</td><td>0.713 → <b>0.824</b></td><td class="w">✔</td><td>0.067 → <b>0.216±0.243</b></td><td class="l">✘</td><td>0.014 → <b>0.032</b></td><td class="l">✘</td></tr>
+<tr><td>ViT-B/32</td><td>age</td><td>0.100 → <b>0.247</b></td><td class="w">✔</td><td>0.676 → <b>0.087±0.011</b></td><td class="w">✔</td><td>0.073 → <b>0.035</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>gender</td><td>0.628 → <b>0.844</b></td><td class="w">✔</td><td>0.086 → <b>0.181±0.086</b></td><td class="l">✘</td><td>0.024 → <b>0.036</b></td><td class="l">✘</td></tr>
+<tr><td>ViT-B/16</td><td>age</td><td>0.046 → <b>0.234</b></td><td class="w">✔</td><td>0.841 → <b>0.173±0.072</b></td><td class="w">✔</td><td>0.108 → <b>0.031</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>gender</td><td>0.748 → <b>0.851</b></td><td class="w">✔</td><td>0.059 → <b>0.086±0.054</b></td><td class="l">✘</td><td>0.020 → <b>0.032</b></td><td class="l">✘</td></tr>
+<tr><td>ViT-L/14</td><td>age</td><td>0.097 → <b>0.168</b></td><td class="w">✔</td><td>0.510 → <b>0.169±0.034</b></td><td class="w">✔</td><td>0.091 → <b>0.033</b></td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>gender</td><td>0.847 → <b>0.843</b></td><td class="l">✘</td><td>0.139 → <b>0.078±0.037</b></td><td class="w">✔</td><td>0.020 → <b>0.040</b></td><td class="l">✘</td></tr>
+<tr><td>ViT-H/14</td><td>age</td><td>0.043 → <b>0.255</b></td><td class="w">✔</td><td>0.466 → <b>0.085±0.018</b></td><td class="w">✔</td><td>0.049 → <b>0.020</b></td><td class="w">✔</td></tr>
+</table>
+<p><b>vs Baseline:</b> Acc 7/8 · MaxSkew 5/8 · NDKL 4/8</p>
+<h2>Table 5 — ImageNetV2 utility (target: drop &lt; 1 point, as in Zhang et al.)</h2><table>
+<tr><th>Backbone</th><th>Base Top-1</th><th>gender Δ</th><th>age Δ</th><th>race Δ</th><th>all &lt;1pt</th></tr>
+<tr><td>ViT-B/32</td><td>52.50</td><td>-0.25</td><td>-0.61</td><td>-0.85</td><td class="w">✔</td></tr>
+<tr><td>ViT-B/16</td><td>58.34</td><td>-0.09</td><td>-0.78</td><td>-0.93</td><td class="w">✔</td></tr>
+<tr><td>ViT-L/14</td><td>64.53</td><td>-0.23</td><td>-0.47</td><td>-0.58</td><td class="w">✔</td></tr>
+<tr><td>ViT-H/14</td><td>67.68</td><td>-0.13</td><td>-0.41</td><td>-0.12</td><td class="w">✔</td></tr>
+</table><p><b>All drops &lt; 1 point:</b> 4/4 backbones (16/16 cells)</p>
+</body></html>

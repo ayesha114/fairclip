@@ -1,0 +1,333 @@
+nohup: ignoring input
+14:08:14 [INFO] ============================================================
+14:08:14 [INFO] FairCLIP Training
+14:08:14 [INFO] Attribute: race
+14:08:14 [INFO] Backbone:  ViT-L/14
+14:08:14 [INFO] Epochs:    30
+14:08:14 [INFO] Batch:     64
+14:08:14 [INFO] Lambda:    2.0
+14:08:14 [INFO] Device:    cuda
+14:08:14 [INFO] Seed:      456
+14:08:14 [INFO] ============================================================
+14:08:14 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+14:08:14 [INFO] Loaded manifest fairface.csv: 97698 rows
+14:08:14 [INFO] Filtered to split='train': 86744 rows
+14:08:14 [INFO] Loaded manifest fairface.csv: 97698 rows
+14:08:14 [INFO] Filtered to split='val': 10954 rows
+14:08:14 [INFO] Using 14 samples/group × 7 groups = 98 effective batch size
+14:08:14 [INFO]   Group 0: 16527 samples (19.1%)
+14:08:14 [INFO]   Group 1: 12233 samples (14.1%)
+14:08:14 [INFO]   Group 2: 13367 samples (15.4%)
+14:08:14 [INFO]   Group 3: 12287 samples (14.2%)
+14:08:14 [INFO]   Group 4: 10795 samples (12.4%)
+14:08:14 [INFO]   Group 5: 12319 samples (14.2%)
+14:08:14 [INFO]   Group 6: 9216 samples (10.6%)
+14:08:14 [INFO] DemographicBalancedSampler: 7 groups, 14/group, 658 batches/epoch, effective batch size 98
+14:08:14 [INFO] Train: 86744 samples
+14:08:14 [INFO] Val:   10954 samples
+14:08:14 [INFO] ============================================================
+14:08:14 [INFO] Initializing FairCLIP
+14:08:14 [INFO]   Backbone: ViT-L/14
+14:08:14 [INFO]   Bias directions: 8
+14:08:14 [INFO]   Lambda fair: img=2.0, txt=2.0
+14:08:14 [INFO]   Temperature: base=0.07, alpha=0.5
+14:08:14 [INFO] ============================================================
+14:08:14 [INFO] Loading CLIP backbone: ViT-L/14
+14:08:14 [INFO] Embedding dimension: 768
+14:08:14 [INFO] Device: cuda
+14:08:20 [INFO] Loaded OpenAI CLIP successfully
+14:08:20 [INFO] Backbone frozen — CLIP weights will not be updated
+14:08:20 [INFO] BiasSubspaceDiscoverer initialized with 8 bias directions
+14:08:20 [INFO] FairnessAwareLoss initialized: λ_img=2.0, λ_txt=2.0
+14:08:20 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+14:08:20 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+14:08:20 [INFO] This runs once before training starts.
+14:08:20 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+14:10:04 [INFO]   Processed 5120 / 86744 samples
+14:11:50 [INFO]   Processed 10240 / 86744 samples
+14:13:37 [INFO]   Processed 15360 / 86744 samples
+14:15:22 [INFO]   Processed 20480 / 86744 samples
+14:17:08 [INFO]   Processed 25600 / 86744 samples
+14:18:53 [INFO]   Processed 30720 / 86744 samples
+14:20:39 [INFO]   Processed 35840 / 86744 samples
+14:22:24 [INFO]   Processed 40960 / 86744 samples
+14:24:10 [INFO]   Processed 46080 / 86744 samples
+14:25:56 [INFO]   Processed 51200 / 86744 samples
+14:27:40 [INFO]   Processed 56320 / 86744 samples
+14:29:26 [INFO]   Processed 61440 / 86744 samples
+14:31:13 [INFO]   Processed 66560 / 86744 samples
+14:32:57 [INFO]   Processed 71680 / 86744 samples
+14:34:43 [INFO]   Processed 76800 / 86744 samples
+14:36:28 [INFO]   Processed 81920 / 86744 samples
+14:38:14 [INFO]   Processed 87040 / 86744 samples
+14:40:00 [INFO]   Processed 92160 / 86744 samples
+14:41:47 [INFO]   Processed 97280 / 86744 samples
+14:43:31 [INFO]   Processed 102400 / 86744 samples
+14:45:17 [INFO]   Processed 107520 / 86744 samples
+14:47:02 [INFO]   Processed 112640 / 86744 samples
+14:48:48 [INFO]   Processed 117760 / 86744 samples
+14:50:33 [INFO]   Processed 122880 / 86744 samples
+14:52:18 [INFO]   Processed 128000 / 86744 samples
+14:54:04 [INFO]   Processed 133120 / 86744 samples
+14:55:50 [INFO]   Processed 138240 / 86744 samples
+14:57:36 [INFO]   Processed 143360 / 86744 samples
+14:59:20 [INFO]   Processed 148480 / 86744 samples
+15:01:06 [INFO]   Processed 153600 / 86744 samples
+15:02:52 [INFO]   Processed 158720 / 86744 samples
+15:04:38 [INFO]   Processed 163840 / 86744 samples
+15:06:25 [INFO]   Processed 168960 / 86744 samples
+15:07:59 [INFO] Fitting bias subspace for attribute: race
+15:07:59 [INFO] Fitting image bias subspace for attribute: race
+15:07:59 [INFO]   Input: 86744 embeddings, dim=768
+15:07:59 [INFO]   Group 0: 16527 samples, centroid norm=0.7688
+15:07:59 [INFO]   Group 1: 12233 samples, centroid norm=0.7851
+15:07:59 [INFO]   Group 2: 13367 samples, centroid norm=0.7870
+15:07:59 [INFO]   Group 3: 12287 samples, centroid norm=0.7996
+15:07:59 [INFO]   Group 4: 10795 samples, centroid norm=0.8006
+15:07:59 [INFO]   Group 5: 12319 samples, centroid norm=0.7963
+15:07:59 [INFO]   Group 6: 9216 samples, centroid norm=0.7824
+15:08:00 [INFO]   Bias direction 1: singular value=0.2933, explained variance=37.8%
+15:08:00 [INFO]   Bias direction 2: singular value=0.2466, explained variance=26.7%
+15:08:00 [INFO]   Bias direction 3: singular value=0.2017, explained variance=17.9%
+15:08:00 [INFO]   Bias direction 4: singular value=0.1294, explained variance=7.4%
+15:08:00 [INFO]   Bias direction 5: singular value=0.1226, explained variance=6.6%
+15:08:00 [INFO]   Bias direction 6: singular value=0.0917, explained variance=3.7%
+15:08:00 [INFO] Image bias subspace discovered: torch.Size([768, 6])
+15:08:00 [INFO] Fitting text bias subspace for attribute: race
+15:08:00 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Group 2: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Group 3: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Group 4: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Group 5: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Group 6: 1 samples, centroid norm=1.0000
+15:08:00 [INFO]   Bias direction 1: singular value=0.5914, explained variance=38.0%
+15:08:00 [INFO]   Bias direction 2: singular value=0.4239, explained variance=19.5%
+15:08:00 [INFO]   Bias direction 3: singular value=0.3942, explained variance=16.9%
+15:08:00 [INFO]   Bias direction 4: singular value=0.3657, explained variance=14.5%
+15:08:00 [INFO]   Bias direction 5: singular value=0.2320, explained variance=5.8%
+15:08:00 [INFO]   Bias direction 6: singular value=0.2211, explained variance=5.3%
+15:08:00 [INFO] Text bias subspace discovered: torch.Size([768, 6])
+15:08:00 [INFO] Computing Procrustes alignment...
+15:08:00 [INFO]   Reference shape: torch.Size([768, 6])
+15:08:00 [INFO]   Source shape: torch.Size([768, 6])
+15:08:00 [WARNING] Procrustes found reflection (det=-1.0000), correcting to pure rotation
+15:08:00 [INFO] Corrected det(R) = 1.0000
+15:08:00 [INFO] Alignment complete:
+15:08:00 [INFO]   Rotation matrix shape: torch.Size([6, 6])
+15:08:00 [INFO]   Alignment error: 1.110541 (lower is better)
+15:08:00 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+15:08:00 [INFO]   Direction 1 cosine similarity after alignment: 0.6060
+15:08:00 [INFO]   Direction 2 cosine similarity after alignment: 0.3684
+15:08:00 [INFO]   Direction 3 cosine similarity after alignment: 0.4903
+15:08:00 [INFO]   Direction 4 cosine similarity after alignment: 0.2140
+15:08:00 [INFO]   Direction 5 cosine similarity after alignment: 0.4195
+15:08:00 [INFO]   Direction 6 cosine similarity after alignment: 0.1409
+15:08:00 [INFO] Procrustes alignment quality: {'alignment_error': 1.1105412244796753, 'rotation_det': 1.0000019073486328, 'is_orthogonal': True}
+15:08:00 [INFO] Bias subspace set: image_dirs=torch.Size([768, 6]), text_dirs=torch.Size([768, 6])
+15:08:00 [INFO] Retrieval-skew loss wired with 8 neutral queries
+15:08:00 [INFO] Bias subspace fitted and ready for training
+15:08:00 [INFO] Bias subspace fitted successfully
+15:08:00 [INFO] GPU cache cleared after fitting. Free now: 5.94 GB
+15:08:00 [INFO] GPU cache cleared after fitting. Free now: 5.94 GB
+15:08:00 [INFO] GPU memory after fitting: 1.77GB used
+15:08:00 [INFO] Trainable parameters: 40,744,448 (last 2 layers only)
+15:08:01 [INFO] Loaded 50000 COCO captions for race contrastive training
+15:08:01 [INFO] Starting training...
+15:08:01 [INFO] No checkpoint found — starting fresh.
+15:08:01 [INFO] 
+Epoch 1/30
+15:09:27 [INFO] Epoch 1 | Step 50/658 | Loss: 4.6213 | InfoNCE: 4.5820 | Fair_img: 0.0074 | Fair_txt: 0.0123 | Retr: 0.0000 | τ: 0.0746 | Time: 86.4s
+15:10:52 [INFO] Epoch 1 | Step 100/658 | Loss: 4.5934 | InfoNCE: 4.5684 | Fair_img: 0.0045 | Fair_txt: 0.0080 | Retr: 0.0000 | τ: 0.0736 | Time: 85.5s
+15:12:18 [INFO] Epoch 1 | Step 150/658 | Loss: 4.4996 | InfoNCE: 4.3522 | Fair_img: 0.0378 | Fair_txt: 0.0359 | Retr: 0.0000 | τ: 0.0801 | Time: 85.5s
+15:13:43 [INFO] Epoch 1 | Step 200/658 | Loss: 4.3827 | InfoNCE: 4.1414 | Fair_img: 0.0609 | Fair_txt: 0.0598 | Retr: 0.0000 | τ: 0.0829 | Time: 85.5s
+15:15:09 [INFO] Epoch 1 | Step 250/658 | Loss: 4.3551 | InfoNCE: 4.0949 | Fair_img: 0.0670 | Fair_txt: 0.0631 | Retr: 0.0000 | τ: 0.0836 | Time: 85.5s
+15:16:34 [INFO] Epoch 1 | Step 300/658 | Loss: 4.3093 | InfoNCE: 4.0442 | Fair_img: 0.0668 | Fair_txt: 0.0658 | Retr: 0.0000 | τ: 0.0835 | Time: 85.5s
+15:18:00 [INFO] Epoch 1 | Step 350/658 | Loss: 4.4222 | InfoNCE: 4.1671 | Fair_img: 0.0649 | Fair_txt: 0.0627 | Retr: 0.0000 | τ: 0.0834 | Time: 85.5s
+15:19:25 [INFO] Epoch 1 | Step 400/658 | Loss: 4.2955 | InfoNCE: 4.0020 | Fair_img: 0.0753 | Fair_txt: 0.0715 | Retr: 0.0000 | τ: 0.0845 | Time: 85.5s
+15:20:51 [INFO] Epoch 1 | Step 450/658 | Loss: 4.3263 | InfoNCE: 4.0539 | Fair_img: 0.0699 | Fair_txt: 0.0663 | Retr: 0.0000 | τ: 0.0839 | Time: 85.5s
+15:22:16 [INFO] Epoch 1 | Step 500/658 | Loss: 4.3811 | InfoNCE: 4.1278 | Fair_img: 0.0629 | Fair_txt: 0.0638 | Retr: 0.0000 | τ: 0.0833 | Time: 85.5s
+15:23:42 [INFO] Epoch 1 | Step 550/658 | Loss: 4.3302 | InfoNCE: 4.0452 | Fair_img: 0.0696 | Fair_txt: 0.0729 | Retr: 0.0000 | τ: 0.0839 | Time: 85.5s
+15:25:07 [INFO] Epoch 1 | Step 600/658 | Loss: 4.3253 | InfoNCE: 4.0774 | Fair_img: 0.0630 | Fair_txt: 0.0610 | Retr: 0.0000 | τ: 0.0832 | Time: 85.5s
+15:26:33 [INFO] Epoch 1 | Step 650/658 | Loss: 4.3546 | InfoNCE: 4.1061 | Fair_img: 0.0582 | Fair_txt: 0.0661 | Retr: 0.0000 | τ: 0.0827 | Time: 85.5s
+15:35:11 [INFO] Epoch 1 Summary: train_loss=4.4177 | val_loss=3.7842 | lr=9.97e-06
+15:35:11 [INFO]   Temperature: mean=0.0821 min=0.0732 max=0.0865
+15:35:12 [INFO]   Checkpoint saved: latest.pt (epoch 1)
+15:35:14 [INFO]   New best model saved (epoch 1)
+15:35:14 [INFO] 
+Epoch 2/30
+15:36:40 [INFO] Epoch 2 | Step 50/658 | Loss: 4.4131 | InfoNCE: 4.1523 | Fair_img: 0.0625 | Fair_txt: 0.0680 | Retr: 0.0000 | τ: 0.0831 | Time: 85.9s
+15:38:05 [INFO] Epoch 2 | Step 100/658 | Loss: 4.4075 | InfoNCE: 4.1218 | Fair_img: 0.0671 | Fair_txt: 0.0758 | Retr: 0.0000 | τ: 0.0837 | Time: 85.5s
+15:39:31 [INFO] Epoch 2 | Step 150/658 | Loss: 4.3400 | InfoNCE: 4.0549 | Fair_img: 0.0768 | Fair_txt: 0.0657 | Retr: 0.0000 | τ: 0.0847 | Time: 85.5s
+15:40:56 [INFO] Epoch 2 | Step 200/658 | Loss: 4.2785 | InfoNCE: 4.0083 | Fair_img: 0.0692 | Fair_txt: 0.0659 | Retr: 0.0000 | τ: 0.0839 | Time: 85.5s
+15:42:22 [INFO] Epoch 2 | Step 250/658 | Loss: 4.2860 | InfoNCE: 4.0008 | Fair_img: 0.0737 | Fair_txt: 0.0689 | Retr: 0.0000 | τ: 0.0844 | Time: 85.5s
+15:43:47 [INFO] Epoch 2 | Step 300/658 | Loss: 4.2390 | InfoNCE: 3.9587 | Fair_img: 0.0697 | Fair_txt: 0.0704 | Retr: 0.0000 | τ: 0.0839 | Time: 85.5s
+15:45:13 [INFO] Epoch 2 | Step 350/658 | Loss: 4.3860 | InfoNCE: 4.1159 | Fair_img: 0.0706 | Fair_txt: 0.0644 | Retr: 0.0000 | τ: 0.0841 | Time: 85.5s
+15:46:38 [INFO] Epoch 2 | Step 400/658 | Loss: 4.2650 | InfoNCE: 3.9586 | Fair_img: 0.0793 | Fair_txt: 0.0739 | Retr: 0.0000 | τ: 0.0850 | Time: 85.5s
+15:48:04 [INFO] Epoch 2 | Step 450/658 | Loss: 4.3102 | InfoNCE: 4.0288 | Fair_img: 0.0723 | Fair_txt: 0.0684 | Retr: 0.0000 | τ: 0.0842 | Time: 85.5s
+15:49:29 [INFO] Epoch 2 | Step 500/658 | Loss: 4.3588 | InfoNCE: 4.0930 | Fair_img: 0.0650 | Fair_txt: 0.0679 | Retr: 0.0000 | τ: 0.0835 | Time: 85.5s
+15:50:54 [INFO] Epoch 2 | Step 550/658 | Loss: 4.3168 | InfoNCE: 4.0201 | Fair_img: 0.0735 | Fair_txt: 0.0748 | Retr: 0.0000 | τ: 0.0843 | Time: 85.5s
+15:52:20 [INFO] Epoch 2 | Step 600/658 | Loss: 4.3157 | InfoNCE: 4.0503 | Fair_img: 0.0661 | Fair_txt: 0.0666 | Retr: 0.0000 | τ: 0.0836 | Time: 85.5s
+15:53:45 [INFO] Epoch 2 | Step 650/658 | Loss: 4.3358 | InfoNCE: 4.0776 | Fair_img: 0.0591 | Fair_txt: 0.0700 | Retr: 0.0000 | τ: 0.0829 | Time: 85.5s
+16:02:24 [INFO] Epoch 2 Summary: train_loss=4.3198 | val_loss=3.7786 | lr=9.89e-06
+16:02:24 [INFO]   Temperature: mean=0.0841 min=0.0818 max=0.0866
+16:02:26 [INFO]   Checkpoint saved: latest.pt (epoch 2)
+16:02:28 [INFO]   New best model saved (epoch 2)
+16:02:28 [INFO] 
+Epoch 3/30
+16:03:53 [INFO] Epoch 3 | Step 50/658 | Loss: 4.3989 | InfoNCE: 4.1287 | Fair_img: 0.0646 | Fair_txt: 0.0706 | Retr: 0.0000 | τ: 0.0834 | Time: 85.8s
+16:05:19 [INFO] Epoch 3 | Step 100/658 | Loss: 4.3802 | InfoNCE: 4.0862 | Fair_img: 0.0709 | Fair_txt: 0.0762 | Retr: 0.0000 | τ: 0.0841 | Time: 85.3s
+16:06:44 [INFO] Epoch 3 | Step 150/658 | Loss: 4.3253 | InfoNCE: 4.0270 | Fair_img: 0.0798 | Fair_txt: 0.0694 | Retr: 0.0000 | τ: 0.0850 | Time: 85.3s
+16:08:09 [INFO] Epoch 3 | Step 200/658 | Loss: 4.2559 | InfoNCE: 3.9728 | Fair_img: 0.0723 | Fair_txt: 0.0693 | Retr: 0.0000 | τ: 0.0842 | Time: 85.3s
+16:09:35 [INFO] Epoch 3 | Step 250/658 | Loss: 4.2750 | InfoNCE: 3.9772 | Fair_img: 0.0775 | Fair_txt: 0.0715 | Retr: 0.0000 | τ: 0.0847 | Time: 85.3s
+16:11:00 [INFO] Epoch 3 | Step 300/658 | Loss: 4.1963 | InfoNCE: 3.9049 | Fair_img: 0.0728 | Fair_txt: 0.0729 | Retr: 0.0000 | τ: 0.0843 | Time: 85.6s
+16:12:26 [INFO] Epoch 3 | Step 350/658 | Loss: 4.3462 | InfoNCE: 4.0631 | Fair_img: 0.0756 | Fair_txt: 0.0660 | Retr: 0.0000 | τ: 0.0846 | Time: 85.5s
+16:13:51 [INFO] Epoch 3 | Step 400/658 | Loss: 4.2390 | InfoNCE: 3.9232 | Fair_img: 0.0834 | Fair_txt: 0.0745 | Retr: 0.0000 | τ: 0.0854 | Time: 85.5s
+16:15:17 [INFO] Epoch 3 | Step 450/658 | Loss: 4.2880 | InfoNCE: 3.9898 | Fair_img: 0.0780 | Fair_txt: 0.0711 | Retr: 0.0000 | τ: 0.0847 | Time: 85.5s
+16:16:43 [INFO] Epoch 3 | Step 500/658 | Loss: 4.3372 | InfoNCE: 4.0525 | Fair_img: 0.0705 | Fair_txt: 0.0718 | Retr: 0.0000 | τ: 0.0841 | Time: 85.7s
+16:18:08 [INFO] Epoch 3 | Step 550/658 | Loss: 4.3062 | InfoNCE: 4.0061 | Fair_img: 0.0741 | Fair_txt: 0.0759 | Retr: 0.0000 | τ: 0.0844 | Time: 85.3s
+16:19:33 [INFO] Epoch 3 | Step 600/658 | Loss: 4.2790 | InfoNCE: 3.9985 | Fair_img: 0.0698 | Fair_txt: 0.0705 | Retr: 0.0000 | τ: 0.0840 | Time: 85.3s
+16:20:59 [INFO] Epoch 3 | Step 650/658 | Loss: 4.3230 | InfoNCE: 4.0485 | Fair_img: 0.0640 | Fair_txt: 0.0733 | Retr: 0.0000 | τ: 0.0834 | Time: 85.3s
+16:29:38 [INFO] Epoch 3 Summary: train_loss=4.2964 | val_loss=3.7986 | lr=9.76e-06
+16:29:38 [INFO]   Temperature: mean=0.0844 min=0.0820 max=0.0869
+16:29:40 [INFO]   Checkpoint saved: latest.pt (epoch 3)
+16:29:40 [INFO]   No improvement for 1/8 epochs
+16:29:40 [INFO] 
+Epoch 4/30
+16:31:06 [INFO] Epoch 4 | Step 50/658 | Loss: 4.3659 | InfoNCE: 4.0884 | Fair_img: 0.0664 | Fair_txt: 0.0724 | Retr: 0.0000 | τ: 0.0836 | Time: 85.9s
+16:32:31 [INFO] Epoch 4 | Step 100/658 | Loss: 4.3806 | InfoNCE: 4.0815 | Fair_img: 0.0715 | Fair_txt: 0.0780 | Retr: 0.0000 | τ: 0.0842 | Time: 85.5s
+16:33:57 [INFO] Epoch 4 | Step 150/658 | Loss: 4.2833 | InfoNCE: 3.9736 | Fair_img: 0.0819 | Fair_txt: 0.0729 | Retr: 0.0000 | τ: 0.0852 | Time: 85.5s
+16:35:22 [INFO] Epoch 4 | Step 200/658 | Loss: 4.2355 | InfoNCE: 3.9501 | Fair_img: 0.0708 | Fair_txt: 0.0719 | Retr: 0.0000 | τ: 0.0841 | Time: 85.5s
+16:36:48 [INFO] Epoch 4 | Step 250/658 | Loss: 4.2213 | InfoNCE: 3.9184 | Fair_img: 0.0781 | Fair_txt: 0.0734 | Retr: 0.0000 | τ: 0.0848 | Time: 85.5s
+16:38:13 [INFO] Epoch 4 | Step 300/658 | Loss: 4.1365 | InfoNCE: 3.8329 | Fair_img: 0.0770 | Fair_txt: 0.0749 | Retr: 0.0000 | τ: 0.0847 | Time: 85.5s
+16:39:39 [INFO] Epoch 4 | Step 350/658 | Loss: 4.3114 | InfoNCE: 4.0133 | Fair_img: 0.0777 | Fair_txt: 0.0713 | Retr: 0.0000 | τ: 0.0848 | Time: 85.5s
+16:41:04 [INFO] Epoch 4 | Step 400/658 | Loss: 4.1670 | InfoNCE: 3.8435 | Fair_img: 0.0842 | Fair_txt: 0.0775 | Retr: 0.0000 | τ: 0.0854 | Time: 85.5s
+16:42:30 [INFO] Epoch 4 | Step 450/658 | Loss: 4.2699 | InfoNCE: 3.9590 | Fair_img: 0.0814 | Fair_txt: 0.0741 | Retr: 0.0000 | τ: 0.0850 | Time: 85.5s
+16:43:55 [INFO] Epoch 4 | Step 500/658 | Loss: 4.2772 | InfoNCE: 3.9636 | Fair_img: 0.0784 | Fair_txt: 0.0784 | Retr: 0.0000 | τ: 0.0849 | Time: 85.5s
+16:45:21 [INFO] Epoch 4 | Step 550/658 | Loss: 4.3114 | InfoNCE: 3.9931 | Fair_img: 0.0804 | Fair_txt: 0.0787 | Retr: 0.0000 | τ: 0.0850 | Time: 85.5s
+16:46:46 [INFO] Epoch 4 | Step 600/658 | Loss: 4.2337 | InfoNCE: 3.9422 | Fair_img: 0.0709 | Fair_txt: 0.0748 | Retr: 0.0000 | τ: 0.0842 | Time: 85.5s
+16:48:12 [INFO] Epoch 4 | Step 650/658 | Loss: 4.2901 | InfoNCE: 3.9982 | Fair_img: 0.0702 | Fair_txt: 0.0757 | Retr: 0.0000 | τ: 0.0841 | Time: 85.5s
+16:56:51 [INFO] Epoch 4 Summary: train_loss=4.2624 | val_loss=3.8520 | lr=9.57e-06
+16:56:51 [INFO]   Temperature: mean=0.0848 min=0.0824 max=0.0879
+16:56:53 [INFO]   Checkpoint saved: latest.pt (epoch 4)
+16:56:53 [INFO]   No improvement for 2/8 epochs
+16:56:53 [INFO] 
+Epoch 5/30
+16:58:19 [INFO] Epoch 5 | Step 50/658 | Loss: 4.3262 | InfoNCE: 4.0308 | Fair_img: 0.0727 | Fair_txt: 0.0750 | Retr: 0.0000 | τ: 0.0842 | Time: 85.9s
+16:59:44 [INFO] Epoch 5 | Step 100/658 | Loss: 4.3676 | InfoNCE: 4.0518 | Fair_img: 0.0746 | Fair_txt: 0.0833 | Retr: 0.0000 | τ: 0.0844 | Time: 85.5s
+17:01:10 [INFO] Epoch 5 | Step 150/658 | Loss: 4.2337 | InfoNCE: 3.9089 | Fair_img: 0.0870 | Fair_txt: 0.0753 | Retr: 0.0000 | τ: 0.0857 | Time: 85.5s
+17:02:35 [INFO] Epoch 5 | Step 200/658 | Loss: 4.1779 | InfoNCE: 3.8806 | Fair_img: 0.0734 | Fair_txt: 0.0752 | Retr: 0.0000 | τ: 0.0843 | Time: 85.5s
+17:04:01 [INFO] Epoch 5 | Step 250/658 | Loss: 4.1667 | InfoNCE: 3.8569 | Fair_img: 0.0763 | Fair_txt: 0.0786 | Retr: 0.0000 | τ: 0.0846 | Time: 85.5s
+17:05:26 [INFO] Epoch 5 | Step 300/658 | Loss: 4.0904 | InfoNCE: 3.7757 | Fair_img: 0.0778 | Fair_txt: 0.0796 | Retr: 0.0000 | τ: 0.0848 | Time: 85.5s
+17:06:52 [INFO] Epoch 5 | Step 350/658 | Loss: 4.2228 | InfoNCE: 3.8979 | Fair_img: 0.0864 | Fair_txt: 0.0761 | Retr: 0.0000 | τ: 0.0856 | Time: 85.5s
+17:08:17 [INFO] Epoch 5 | Step 400/658 | Loss: 4.1030 | InfoNCE: 3.7584 | Fair_img: 0.0915 | Fair_txt: 0.0809 | Retr: 0.0000 | τ: 0.0861 | Time: 85.5s
+17:09:43 [INFO] Epoch 5 | Step 450/658 | Loss: 4.2059 | InfoNCE: 3.8875 | Fair_img: 0.0831 | Fair_txt: 0.0761 | Retr: 0.0000 | τ: 0.0852 | Time: 85.5s
+17:11:08 [INFO] Epoch 5 | Step 500/658 | Loss: 4.1865 | InfoNCE: 3.8570 | Fair_img: 0.0833 | Fair_txt: 0.0815 | Retr: 0.0000 | τ: 0.0853 | Time: 85.5s
+17:12:34 [INFO] Epoch 5 | Step 550/658 | Loss: 4.2565 | InfoNCE: 3.9310 | Fair_img: 0.0797 | Fair_txt: 0.0831 | Retr: 0.0000 | τ: 0.0849 | Time: 85.5s
+17:13:59 [INFO] Epoch 5 | Step 600/658 | Loss: 4.1645 | InfoNCE: 3.8336 | Fair_img: 0.0875 | Fair_txt: 0.0780 | Retr: 0.0000 | τ: 0.0858 | Time: 85.5s
+17:15:25 [INFO] Epoch 5 | Step 650/658 | Loss: 4.1947 | InfoNCE: 3.8879 | Fair_img: 0.0744 | Fair_txt: 0.0790 | Retr: 0.0000 | τ: 0.0845 | Time: 85.5s
+17:24:04 [INFO] Epoch 5 Summary: train_loss=4.2041 | val_loss=3.9321 | lr=9.33e-06
+17:24:04 [INFO]   Temperature: mean=0.0852 min=0.0831 max=0.0892
+17:24:07 [INFO]   Checkpoint saved: latest.pt (epoch 5)
+17:24:07 [INFO]   No improvement for 3/8 epochs
+17:24:07 [INFO] 
+Epoch 6/30
+17:25:33 [INFO] Epoch 6 | Step 50/658 | Loss: 4.2601 | InfoNCE: 3.9610 | Fair_img: 0.0715 | Fair_txt: 0.0781 | Retr: 0.0000 | τ: 0.0842 | Time: 86.2s
+17:26:58 [INFO] Epoch 6 | Step 100/658 | Loss: 4.3315 | InfoNCE: 4.0066 | Fair_img: 0.0758 | Fair_txt: 0.0866 | Retr: 0.0000 | τ: 0.0846 | Time: 85.5s
+17:28:24 [INFO] Epoch 6 | Step 150/658 | Loss: 4.1690 | InfoNCE: 3.8324 | Fair_img: 0.0889 | Fair_txt: 0.0795 | Retr: 0.0000 | τ: 0.0859 | Time: 85.5s
+17:29:49 [INFO] Epoch 6 | Step 200/658 | Loss: 4.1130 | InfoNCE: 3.7977 | Fair_img: 0.0800 | Fair_txt: 0.0777 | Retr: 0.0000 | τ: 0.0849 | Time: 85.5s
+17:31:15 [INFO] Epoch 6 | Step 250/658 | Loss: 4.0633 | InfoNCE: 3.7479 | Fair_img: 0.0768 | Fair_txt: 0.0809 | Retr: 0.0000 | τ: 0.0847 | Time: 85.5s
+17:32:40 [INFO] Epoch 6 | Step 300/658 | Loss: 3.9715 | InfoNCE: 3.6481 | Fair_img: 0.0798 | Fair_txt: 0.0819 | Retr: 0.0000 | τ: 0.0850 | Time: 85.5s
+17:34:06 [INFO] Epoch 6 | Step 350/658 | Loss: 4.1060 | InfoNCE: 3.7799 | Fair_img: 0.0855 | Fair_txt: 0.0775 | Retr: 0.0000 | τ: 0.0855 | Time: 85.5s
+17:35:31 [INFO] Epoch 6 | Step 400/658 | Loss: 4.0232 | InfoNCE: 3.6725 | Fair_img: 0.0930 | Fair_txt: 0.0824 | Retr: 0.0000 | τ: 0.0862 | Time: 85.6s
+17:36:57 [INFO] Epoch 6 | Step 450/658 | Loss: 4.1054 | InfoNCE: 3.7877 | Fair_img: 0.0830 | Fair_txt: 0.0759 | Retr: 0.0000 | τ: 0.0852 | Time: 85.7s
+17:38:23 [INFO] Epoch 6 | Step 500/658 | Loss: 4.0914 | InfoNCE: 3.7552 | Fair_img: 0.0851 | Fair_txt: 0.0831 | Retr: 0.0000 | τ: 0.0855 | Time: 85.7s
+17:39:49 [INFO] Epoch 6 | Step 550/658 | Loss: 4.1767 | InfoNCE: 3.8494 | Fair_img: 0.0787 | Fair_txt: 0.0849 | Retr: 0.0000 | τ: 0.0849 | Time: 85.7s
+17:41:14 [INFO] Epoch 6 | Step 600/658 | Loss: 4.1181 | InfoNCE: 3.7705 | Fair_img: 0.0930 | Fair_txt: 0.0808 | Retr: 0.0000 | τ: 0.0862 | Time: 85.7s
+17:42:40 [INFO] Epoch 6 | Step 650/658 | Loss: 4.1437 | InfoNCE: 3.8373 | Fair_img: 0.0733 | Fair_txt: 0.0799 | Retr: 0.0000 | τ: 0.0844 | Time: 85.7s
+17:51:19 [INFO] Epoch 6 Summary: train_loss=4.1211 | val_loss=4.0292 | lr=9.05e-06
+17:51:19 [INFO]   Temperature: mean=0.0855 min=0.0832 max=0.0913
+17:51:21 [INFO]   Checkpoint saved: latest.pt (epoch 6)
+17:51:21 [INFO]   No improvement for 4/8 epochs
+17:51:21 [INFO] 
+Epoch 7/30
+17:52:47 [INFO] Epoch 7 | Step 50/658 | Loss: 4.1264 | InfoNCE: 3.8095 | Fair_img: 0.0801 | Fair_txt: 0.0783 | Retr: 0.0000 | τ: 0.0850 | Time: 85.9s
+17:54:13 [INFO] Epoch 7 | Step 100/658 | Loss: 4.2171 | InfoNCE: 3.8807 | Fair_img: 0.0782 | Fair_txt: 0.0900 | Retr: 0.0000 | τ: 0.0848 | Time: 85.5s
+17:55:38 [INFO] Epoch 7 | Step 150/658 | Loss: 4.0530 | InfoNCE: 3.7251 | Fair_img: 0.0804 | Fair_txt: 0.0836 | Retr: 0.0000 | τ: 0.0851 | Time: 85.6s
+17:57:04 [INFO] Epoch 7 | Step 200/658 | Loss: 4.0299 | InfoNCE: 3.7192 | Fair_img: 0.0757 | Fair_txt: 0.0796 | Retr: 0.0000 | τ: 0.0845 | Time: 85.6s
+17:58:30 [INFO] Epoch 7 | Step 250/658 | Loss: 3.9306 | InfoNCE: 3.6094 | Fair_img: 0.0786 | Fair_txt: 0.0820 | Retr: 0.0000 | τ: 0.0849 | Time: 85.7s
+17:59:55 [INFO] Epoch 7 | Step 300/658 | Loss: 3.8341 | InfoNCE: 3.4921 | Fair_img: 0.0881 | Fair_txt: 0.0829 | Retr: 0.0000 | τ: 0.0858 | Time: 85.7s
+18:01:21 [INFO] Epoch 7 | Step 350/658 | Loss: 3.9890 | InfoNCE: 3.6624 | Fair_img: 0.0836 | Fair_txt: 0.0797 | Retr: 0.0000 | τ: 0.0854 | Time: 85.7s
+18:02:47 [INFO] Epoch 7 | Step 400/658 | Loss: 3.9108 | InfoNCE: 3.5499 | Fair_img: 0.0968 | Fair_txt: 0.0837 | Retr: 0.0000 | τ: 0.0865 | Time: 85.8s
+18:04:13 [INFO] Epoch 7 | Step 450/658 | Loss: 4.0188 | InfoNCE: 3.6942 | Fair_img: 0.0870 | Fair_txt: 0.0753 | Retr: 0.0000 | τ: 0.0856 | Time: 85.7s
+18:05:38 [INFO] Epoch 7 | Step 500/658 | Loss: 3.9790 | InfoNCE: 3.6111 | Fair_img: 0.1012 | Fair_txt: 0.0828 | Retr: 0.0000 | τ: 0.0869 | Time: 85.7s
+18:07:04 [INFO] Epoch 7 | Step 550/658 | Loss: 4.0694 | InfoNCE: 3.7594 | Fair_img: 0.0706 | Fair_txt: 0.0844 | Retr: 0.0000 | τ: 0.0841 | Time: 85.7s
+18:08:30 [INFO] Epoch 7 | Step 600/658 | Loss: 3.9531 | InfoNCE: 3.6018 | Fair_img: 0.0931 | Fair_txt: 0.0826 | Retr: 0.0000 | τ: 0.0863 | Time: 85.8s
+18:09:55 [INFO] Epoch 7 | Step 650/658 | Loss: 3.9772 | InfoNCE: 3.6481 | Fair_img: 0.0829 | Fair_txt: 0.0817 | Retr: 0.0000 | τ: 0.0853 | Time: 85.5s
+18:18:34 [INFO] Epoch 7 Summary: train_loss=4.0101 | val_loss=4.1796 | lr=8.72e-06
+18:18:34 [INFO]   Temperature: mean=0.0859 min=0.0835 max=0.0942
+18:18:36 [INFO]   Checkpoint saved: latest.pt (epoch 7)
+18:18:36 [INFO]   No improvement for 5/8 epochs
+18:18:36 [INFO] 
+Epoch 8/30
+18:20:02 [INFO] Epoch 8 | Step 50/658 | Loss: 3.9492 | InfoNCE: 3.6341 | Fair_img: 0.0771 | Fair_txt: 0.0805 | Retr: 0.0000 | τ: 0.0848 | Time: 85.8s
+18:21:28 [INFO] Epoch 8 | Step 100/658 | Loss: 4.1735 | InfoNCE: 3.8300 | Fair_img: 0.0771 | Fair_txt: 0.0946 | Retr: 0.0000 | τ: 0.0847 | Time: 85.3s
+18:22:53 [INFO] Epoch 8 | Step 150/658 | Loss: 3.9396 | InfoNCE: 3.6210 | Fair_img: 0.0731 | Fair_txt: 0.0862 | Retr: 0.0000 | τ: 0.0844 | Time: 85.3s
+18:24:18 [INFO] Epoch 8 | Step 200/658 | Loss: 3.9262 | InfoNCE: 3.6035 | Fair_img: 0.0808 | Fair_txt: 0.0806 | Retr: 0.0000 | τ: 0.0850 | Time: 85.3s
+18:25:44 [INFO] Epoch 8 | Step 250/658 | Loss: 3.7400 | InfoNCE: 3.4138 | Fair_img: 0.0783 | Fair_txt: 0.0848 | Retr: 0.0000 | τ: 0.0849 | Time: 85.3s
+18:27:09 [INFO] Epoch 8 | Step 300/658 | Loss: 3.6691 | InfoNCE: 3.3068 | Fair_img: 0.0951 | Fair_txt: 0.0861 | Retr: 0.0000 | τ: 0.0864 | Time: 85.3s
+18:28:34 [INFO] Epoch 8 | Step 350/658 | Loss: 3.8609 | InfoNCE: 3.5324 | Fair_img: 0.0830 | Fair_txt: 0.0812 | Retr: 0.0000 | τ: 0.0854 | Time: 85.3s
+18:30:00 [INFO] Epoch 8 | Step 400/658 | Loss: 3.7309 | InfoNCE: 3.3634 | Fair_img: 0.0971 | Fair_txt: 0.0867 | Retr: 0.0000 | τ: 0.0865 | Time: 85.3s
+18:31:25 [INFO] Epoch 8 | Step 450/658 | Loss: 3.8001 | InfoNCE: 3.4582 | Fair_img: 0.0929 | Fair_txt: 0.0781 | Retr: 0.0000 | τ: 0.0862 | Time: 85.3s
+18:32:50 [INFO] Epoch 8 | Step 500/658 | Loss: 3.7655 | InfoNCE: 3.4234 | Fair_img: 0.0859 | Fair_txt: 0.0851 | Retr: 0.0000 | τ: 0.0856 | Time: 85.3s
+18:34:16 [INFO] Epoch 8 | Step 550/658 | Loss: 3.9876 | InfoNCE: 3.6378 | Fair_img: 0.0876 | Fair_txt: 0.0872 | Retr: 0.0000 | τ: 0.0857 | Time: 85.3s
+18:35:41 [INFO] Epoch 8 | Step 600/658 | Loss: 3.8703 | InfoNCE: 3.4860 | Fair_img: 0.1036 | Fair_txt: 0.0886 | Retr: 0.0000 | τ: 0.0871 | Time: 85.3s
+18:37:06 [INFO] Epoch 8 | Step 650/658 | Loss: 3.8651 | InfoNCE: 3.5234 | Fair_img: 0.0861 | Fair_txt: 0.0847 | Retr: 0.0000 | τ: 0.0856 | Time: 85.3s
+18:45:45 [INFO] Epoch 8 Summary: train_loss=3.8841 | val_loss=4.3367 | lr=8.35e-06
+18:45:45 [INFO]   Temperature: mean=0.0863 min=0.0834 max=0.0980
+18:45:47 [INFO]   Checkpoint saved: latest.pt (epoch 8)
+18:45:47 [INFO]   No improvement for 6/8 epochs
+18:45:47 [INFO] 
+Epoch 9/30
+18:47:13 [INFO] Epoch 9 | Step 50/658 | Loss: 3.8310 | InfoNCE: 3.5000 | Fair_img: 0.0818 | Fair_txt: 0.0837 | Retr: 0.0000 | τ: 0.0852 | Time: 86.0s
+18:48:39 [INFO] Epoch 9 | Step 100/658 | Loss: 3.9527 | InfoNCE: 3.5660 | Fair_img: 0.0937 | Fair_txt: 0.0997 | Retr: 0.0000 | τ: 0.0862 | Time: 85.5s
+18:50:04 [INFO] Epoch 9 | Step 150/658 | Loss: 3.8836 | InfoNCE: 3.5389 | Fair_img: 0.0805 | Fair_txt: 0.0918 | Retr: 0.0000 | τ: 0.0850 | Time: 85.5s
+18:51:30 [INFO] Epoch 9 | Step 200/658 | Loss: 3.7706 | InfoNCE: 3.4273 | Fair_img: 0.0873 | Fair_txt: 0.0843 | Retr: 0.0000 | τ: 0.0856 | Time: 85.7s
+18:52:55 [INFO] Epoch 9 | Step 250/658 | Loss: 3.6280 | InfoNCE: 3.2974 | Fair_img: 0.0790 | Fair_txt: 0.0863 | Retr: 0.0000 | τ: 0.0849 | Time: 85.3s
+18:54:21 [INFO] Epoch 9 | Step 300/658 | Loss: 3.4628 | InfoNCE: 3.0948 | Fair_img: 0.0947 | Fair_txt: 0.0893 | Retr: 0.0000 | τ: 0.0863 | Time: 85.3s
+18:55:46 [INFO] Epoch 9 | Step 350/658 | Loss: 3.7025 | InfoNCE: 3.3629 | Fair_img: 0.0861 | Fair_txt: 0.0837 | Retr: 0.0000 | τ: 0.0856 | Time: 85.3s
+18:57:11 [INFO] Epoch 9 | Step 400/658 | Loss: 3.5583 | InfoNCE: 3.1898 | Fair_img: 0.0929 | Fair_txt: 0.0913 | Retr: 0.0000 | τ: 0.0861 | Time: 85.3s
+18:58:37 [INFO] Epoch 9 | Step 450/658 | Loss: 3.6288 | InfoNCE: 3.2948 | Fair_img: 0.0881 | Fair_txt: 0.0789 | Retr: 0.0000 | τ: 0.0858 | Time: 85.3s
+19:00:02 [INFO] Epoch 9 | Step 500/658 | Loss: 3.5887 | InfoNCE: 3.2351 | Fair_img: 0.0896 | Fair_txt: 0.0872 | Retr: 0.0000 | τ: 0.0859 | Time: 85.3s
+19:01:27 [INFO] Epoch 9 | Step 550/658 | Loss: 3.8120 | InfoNCE: 3.4588 | Fair_img: 0.0867 | Fair_txt: 0.0898 | Retr: 0.0000 | τ: 0.0856 | Time: 85.3s
+19:02:53 [INFO] Epoch 9 | Step 600/658 | Loss: 3.7108 | InfoNCE: 3.3265 | Fair_img: 0.0988 | Fair_txt: 0.0933 | Retr: 0.0000 | τ: 0.0867 | Time: 85.4s
+19:04:18 [INFO] Epoch 9 | Step 650/658 | Loss: 3.6489 | InfoNCE: 3.2728 | Fair_img: 0.1025 | Fair_txt: 0.0856 | Retr: 0.0000 | τ: 0.0870 | Time: 85.3s
+19:12:57 [INFO] Epoch 9 Summary: train_loss=3.7353 | val_loss=4.6055 | lr=7.94e-06
+19:12:57 [INFO]   Temperature: mean=0.0865 min=0.0838 max=0.1022
+19:12:59 [INFO]   Checkpoint saved: latest.pt (epoch 9)
+19:12:59 [INFO]   No improvement for 7/8 epochs
+19:12:59 [INFO] 
+Epoch 10/30
+19:14:25 [INFO] Epoch 10 | Step 50/658 | Loss: 3.6143 | InfoNCE: 3.3106 | Fair_img: 0.0660 | Fair_txt: 0.0858 | Retr: 0.0000 | τ: 0.0837 | Time: 85.9s
+19:15:50 [INFO] Epoch 10 | Step 100/658 | Loss: 3.7974 | InfoNCE: 3.4281 | Fair_img: 0.0828 | Fair_txt: 0.1019 | Retr: 0.0000 | τ: 0.0853 | Time: 85.5s
+19:17:16 [INFO] Epoch 10 | Step 150/658 | Loss: 3.5702 | InfoNCE: 3.2221 | Fair_img: 0.0792 | Fair_txt: 0.0948 | Retr: 0.0000 | τ: 0.0849 | Time: 85.5s
+19:18:41 [INFO] Epoch 10 | Step 200/658 | Loss: 3.7445 | InfoNCE: 3.4092 | Fair_img: 0.0812 | Fair_txt: 0.0864 | Retr: 0.0000 | τ: 0.0849 | Time: 85.5s
+19:20:07 [INFO] Epoch 10 | Step 250/658 | Loss: 3.4962 | InfoNCE: 3.1808 | Fair_img: 0.0728 | Fair_txt: 0.0850 | Retr: 0.0000 | τ: 0.0843 | Time: 85.5s
+19:21:32 [INFO] Epoch 10 | Step 300/658 | Loss: 3.2829 | InfoNCE: 2.9137 | Fair_img: 0.0944 | Fair_txt: 0.0902 | Retr: 0.0000 | τ: 0.0862 | Time: 85.5s
+19:22:58 [INFO] Epoch 10 | Step 350/658 | Loss: 3.6216 | InfoNCE: 3.2934 | Fair_img: 0.0792 | Fair_txt: 0.0849 | Retr: 0.0000 | τ: 0.0850 | Time: 85.5s
+19:24:23 [INFO] Epoch 10 | Step 400/658 | Loss: 3.3842 | InfoNCE: 3.0104 | Fair_img: 0.0928 | Fair_txt: 0.0940 | Retr: 0.0000 | τ: 0.0861 | Time: 85.5s
+19:25:49 [INFO] Epoch 10 | Step 450/658 | Loss: 3.4516 | InfoNCE: 3.1499 | Fair_img: 0.0723 | Fair_txt: 0.0786 | Retr: 0.0000 | τ: 0.0843 | Time: 85.5s
+19:27:14 [INFO] Epoch 10 | Step 500/658 | Loss: 3.4706 | InfoNCE: 3.1052 | Fair_img: 0.0932 | Fair_txt: 0.0895 | Retr: 0.0000 | τ: 0.0861 | Time: 85.5s
+19:28:40 [INFO] Epoch 10 | Step 550/658 | Loss: 3.6702 | InfoNCE: 3.3124 | Fair_img: 0.0847 | Fair_txt: 0.0942 | Retr: 0.0000 | τ: 0.0855 | Time: 85.5s
+19:30:05 [INFO] Epoch 10 | Step 600/658 | Loss: 3.5858 | InfoNCE: 3.1817 | Fair_img: 0.1043 | Fair_txt: 0.0977 | Retr: 0.0000 | τ: 0.0872 | Time: 85.5s
+19:31:31 [INFO] Epoch 10 | Step 650/658 | Loss: 3.5957 | InfoNCE: 3.2413 | Fair_img: 0.0910 | Fair_txt: 0.0862 | Retr: 0.0000 | τ: 0.0861 | Time: 85.5s
+19:40:11 [INFO] Epoch 10 Summary: train_loss=3.5861 | val_loss=4.7794 | lr=7.50e-06
+19:40:11 [INFO]   Temperature: mean=0.0866 min=0.0835 max=0.1053
+19:40:13 [INFO]   Checkpoint saved: latest.pt (epoch 10)
+19:40:13 [INFO]   No improvement for 8/8 epochs
+19:40:13 [INFO] Early stopping triggered at epoch 10!
+19:40:13 [INFO] Best val loss: 3.7786 (epoch 2)
+19:40:13 [INFO] 
+Training complete!
+19:40:13 [INFO] Best val loss: 3.7786
+19:40:13 [INFO] Checkpoints saved to: results/checkpoints_procfix/fairface/ViT-L_14/race/seed456

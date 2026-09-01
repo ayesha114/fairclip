@@ -1,0 +1,21 @@
+nohup: ignoring input
+SKIP ('BASELINE', 'baseline', 'ViT-B/32', 'gender', '42')
+SKIP ('BASELINE', 'baseline', 'ViT-B/32', 'age', '42')
+SKIP ('BASELINE', 'baseline', 'ViT-B/32', 'race', '42')
+SKIP ('BASELINE', 'baseline', 'ViT-B/16', 'gender', '42')
+DONE ('BASELINE', 'baseline', 'ViT-B/16', 'age', '42') [0.3553, 0.2838, 0.0791, 0.1581, '5.61e-02', 0.675, 0.208, 41.86, 81.5, 78.9]
+DONE ('BASELINE', 'baseline', 'ViT-B/16', 'race', '42') [0.6156, 0.623, 0.0463, 0.0926, '4.08e-02', 0.403, 0.157, 64.08, 81.5, 78.9]
+DONE ('BASELINE', 'baseline', 'ViT-L/14', 'gender', '42') [0.9492, 0.9492, 0.0184, 0.0368, '1.66e-02', 0.113, 0.037, 92.04, 82.1, 80.4]
+DONE ('BASELINE', 'baseline', 'ViT-L/14', 'age', '42') [0.4733, 0.4192, 0.0683, 0.1365, '4.92e-02', 0.474, 0.18, 53.78, 82.1, 80.4]
+DONE ('BASELINE', 'baseline', 'ViT-L/14', 'race', '42') [0.6188, 0.6092, 0.0364, 0.0728, '3.34e-02', 0.442, 0.157, 63.06, 82.1, 80.4]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+FAIL ('BASELINE', 'baseline', 'ViT-H/14', 'gender', '42') OutOfMemoryError('CUDA out of memory. Tried to allocate 322.00 MiB. GPU 0 has a total capacity of 7.66 GiB of which 294.56 MiB is free. Including non-PyTorch memory, this process h
+FAIL ('BASELINE', 'baseline', 'ViT-H/14', 'age', '42') OutOfMemoryError('CUDA out of memory. Tried to allocate 322.00 MiB. GPU 0 has a total capacity of 7.66 GiB of which 294.56 MiB is free. Including non-PyTorch memory, this process h
+FAIL ('BASELINE', 'baseline', 'ViT-H/14', 'race', '42') OutOfMemoryError('CUDA out of memory. Tried to allocate 322.00 MiB. GPU 0 has a total capacity of 7.66 GiB of which 294.56 MiB is free. Including non-PyTorch memory, this process h
+DONE ('MULTISEED', 'fairclip', 'ViT-B/32', 'gender', '42') [0.5288, 0.3459, 0.0029, 0.0059, '6.87e-05', 0.063, 0.011, 67.64, 76.7, 74.8]
+DONE ('MULTISEED', 'fairclip', 'ViT-B/32', 'age', '42') [0.1206, 0.0338, 0.0326, 0.0651, '3.86e-04', 0.857, 0.217, 18.78, 77.6, 74.7]
+DONE ('MULTISEED', 'fairclip', 'ViT-B/32', 'race', '42') [0.1526, 0.1237, 0.0089, 0.0179, '4.56e-05', 0.554, 0.391, 24.12, 77.9, 75.9]
+DONE ('MULTISEED', 'fairclip', 'ViT-B/16', 'gender', '42') [0.5288, 0.3459, 0.0031, 0.0061, '8.12e-05', 0.276, 0.046, 62.33, 80.6, 77.1]
+DONE ('MULTISEED', 'fairclip', 'ViT-B/16', 'age', '42') [0.1786, 0.0907, 0.034, 0.068, '5.13e-04', 1.097, 0.407, 23.27, 79.5, 76.3]
+DONE ('MULTISEED', 'fairclip', 'ViT-B/16', 'race', '42') [0.1458, 0.0665, 0.0101, 0.0202, '4.15e-05', 0.676, 0.429, 22.66, 81.6, 78.6]

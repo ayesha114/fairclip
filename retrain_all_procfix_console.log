@@ -1,0 +1,16 @@
+nohup: ignoring input
+TRAIN ViT-B/32 gender seed42 Sat Aug  8 11:20:53 AM PKT 2026
+DONE ViT-B/32 gender seed42 Sat Aug  8 12:00:41 PM PKT 2026
+TRAIN ViT-B/32 age seed42 Sat Aug  8 12:00:41 PM PKT 2026
+DONE ViT-B/32 age seed42 Sat Aug  8 12:16:08 PM PKT 2026
+TRAIN ViT-B/32 race seed42 Sat Aug  8 12:16:08 PM PKT 2026
+DONE ViT-B/32 race seed42 Sat Aug  8 12:49:30 PM PKT 2026
+TRAIN ViT-B/16 gender seed42 Sat Aug  8 12:49:30 PM PKT 2026
+DONE ViT-B/16 gender seed42 Sat Aug  8 02:39:32 PM PKT 2026
+TRAIN ViT-B/16 age seed42 Sat Aug  8 02:39:32 PM PKT 2026
+DONE ViT-B/16 age seed42 Sat Aug  8 03:54:06 PM PKT 2026
+TRAIN ViT-B/16 race seed42 Sat Aug  8 03:54:06 PM PKT 2026
+DONE ViT-B/16 race seed42 Sat Aug  8 05:59:39 PM PKT 2026
+TRAIN ViT-L/14 gender seed42 Sat Aug  8 05:59:39 PM PKT 2026
+DONE ViT-L/14 gender seed42 Sun Aug  9 12:41:56 AM PKT 2026
+TRAIN ViT-L/14 age seed42 Sun Aug  9 12:41:56 AM PKT 2026

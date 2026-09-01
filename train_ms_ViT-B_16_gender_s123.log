@@ -1,0 +1,388 @@
+17:43:47 [INFO] ============================================================
+17:43:47 [INFO] FairCLIP Training
+17:43:47 [INFO] Attribute: gender
+17:43:47 [INFO] Backbone:  ViT-B/16
+17:43:47 [INFO] Epochs:    30
+17:43:47 [INFO] Batch:     64
+17:43:47 [INFO] Lambda:    0.01
+17:43:47 [INFO] Device:    cuda
+17:43:47 [INFO] Seed:      123
+17:43:47 [INFO] ============================================================
+17:43:47 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+17:43:47 [INFO] Loaded manifest fairface.csv: 97698 rows
+17:43:47 [INFO] Filtered to split='train': 86744 rows
+17:43:47 [INFO] Loaded manifest fairface.csv: 97698 rows
+17:43:47 [INFO] Filtered to split='val': 10954 rows
+17:43:47 [INFO] Using 32 samples/group × 2 groups = 64 effective batch size
+17:43:48 [INFO]   Group 0: 45986 samples (53.0%)
+17:43:48 [INFO]   Group 1: 40758 samples (47.0%)
+17:43:48 [INFO] DemographicBalancedSampler: 2 groups, 32/group, 1273 batches/epoch, effective batch size 64
+17:43:48 [INFO] Train: 86744 samples
+17:43:48 [INFO] Val:   10954 samples
+17:43:48 [INFO] ============================================================
+17:43:48 [INFO] Initializing FairCLIP
+17:43:48 [INFO]   Backbone: ViT-B/16
+17:43:48 [INFO]   Bias directions: 8
+17:43:48 [INFO]   Lambda fair: img=0.01, txt=0.01
+17:43:48 [INFO]   Temperature: base=0.07, alpha=0.5
+17:43:48 [INFO] ============================================================
+17:43:48 [INFO] Loading CLIP backbone: ViT-B/16
+17:43:48 [INFO] Embedding dimension: 512
+17:43:48 [INFO] Device: cuda
+17:43:50 [INFO] Loaded OpenAI CLIP successfully
+17:43:50 [INFO] Backbone frozen — CLIP weights will not be updated
+17:43:50 [INFO] BiasSubspaceDiscoverer initialized with 8 bias directions
+17:43:50 [INFO] FairnessAwareLoss initialized: λ_img=0.01, λ_txt=0.01
+17:43:50 [INFO] AdaptiveTemperatureController: τ_base=0.07, α=0.5, range=[0.01, 0.5]
+17:43:50 [INFO] Fitting bias subspace on training data (Steps IV + V)...
+17:43:50 [INFO] This runs once before training starts.
+17:43:50 [INFO] Extracting CLIP embeddings for bias subspace fitting...
+17:44:19 [INFO]   Processed 5120 / 86744 samples
+17:44:48 [INFO]   Processed 10240 / 86744 samples
+17:45:17 [INFO]   Processed 15360 / 86744 samples
+17:45:46 [INFO]   Processed 20480 / 86744 samples
+17:46:15 [INFO]   Processed 25600 / 86744 samples
+17:46:44 [INFO]   Processed 30720 / 86744 samples
+17:47:13 [INFO]   Processed 35840 / 86744 samples
+17:47:42 [INFO]   Processed 40960 / 86744 samples
+17:48:10 [INFO]   Processed 46080 / 86744 samples
+17:48:39 [INFO]   Processed 51200 / 86744 samples
+17:49:08 [INFO]   Processed 56320 / 86744 samples
+17:49:37 [INFO]   Processed 61440 / 86744 samples
+17:50:06 [INFO]   Processed 66560 / 86744 samples
+17:50:35 [INFO]   Processed 71680 / 86744 samples
+17:51:04 [INFO]   Processed 76800 / 86744 samples
+17:51:33 [INFO]   Processed 81920 / 86744 samples
+17:52:02 [INFO]   Processed 87040 / 86744 samples
+17:52:31 [INFO]   Processed 92160 / 86744 samples
+17:53:00 [INFO]   Processed 97280 / 86744 samples
+17:53:29 [INFO]   Processed 102400 / 86744 samples
+17:53:58 [INFO]   Processed 107520 / 86744 samples
+17:54:27 [INFO]   Processed 112640 / 86744 samples
+17:54:56 [INFO]   Processed 117760 / 86744 samples
+17:55:25 [INFO]   Processed 122880 / 86744 samples
+17:55:54 [INFO]   Processed 128000 / 86744 samples
+17:56:23 [INFO]   Processed 133120 / 86744 samples
+17:56:52 [INFO]   Processed 138240 / 86744 samples
+17:57:21 [INFO]   Processed 143360 / 86744 samples
+17:57:50 [INFO]   Processed 148480 / 86744 samples
+17:58:19 [INFO]   Processed 153600 / 86744 samples
+17:58:48 [INFO]   Processed 158720 / 86744 samples
+17:59:17 [INFO]   Processed 163840 / 86744 samples
+17:59:45 [INFO]   Processed 168960 / 86744 samples
+18:00:11 [INFO] Fitting bias subspace for attribute: gender
+18:00:11 [INFO] Fitting image bias subspace for attribute: gender
+18:00:11 [INFO]   Input: 86744 embeddings, dim=512
+18:00:11 [INFO]   Group 0: 45986 samples, centroid norm=0.7733
+18:00:11 [INFO]   Group 1: 40758 samples, centroid norm=0.7851
+18:00:11 [INFO]   Bias direction 1: singular value=0.1842, explained variance=100.0%
+18:00:11 [INFO] Image bias subspace discovered: torch.Size([512, 1])
+18:00:11 [INFO] Fitting text bias subspace for attribute: gender
+18:00:11 [INFO]   Group 0: 1 samples, centroid norm=1.0000
+18:00:11 [INFO]   Group 1: 1 samples, centroid norm=1.0000
+18:00:11 [INFO]   Bias direction 1: singular value=0.2220, explained variance=100.0%
+18:00:11 [INFO] Text bias subspace discovered: torch.Size([512, 1])
+18:00:11 [INFO] Computing Procrustes alignment...
+18:00:11 [INFO]   Reference shape: torch.Size([512, 1])
+18:00:11 [INFO]   Source shape: torch.Size([512, 1])
+18:00:11 [INFO] Alignment complete:
+18:00:11 [INFO]   Rotation matrix shape: torch.Size([1, 1])
+18:00:11 [INFO]   Alignment error: 0.794276 (lower is better)
+18:00:11 [INFO]   det(R) = 1.0000 (should be +1.0 for pure rotation)
+18:00:11 [INFO]   Direction 1 cosine similarity after alignment: 0.6846
+18:00:11 [INFO] Procrustes alignment quality: {'alignment_error': 0.7942762970924377, 'rotation_det': 1.0, 'is_orthogonal': True}
+18:00:11 [INFO] Bias subspace set: image_dirs=torch.Size([512, 1]), text_dirs=torch.Size([512, 1])
+18:00:11 [INFO] Retrieval-skew loss wired with 8 neutral queries
+18:00:11 [INFO] Bias subspace fitted and ready for training
+18:00:11 [INFO] Bias subspace fitted successfully
+18:00:11 [INFO] GPU cache cleared after fitting. Free now: 7.11 GB
+18:00:11 [INFO] GPU cache cleared after fitting. Free now: 7.11 GB
+18:00:12 [INFO] GPU memory after fitting: 0.66GB used
+18:00:12 [INFO] Trainable parameters: 21,135,872 (last 2 layers only)
+18:00:12 [INFO] Starting training...
+18:00:12 [INFO] No checkpoint found — starting fresh.
+18:00:12 [INFO] 
+Epoch 1/30
+18:00:29 [INFO] Epoch 1 | Step 50/1273 | Loss: 3.5809 | InfoNCE: 3.5750 | Fair_img: 0.2913 | Fair_txt: 0.2989 | Retr: 0.0000 | τ: 0.1078 | Time: 17.0s
+18:00:45 [INFO] Epoch 1 | Step 100/1273 | Loss: 3.5501 | InfoNCE: 3.5443 | Fair_img: 0.3606 | Fair_txt: 0.2201 | Retr: 0.0000 | τ: 0.1120 | Time: 16.5s
+18:01:02 [INFO] Epoch 1 | Step 150/1273 | Loss: 3.5906 | InfoNCE: 3.5849 | Fair_img: 0.3358 | Fair_txt: 0.2312 | Retr: 0.0000 | τ: 0.1106 | Time: 16.5s
+18:01:18 [INFO] Epoch 1 | Step 200/1273 | Loss: 3.5021 | InfoNCE: 3.4954 | Fair_img: 0.4123 | Fair_txt: 0.2516 | Retr: 0.0000 | τ: 0.1149 | Time: 16.5s
+18:01:34 [INFO] Epoch 1 | Step 250/1273 | Loss: 3.5217 | InfoNCE: 3.5161 | Fair_img: 0.3529 | Fair_txt: 0.2117 | Retr: 0.0000 | τ: 0.1116 | Time: 16.5s
+18:01:51 [INFO] Epoch 1 | Step 300/1273 | Loss: 3.5434 | InfoNCE: 3.5382 | Fair_img: 0.3265 | Fair_txt: 0.1894 | Retr: 0.0000 | τ: 0.1100 | Time: 16.5s
+18:02:07 [INFO] Epoch 1 | Step 350/1273 | Loss: 3.6191 | InfoNCE: 3.6138 | Fair_img: 0.3023 | Fair_txt: 0.2248 | Retr: 0.0000 | τ: 0.1085 | Time: 16.5s
+18:02:24 [INFO] Epoch 1 | Step 400/1273 | Loss: 3.5081 | InfoNCE: 3.5016 | Fair_img: 0.3966 | Fair_txt: 0.2578 | Retr: 0.0000 | τ: 0.1141 | Time: 16.5s
+18:02:40 [INFO] Epoch 1 | Step 450/1273 | Loss: 3.5931 | InfoNCE: 3.5870 | Fair_img: 0.3500 | Fair_txt: 0.2558 | Retr: 0.0000 | τ: 0.1114 | Time: 16.5s
+18:02:57 [INFO] Epoch 1 | Step 500/1273 | Loss: 3.5118 | InfoNCE: 3.5058 | Fair_img: 0.3523 | Fair_txt: 0.2500 | Retr: 0.0000 | τ: 0.1115 | Time: 16.5s
+18:03:13 [INFO] Epoch 1 | Step 550/1273 | Loss: 3.5304 | InfoNCE: 3.5246 | Fair_img: 0.3356 | Fair_txt: 0.2396 | Retr: 0.0000 | τ: 0.1106 | Time: 16.5s
+18:03:30 [INFO] Epoch 1 | Step 600/1273 | Loss: 3.6899 | InfoNCE: 3.6839 | Fair_img: 0.3266 | Fair_txt: 0.2719 | Retr: 0.0000 | τ: 0.1100 | Time: 16.5s
+18:03:46 [INFO] Epoch 1 | Step 650/1273 | Loss: 3.5483 | InfoNCE: 3.5424 | Fair_img: 0.3195 | Fair_txt: 0.2661 | Retr: 0.0000 | τ: 0.1096 | Time: 16.5s
+18:04:03 [INFO] Epoch 1 | Step 700/1273 | Loss: 3.5004 | InfoNCE: 3.4944 | Fair_img: 0.3345 | Fair_txt: 0.2610 | Retr: 0.0000 | τ: 0.1105 | Time: 16.4s
+18:04:19 [INFO] Epoch 1 | Step 750/1273 | Loss: 3.5611 | InfoNCE: 3.5554 | Fair_img: 0.3006 | Fair_txt: 0.2646 | Retr: 0.0000 | τ: 0.1084 | Time: 16.5s
+18:04:35 [INFO] Epoch 1 | Step 800/1273 | Loss: 3.6862 | InfoNCE: 3.6810 | Fair_img: 0.2699 | Fair_txt: 0.2490 | Retr: 0.0000 | τ: 0.1064 | Time: 16.5s
+18:04:52 [INFO] Epoch 1 | Step 850/1273 | Loss: 3.5472 | InfoNCE: 3.5415 | Fair_img: 0.2992 | Fair_txt: 0.2727 | Retr: 0.0000 | τ: 0.1083 | Time: 16.5s
+18:05:08 [INFO] Epoch 1 | Step 900/1273 | Loss: 3.5623 | InfoNCE: 3.5567 | Fair_img: 0.2820 | Fair_txt: 0.2767 | Retr: 0.0000 | τ: 0.1072 | Time: 16.5s
+18:05:25 [INFO] Epoch 1 | Step 950/1273 | Loss: 3.5675 | InfoNCE: 3.5620 | Fair_img: 0.2967 | Fair_txt: 0.2518 | Retr: 0.0000 | τ: 0.1081 | Time: 16.5s
+18:05:41 [INFO] Epoch 1 | Step 1000/1273 | Loss: 3.6028 | InfoNCE: 3.5966 | Fair_img: 0.3351 | Fair_txt: 0.2865 | Retr: 0.0000 | τ: 0.1105 | Time: 16.5s
+18:05:58 [INFO] Epoch 1 | Step 1050/1273 | Loss: 3.6606 | InfoNCE: 3.6541 | Fair_img: 0.3369 | Fair_txt: 0.3060 | Retr: 0.0000 | τ: 0.1106 | Time: 16.5s
+18:06:14 [INFO] Epoch 1 | Step 1100/1273 | Loss: 3.5696 | InfoNCE: 3.5626 | Fair_img: 0.3767 | Fair_txt: 0.3199 | Retr: 0.0000 | τ: 0.1130 | Time: 16.5s
+18:06:31 [INFO] Epoch 1 | Step 1150/1273 | Loss: 3.5413 | InfoNCE: 3.5355 | Fair_img: 0.2961 | Fair_txt: 0.2841 | Retr: 0.0000 | τ: 0.1081 | Time: 16.4s
+18:06:47 [INFO] Epoch 1 | Step 1200/1273 | Loss: 3.4825 | InfoNCE: 3.4756 | Fair_img: 0.3756 | Fair_txt: 0.3092 | Retr: 0.0000 | τ: 0.1129 | Time: 16.5s
+18:07:04 [INFO] Epoch 1 | Step 1250/1273 | Loss: 3.6172 | InfoNCE: 3.6116 | Fair_img: 0.2794 | Fair_txt: 0.2756 | Retr: 0.0000 | τ: 0.1070 | Time: 16.6s
+18:09:19 [INFO] Epoch 1 Summary: train_loss=3.5604 | val_loss=3.5393 | lr=9.97e-06
+18:09:19 [INFO]   Temperature: mean=0.1095 min=0.0747 max=0.1171
+18:09:20 [INFO]   Checkpoint saved: latest.pt (epoch 1)
+18:09:20 [INFO]   New best model saved (epoch 1)
+18:09:20 [INFO] 
+Epoch 2/30
+18:09:36 [INFO] Epoch 2 | Step 50/1273 | Loss: 3.4933 | InfoNCE: 3.4874 | Fair_img: 0.3202 | Fair_txt: 0.2759 | Retr: 0.0000 | τ: 0.1096 | Time: 16.7s
+18:09:53 [INFO] Epoch 2 | Step 100/1273 | Loss: 3.5034 | InfoNCE: 3.4973 | Fair_img: 0.3383 | Fair_txt: 0.2779 | Retr: 0.0000 | τ: 0.1107 | Time: 16.4s
+18:10:09 [INFO] Epoch 2 | Step 150/1273 | Loss: 3.5709 | InfoNCE: 3.5654 | Fair_img: 0.2681 | Fair_txt: 0.2828 | Retr: 0.0000 | τ: 0.1062 | Time: 16.4s
+18:10:26 [INFO] Epoch 2 | Step 200/1273 | Loss: 3.4881 | InfoNCE: 3.4810 | Fair_img: 0.3796 | Fair_txt: 0.3291 | Retr: 0.0000 | τ: 0.1131 | Time: 16.4s
+18:10:42 [INFO] Epoch 2 | Step 250/1273 | Loss: 3.4901 | InfoNCE: 3.4847 | Fair_img: 0.2778 | Fair_txt: 0.2705 | Retr: 0.0000 | τ: 0.1069 | Time: 16.4s
+18:10:58 [INFO] Epoch 2 | Step 300/1273 | Loss: 3.5514 | InfoNCE: 3.5457 | Fair_img: 0.2898 | Fair_txt: 0.2728 | Retr: 0.0000 | τ: 0.1077 | Time: 16.4s
+18:11:15 [INFO] Epoch 2 | Step 350/1273 | Loss: 3.6370 | InfoNCE: 3.6313 | Fair_img: 0.2707 | Fair_txt: 0.3008 | Retr: 0.0000 | τ: 0.1064 | Time: 16.4s
+18:11:31 [INFO] Epoch 2 | Step 400/1273 | Loss: 3.4841 | InfoNCE: 3.4777 | Fair_img: 0.3391 | Fair_txt: 0.3020 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:11:48 [INFO] Epoch 2 | Step 450/1273 | Loss: 3.5337 | InfoNCE: 3.5276 | Fair_img: 0.3141 | Fair_txt: 0.2970 | Retr: 0.0000 | τ: 0.1092 | Time: 16.4s
+18:12:04 [INFO] Epoch 2 | Step 500/1273 | Loss: 3.5446 | InfoNCE: 3.5388 | Fair_img: 0.2946 | Fair_txt: 0.2841 | Retr: 0.0000 | τ: 0.1080 | Time: 16.4s
+18:12:20 [INFO] Epoch 2 | Step 550/1273 | Loss: 3.5388 | InfoNCE: 3.5325 | Fair_img: 0.3193 | Fair_txt: 0.3033 | Retr: 0.0000 | τ: 0.1096 | Time: 16.4s
+18:12:37 [INFO] Epoch 2 | Step 600/1273 | Loss: 3.6847 | InfoNCE: 3.6782 | Fair_img: 0.3299 | Fair_txt: 0.3261 | Retr: 0.0000 | τ: 0.1102 | Time: 16.4s
+18:12:53 [INFO] Epoch 2 | Step 650/1273 | Loss: 3.5480 | InfoNCE: 3.5425 | Fair_img: 0.2663 | Fair_txt: 0.2860 | Retr: 0.0000 | τ: 0.1061 | Time: 16.4s
+18:13:09 [INFO] Epoch 2 | Step 700/1273 | Loss: 3.4834 | InfoNCE: 3.4770 | Fair_img: 0.3411 | Fair_txt: 0.3057 | Retr: 0.0000 | τ: 0.1109 | Time: 16.4s
+18:13:26 [INFO] Epoch 2 | Step 750/1273 | Loss: 3.5449 | InfoNCE: 3.5387 | Fair_img: 0.3081 | Fair_txt: 0.3095 | Retr: 0.0000 | τ: 0.1089 | Time: 16.4s
+18:13:42 [INFO] Epoch 2 | Step 800/1273 | Loss: 3.6290 | InfoNCE: 3.6238 | Fair_img: 0.2458 | Fair_txt: 0.2742 | Retr: 0.0000 | τ: 0.1047 | Time: 16.4s
+18:13:59 [INFO] Epoch 2 | Step 850/1273 | Loss: 3.5731 | InfoNCE: 3.5669 | Fair_img: 0.3121 | Fair_txt: 0.3096 | Retr: 0.0000 | τ: 0.1091 | Time: 16.4s
+18:14:15 [INFO] Epoch 2 | Step 900/1273 | Loss: 3.5608 | InfoNCE: 3.5550 | Fair_img: 0.2810 | Fair_txt: 0.3009 | Retr: 0.0000 | τ: 0.1071 | Time: 16.4s
+18:14:31 [INFO] Epoch 2 | Step 950/1273 | Loss: 3.5634 | InfoNCE: 3.5575 | Fair_img: 0.2996 | Fair_txt: 0.2893 | Retr: 0.0000 | τ: 0.1083 | Time: 16.4s
+18:14:48 [INFO] Epoch 2 | Step 1000/1273 | Loss: 3.5671 | InfoNCE: 3.5608 | Fair_img: 0.3298 | Fair_txt: 0.3087 | Retr: 0.0000 | τ: 0.1102 | Time: 16.4s
+18:15:04 [INFO] Epoch 2 | Step 1050/1273 | Loss: 3.6999 | InfoNCE: 3.6927 | Fair_img: 0.3654 | Fair_txt: 0.3580 | Retr: 0.0000 | τ: 0.1123 | Time: 16.4s
+18:15:20 [INFO] Epoch 2 | Step 1100/1273 | Loss: 3.5805 | InfoNCE: 3.5735 | Fair_img: 0.3635 | Fair_txt: 0.3404 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+18:15:37 [INFO] Epoch 2 | Step 1150/1273 | Loss: 3.5463 | InfoNCE: 3.5408 | Fair_img: 0.2571 | Fair_txt: 0.2926 | Retr: 0.0000 | τ: 0.1055 | Time: 16.4s
+18:15:53 [INFO] Epoch 2 | Step 1200/1273 | Loss: 3.4924 | InfoNCE: 3.4855 | Fair_img: 0.3595 | Fair_txt: 0.3244 | Retr: 0.0000 | τ: 0.1120 | Time: 16.4s
+18:16:10 [INFO] Epoch 2 | Step 1250/1273 | Loss: 3.6257 | InfoNCE: 3.6196 | Fair_img: 0.3006 | Fair_txt: 0.3149 | Retr: 0.0000 | τ: 0.1084 | Time: 16.4s
+18:18:25 [INFO] Epoch 2 Summary: train_loss=3.5375 | val_loss=3.5412 | lr=9.89e-06
+18:18:25 [INFO]   Temperature: mean=0.1091 min=0.1015 max=0.1171
+18:18:26 [INFO]   Checkpoint saved: latest.pt (epoch 2)
+18:18:26 [INFO]   No improvement for 1/8 epochs
+18:18:26 [INFO] 
+Epoch 3/30
+18:18:43 [INFO] Epoch 3 | Step 50/1273 | Loss: 3.4857 | InfoNCE: 3.4796 | Fair_img: 0.3120 | Fair_txt: 0.2971 | Retr: 0.0000 | τ: 0.1091 | Time: 16.7s
+18:18:59 [INFO] Epoch 3 | Step 100/1273 | Loss: 3.5245 | InfoNCE: 3.5184 | Fair_img: 0.3149 | Fair_txt: 0.2914 | Retr: 0.0000 | τ: 0.1093 | Time: 16.4s
+18:19:15 [INFO] Epoch 3 | Step 150/1273 | Loss: 3.5560 | InfoNCE: 3.5502 | Fair_img: 0.2792 | Fair_txt: 0.3064 | Retr: 0.0000 | τ: 0.1070 | Time: 16.4s
+18:19:32 [INFO] Epoch 3 | Step 200/1273 | Loss: 3.4894 | InfoNCE: 3.4826 | Fair_img: 0.3536 | Fair_txt: 0.3281 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+18:19:48 [INFO] Epoch 3 | Step 250/1273 | Loss: 3.4880 | InfoNCE: 3.4813 | Fair_img: 0.3359 | Fair_txt: 0.3260 | Retr: 0.0000 | τ: 0.1106 | Time: 16.4s
+18:20:05 [INFO] Epoch 3 | Step 300/1273 | Loss: 3.5213 | InfoNCE: 3.5156 | Fair_img: 0.2830 | Fair_txt: 0.2918 | Retr: 0.0000 | τ: 0.1072 | Time: 16.4s
+18:20:21 [INFO] Epoch 3 | Step 350/1273 | Loss: 3.5346 | InfoNCE: 3.5283 | Fair_img: 0.3026 | Fair_txt: 0.3343 | Retr: 0.0000 | τ: 0.1085 | Time: 16.4s
+18:20:37 [INFO] Epoch 3 | Step 400/1273 | Loss: 3.4802 | InfoNCE: 3.4733 | Fair_img: 0.3523 | Fair_txt: 0.3324 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+18:20:54 [INFO] Epoch 3 | Step 450/1273 | Loss: 3.5330 | InfoNCE: 3.5263 | Fair_img: 0.3337 | Fair_txt: 0.3337 | Retr: 0.0000 | τ: 0.1104 | Time: 16.4s
+18:21:10 [INFO] Epoch 3 | Step 500/1273 | Loss: 3.5319 | InfoNCE: 3.5255 | Fair_img: 0.3149 | Fair_txt: 0.3214 | Retr: 0.0000 | τ: 0.1093 | Time: 16.4s
+18:21:27 [INFO] Epoch 3 | Step 550/1273 | Loss: 3.5477 | InfoNCE: 3.5408 | Fair_img: 0.3465 | Fair_txt: 0.3347 | Retr: 0.0000 | τ: 0.1112 | Time: 16.4s
+18:21:43 [INFO] Epoch 3 | Step 600/1273 | Loss: 3.6418 | InfoNCE: 3.6348 | Fair_img: 0.3602 | Fair_txt: 0.3466 | Retr: 0.0000 | τ: 0.1120 | Time: 16.4s
+18:21:59 [INFO] Epoch 3 | Step 650/1273 | Loss: 3.5206 | InfoNCE: 3.5140 | Fair_img: 0.3272 | Fair_txt: 0.3406 | Retr: 0.0000 | τ: 0.1100 | Time: 16.4s
+18:22:16 [INFO] Epoch 3 | Step 700/1273 | Loss: 3.4823 | InfoNCE: 3.4755 | Fair_img: 0.3458 | Fair_txt: 0.3295 | Retr: 0.0000 | τ: 0.1112 | Time: 16.4s
+18:22:32 [INFO] Epoch 3 | Step 750/1273 | Loss: 3.5531 | InfoNCE: 3.5466 | Fair_img: 0.3207 | Fair_txt: 0.3264 | Retr: 0.0000 | τ: 0.1096 | Time: 16.4s
+18:22:48 [INFO] Epoch 3 | Step 800/1273 | Loss: 3.6798 | InfoNCE: 3.6740 | Fair_img: 0.2714 | Fair_txt: 0.3108 | Retr: 0.0000 | τ: 0.1065 | Time: 16.4s
+18:23:05 [INFO] Epoch 3 | Step 850/1273 | Loss: 3.5569 | InfoNCE: 3.5503 | Fair_img: 0.3252 | Fair_txt: 0.3377 | Retr: 0.0000 | τ: 0.1099 | Time: 16.4s
+18:23:21 [INFO] Epoch 3 | Step 900/1273 | Loss: 3.5736 | InfoNCE: 3.5675 | Fair_img: 0.2868 | Fair_txt: 0.3276 | Retr: 0.0000 | τ: 0.1075 | Time: 16.4s
+18:23:38 [INFO] Epoch 3 | Step 950/1273 | Loss: 3.5507 | InfoNCE: 3.5441 | Fair_img: 0.3366 | Fair_txt: 0.3255 | Retr: 0.0000 | τ: 0.1106 | Time: 16.4s
+18:23:54 [INFO] Epoch 3 | Step 1000/1273 | Loss: 3.5374 | InfoNCE: 3.5304 | Fair_img: 0.3595 | Fair_txt: 0.3370 | Retr: 0.0000 | τ: 0.1120 | Time: 16.4s
+18:24:10 [INFO] Epoch 3 | Step 1050/1273 | Loss: 3.6637 | InfoNCE: 3.6564 | Fair_img: 0.3677 | Fair_txt: 0.3590 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+18:24:27 [INFO] Epoch 3 | Step 1100/1273 | Loss: 3.5811 | InfoNCE: 3.5737 | Fair_img: 0.3773 | Fair_txt: 0.3630 | Retr: 0.0000 | τ: 0.1130 | Time: 16.4s
+18:24:43 [INFO] Epoch 3 | Step 1150/1273 | Loss: 3.4937 | InfoNCE: 3.4871 | Fair_img: 0.3291 | Fair_txt: 0.3338 | Retr: 0.0000 | τ: 0.1102 | Time: 16.4s
+18:24:59 [INFO] Epoch 3 | Step 1200/1273 | Loss: 3.4772 | InfoNCE: 3.4697 | Fair_img: 0.3914 | Fair_txt: 0.3587 | Retr: 0.0000 | τ: 0.1138 | Time: 16.4s
+18:25:16 [INFO] Epoch 3 | Step 1250/1273 | Loss: 3.6355 | InfoNCE: 3.6290 | Fair_img: 0.3128 | Fair_txt: 0.3352 | Retr: 0.0000 | τ: 0.1092 | Time: 16.4s
+18:27:31 [INFO] Epoch 3 Summary: train_loss=3.5316 | val_loss=3.5569 | lr=9.76e-06
+18:27:31 [INFO]   Temperature: mean=0.1102 min=0.1032 max=0.1174
+18:27:32 [INFO]   Checkpoint saved: latest.pt (epoch 3)
+18:27:32 [INFO]   No improvement for 2/8 epochs
+18:27:32 [INFO] 
+Epoch 4/30
+18:27:48 [INFO] Epoch 4 | Step 50/1273 | Loss: 3.4953 | InfoNCE: 3.4885 | Fair_img: 0.3435 | Fair_txt: 0.3350 | Retr: 0.0000 | τ: 0.1110 | Time: 16.7s
+18:28:05 [INFO] Epoch 4 | Step 100/1273 | Loss: 3.4780 | InfoNCE: 3.4716 | Fair_img: 0.3313 | Fair_txt: 0.3112 | Retr: 0.0000 | τ: 0.1103 | Time: 16.4s
+18:28:21 [INFO] Epoch 4 | Step 150/1273 | Loss: 3.5407 | InfoNCE: 3.5338 | Fair_img: 0.3524 | Fair_txt: 0.3448 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+18:28:38 [INFO] Epoch 4 | Step 200/1273 | Loss: 3.4794 | InfoNCE: 3.4723 | Fair_img: 0.3662 | Fair_txt: 0.3476 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+18:28:54 [INFO] Epoch 4 | Step 250/1273 | Loss: 3.5019 | InfoNCE: 3.4949 | Fair_img: 0.3543 | Fair_txt: 0.3482 | Retr: 0.0000 | τ: 0.1117 | Time: 16.4s
+18:29:10 [INFO] Epoch 4 | Step 300/1273 | Loss: 3.4978 | InfoNCE: 3.4917 | Fair_img: 0.2978 | Fair_txt: 0.3125 | Retr: 0.0000 | τ: 0.1082 | Time: 16.4s
+18:29:27 [INFO] Epoch 4 | Step 350/1273 | Loss: 3.5987 | InfoNCE: 3.5922 | Fair_img: 0.2959 | Fair_txt: 0.3588 | Retr: 0.0000 | τ: 0.1081 | Time: 16.4s
+18:29:43 [INFO] Epoch 4 | Step 400/1273 | Loss: 3.4791 | InfoNCE: 3.4717 | Fair_img: 0.3761 | Fair_txt: 0.3662 | Retr: 0.0000 | τ: 0.1129 | Time: 16.4s
+18:29:59 [INFO] Epoch 4 | Step 450/1273 | Loss: 3.5912 | InfoNCE: 3.5842 | Fair_img: 0.3423 | Fair_txt: 0.3607 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+18:30:16 [INFO] Epoch 4 | Step 500/1273 | Loss: 3.5229 | InfoNCE: 3.5159 | Fair_img: 0.3487 | Fair_txt: 0.3517 | Retr: 0.0000 | τ: 0.1113 | Time: 16.4s
+18:30:32 [INFO] Epoch 4 | Step 550/1273 | Loss: 3.5375 | InfoNCE: 3.5308 | Fair_img: 0.3346 | Fair_txt: 0.3362 | Retr: 0.0000 | τ: 0.1105 | Time: 16.4s
+18:30:49 [INFO] Epoch 4 | Step 600/1273 | Loss: 3.6555 | InfoNCE: 3.6485 | Fair_img: 0.3511 | Fair_txt: 0.3535 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+18:31:05 [INFO] Epoch 4 | Step 650/1273 | Loss: 3.5482 | InfoNCE: 3.5413 | Fair_img: 0.3266 | Fair_txt: 0.3580 | Retr: 0.0000 | τ: 0.1100 | Time: 16.4s
+18:31:21 [INFO] Epoch 4 | Step 700/1273 | Loss: 3.4786 | InfoNCE: 3.4717 | Fair_img: 0.3519 | Fair_txt: 0.3366 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+18:31:38 [INFO] Epoch 4 | Step 750/1273 | Loss: 3.5004 | InfoNCE: 3.4933 | Fair_img: 0.3555 | Fair_txt: 0.3505 | Retr: 0.0000 | τ: 0.1117 | Time: 16.4s
+18:31:54 [INFO] Epoch 4 | Step 800/1273 | Loss: 3.7256 | InfoNCE: 3.7193 | Fair_img: 0.2934 | Fair_txt: 0.3369 | Retr: 0.0000 | τ: 0.1079 | Time: 16.4s
+18:32:11 [INFO] Epoch 4 | Step 850/1273 | Loss: 3.5475 | InfoNCE: 3.5405 | Fair_img: 0.3475 | Fair_txt: 0.3582 | Retr: 0.0000 | τ: 0.1113 | Time: 16.4s
+18:32:27 [INFO] Epoch 4 | Step 900/1273 | Loss: 3.5032 | InfoNCE: 3.4963 | Fair_img: 0.3349 | Fair_txt: 0.3571 | Retr: 0.0000 | τ: 0.1105 | Time: 16.4s
+18:32:43 [INFO] Epoch 4 | Step 950/1273 | Loss: 3.5501 | InfoNCE: 3.5433 | Fair_img: 0.3406 | Fair_txt: 0.3424 | Retr: 0.0000 | τ: 0.1109 | Time: 16.4s
+18:33:00 [INFO] Epoch 4 | Step 1000/1273 | Loss: 3.5405 | InfoNCE: 3.5333 | Fair_img: 0.3591 | Fair_txt: 0.3608 | Retr: 0.0000 | τ: 0.1119 | Time: 16.4s
+18:33:16 [INFO] Epoch 4 | Step 1050/1273 | Loss: 3.6510 | InfoNCE: 3.6440 | Fair_img: 0.3398 | Fair_txt: 0.3652 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:33:32 [INFO] Epoch 4 | Step 1100/1273 | Loss: 3.5789 | InfoNCE: 3.5715 | Fair_img: 0.3756 | Fair_txt: 0.3667 | Retr: 0.0000 | τ: 0.1129 | Time: 16.4s
+18:33:49 [INFO] Epoch 4 | Step 1150/1273 | Loss: 3.4956 | InfoNCE: 3.4886 | Fair_img: 0.3441 | Fair_txt: 0.3509 | Retr: 0.0000 | τ: 0.1111 | Time: 16.4s
+18:34:05 [INFO] Epoch 4 | Step 1200/1273 | Loss: 3.4766 | InfoNCE: 3.4688 | Fair_img: 0.4023 | Fair_txt: 0.3789 | Retr: 0.0000 | τ: 0.1144 | Time: 16.4s
+18:34:22 [INFO] Epoch 4 | Step 1250/1273 | Loss: 3.6352 | InfoNCE: 3.6289 | Fair_img: 0.3028 | Fair_txt: 0.3336 | Retr: 0.0000 | τ: 0.1085 | Time: 16.4s
+18:36:36 [INFO] Epoch 4 Summary: train_loss=3.5261 | val_loss=3.5718 | lr=9.57e-06
+18:36:36 [INFO]   Temperature: mean=0.1109 min=0.1039 max=0.1155
+18:36:37 [INFO]   Checkpoint saved: latest.pt (epoch 4)
+18:36:37 [INFO]   No improvement for 3/8 epochs
+18:36:37 [INFO] 
+Epoch 5/30
+18:36:54 [INFO] Epoch 5 | Step 50/1273 | Loss: 3.5298 | InfoNCE: 3.5230 | Fair_img: 0.3332 | Fair_txt: 0.3489 | Retr: 0.0000 | τ: 0.1104 | Time: 16.8s
+18:37:10 [INFO] Epoch 5 | Step 100/1273 | Loss: 3.4762 | InfoNCE: 3.4696 | Fair_img: 0.3406 | Fair_txt: 0.3215 | Retr: 0.0000 | τ: 0.1109 | Time: 16.4s
+18:37:27 [INFO] Epoch 5 | Step 150/1273 | Loss: 3.4999 | InfoNCE: 3.4930 | Fair_img: 0.3444 | Fair_txt: 0.3547 | Retr: 0.0000 | τ: 0.1111 | Time: 16.4s
+18:37:43 [INFO] Epoch 5 | Step 200/1273 | Loss: 3.4751 | InfoNCE: 3.4676 | Fair_img: 0.3818 | Fair_txt: 0.3678 | Retr: 0.0000 | τ: 0.1133 | Time: 16.4s
+18:38:00 [INFO] Epoch 5 | Step 250/1273 | Loss: 3.4767 | InfoNCE: 3.4697 | Fair_img: 0.3489 | Fair_txt: 0.3602 | Retr: 0.0000 | τ: 0.1113 | Time: 16.4s
+18:38:16 [INFO] Epoch 5 | Step 300/1273 | Loss: 3.4810 | InfoNCE: 3.4742 | Fair_img: 0.3382 | Fair_txt: 0.3412 | Retr: 0.0000 | τ: 0.1107 | Time: 16.4s
+18:38:32 [INFO] Epoch 5 | Step 350/1273 | Loss: 3.6711 | InfoNCE: 3.6646 | Fair_img: 0.2866 | Fair_txt: 0.3635 | Retr: 0.0000 | τ: 0.1075 | Time: 16.4s
+18:38:49 [INFO] Epoch 5 | Step 400/1273 | Loss: 3.4777 | InfoNCE: 3.4698 | Fair_img: 0.3957 | Fair_txt: 0.3872 | Retr: 0.0000 | τ: 0.1140 | Time: 16.4s
+18:39:05 [INFO] Epoch 5 | Step 450/1273 | Loss: 3.4936 | InfoNCE: 3.4866 | Fair_img: 0.3492 | Fair_txt: 0.3542 | Retr: 0.0000 | τ: 0.1114 | Time: 16.4s
+18:39:22 [INFO] Epoch 5 | Step 500/1273 | Loss: 3.5031 | InfoNCE: 3.4961 | Fair_img: 0.3472 | Fair_txt: 0.3584 | Retr: 0.0000 | τ: 0.1112 | Time: 16.4s
+18:39:38 [INFO] Epoch 5 | Step 550/1273 | Loss: 3.5229 | InfoNCE: 3.5162 | Fair_img: 0.3270 | Fair_txt: 0.3437 | Retr: 0.0000 | τ: 0.1100 | Time: 16.4s
+18:39:55 [INFO] Epoch 5 | Step 600/1273 | Loss: 3.5824 | InfoNCE: 3.5751 | Fair_img: 0.3578 | Fair_txt: 0.3672 | Retr: 0.0000 | τ: 0.1119 | Time: 16.4s
+18:40:11 [INFO] Epoch 5 | Step 650/1273 | Loss: 3.4765 | InfoNCE: 3.4694 | Fair_img: 0.3522 | Fair_txt: 0.3568 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+18:40:28 [INFO] Epoch 5 | Step 700/1273 | Loss: 3.4753 | InfoNCE: 3.4686 | Fair_img: 0.3403 | Fair_txt: 0.3344 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:40:44 [INFO] Epoch 5 | Step 750/1273 | Loss: 3.4838 | InfoNCE: 3.4767 | Fair_img: 0.3551 | Fair_txt: 0.3480 | Retr: 0.0000 | τ: 0.1117 | Time: 16.4s
+18:41:00 [INFO] Epoch 5 | Step 800/1273 | Loss: 3.6955 | InfoNCE: 3.6892 | Fair_img: 0.2902 | Fair_txt: 0.3337 | Retr: 0.0000 | τ: 0.1077 | Time: 16.5s
+18:41:17 [INFO] Epoch 5 | Step 850/1273 | Loss: 3.5822 | InfoNCE: 3.5750 | Fair_img: 0.3448 | Fair_txt: 0.3693 | Retr: 0.0000 | τ: 0.1111 | Time: 16.4s
+18:41:33 [INFO] Epoch 5 | Step 900/1273 | Loss: 3.5301 | InfoNCE: 3.5233 | Fair_img: 0.3309 | Fair_txt: 0.3564 | Retr: 0.0000 | τ: 0.1103 | Time: 16.4s
+18:41:50 [INFO] Epoch 5 | Step 950/1273 | Loss: 3.5608 | InfoNCE: 3.5538 | Fair_img: 0.3423 | Fair_txt: 0.3662 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+18:42:06 [INFO] Epoch 5 | Step 1000/1273 | Loss: 3.5449 | InfoNCE: 3.5376 | Fair_img: 0.3523 | Fair_txt: 0.3687 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+18:42:23 [INFO] Epoch 5 | Step 1050/1273 | Loss: 3.6132 | InfoNCE: 3.6065 | Fair_img: 0.3176 | Fair_txt: 0.3603 | Retr: 0.0000 | τ: 0.1094 | Time: 16.4s
+18:42:39 [INFO] Epoch 5 | Step 1100/1273 | Loss: 3.5717 | InfoNCE: 3.5641 | Fair_img: 0.3766 | Fair_txt: 0.3840 | Retr: 0.0000 | τ: 0.1130 | Time: 16.4s
+18:42:56 [INFO] Epoch 5 | Step 1150/1273 | Loss: 3.4911 | InfoNCE: 3.4836 | Fair_img: 0.3756 | Fair_txt: 0.3751 | Retr: 0.0000 | τ: 0.1129 | Time: 16.4s
+18:43:12 [INFO] Epoch 5 | Step 1200/1273 | Loss: 3.4747 | InfoNCE: 3.4672 | Fair_img: 0.3802 | Fair_txt: 0.3622 | Retr: 0.0000 | τ: 0.1132 | Time: 16.4s
+18:43:28 [INFO] Epoch 5 | Step 1250/1273 | Loss: 3.5752 | InfoNCE: 3.5682 | Fair_img: 0.3393 | Fair_txt: 0.3649 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:45:43 [INFO] Epoch 5 Summary: train_loss=3.5208 | val_loss=3.5841 | lr=9.33e-06
+18:45:43 [INFO]   Temperature: mean=0.1113 min=0.1053 max=0.1147
+18:45:43 [INFO]   Checkpoint saved: latest.pt (epoch 5)
+18:45:43 [INFO]   No improvement for 4/8 epochs
+18:45:43 [INFO] 
+Epoch 6/30
+18:46:00 [INFO] Epoch 6 | Step 50/1273 | Loss: 3.4864 | InfoNCE: 3.4796 | Fair_img: 0.3403 | Fair_txt: 0.3435 | Retr: 0.0000 | τ: 0.1108 | Time: 16.8s
+18:46:17 [INFO] Epoch 6 | Step 100/1273 | Loss: 3.4804 | InfoNCE: 3.4735 | Fair_img: 0.3483 | Fair_txt: 0.3434 | Retr: 0.0000 | τ: 0.1113 | Time: 16.4s
+18:46:33 [INFO] Epoch 6 | Step 150/1273 | Loss: 3.4756 | InfoNCE: 3.4683 | Fair_img: 0.3528 | Fair_txt: 0.3725 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+18:46:50 [INFO] Epoch 6 | Step 200/1273 | Loss: 3.4749 | InfoNCE: 3.4675 | Fair_img: 0.3706 | Fair_txt: 0.3703 | Retr: 0.0000 | τ: 0.1126 | Time: 16.4s
+18:47:06 [INFO] Epoch 6 | Step 250/1273 | Loss: 3.4749 | InfoNCE: 3.4672 | Fair_img: 0.3799 | Fair_txt: 0.3830 | Retr: 0.0000 | τ: 0.1131 | Time: 16.4s
+18:47:22 [INFO] Epoch 6 | Step 300/1273 | Loss: 3.4761 | InfoNCE: 3.4693 | Fair_img: 0.3289 | Fair_txt: 0.3436 | Retr: 0.0000 | τ: 0.1101 | Time: 16.4s
+18:47:39 [INFO] Epoch 6 | Step 350/1273 | Loss: 3.7245 | InfoNCE: 3.7178 | Fair_img: 0.2902 | Fair_txt: 0.3807 | Retr: 0.0000 | τ: 0.1077 | Time: 16.4s
+18:47:55 [INFO] Epoch 6 | Step 400/1273 | Loss: 3.4749 | InfoNCE: 3.4672 | Fair_img: 0.3861 | Fair_txt: 0.3773 | Retr: 0.0000 | τ: 0.1135 | Time: 16.4s
+18:48:12 [INFO] Epoch 6 | Step 450/1273 | Loss: 3.4863 | InfoNCE: 3.4789 | Fair_img: 0.3606 | Fair_txt: 0.3766 | Retr: 0.0000 | τ: 0.1120 | Time: 16.4s
+18:48:28 [INFO] Epoch 6 | Step 500/1273 | Loss: 3.4904 | InfoNCE: 3.4835 | Fair_img: 0.3395 | Fair_txt: 0.3539 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:48:45 [INFO] Epoch 6 | Step 550/1273 | Loss: 3.5099 | InfoNCE: 3.5025 | Fair_img: 0.3525 | Fair_txt: 0.3843 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+18:49:01 [INFO] Epoch 6 | Step 600/1273 | Loss: 3.6657 | InfoNCE: 3.6587 | Fair_img: 0.3331 | Fair_txt: 0.3689 | Retr: 0.0000 | τ: 0.1104 | Time: 16.4s
+18:49:17 [INFO] Epoch 6 | Step 650/1273 | Loss: 3.4750 | InfoNCE: 3.4675 | Fair_img: 0.3628 | Fair_txt: 0.3826 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+18:49:34 [INFO] Epoch 6 | Step 700/1273 | Loss: 3.5398 | InfoNCE: 3.5323 | Fair_img: 0.3640 | Fair_txt: 0.3802 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+18:49:50 [INFO] Epoch 6 | Step 750/1273 | Loss: 3.4749 | InfoNCE: 3.4671 | Fair_img: 0.3874 | Fair_txt: 0.3891 | Retr: 0.0000 | τ: 0.1136 | Time: 16.4s
+18:50:07 [INFO] Epoch 6 | Step 800/1273 | Loss: 3.6339 | InfoNCE: 3.6272 | Fair_img: 0.3111 | Fair_txt: 0.3527 | Retr: 0.0000 | τ: 0.1090 | Time: 16.4s
+18:50:23 [INFO] Epoch 6 | Step 850/1273 | Loss: 3.5116 | InfoNCE: 3.5042 | Fair_img: 0.3583 | Fair_txt: 0.3772 | Retr: 0.0000 | τ: 0.1119 | Time: 16.4s
+18:50:40 [INFO] Epoch 6 | Step 900/1273 | Loss: 3.5632 | InfoNCE: 3.5566 | Fair_img: 0.3176 | Fair_txt: 0.3421 | Retr: 0.0000 | τ: 0.1094 | Time: 16.4s
+18:50:56 [INFO] Epoch 6 | Step 950/1273 | Loss: 3.5488 | InfoNCE: 3.5419 | Fair_img: 0.3392 | Fair_txt: 0.3529 | Retr: 0.0000 | τ: 0.1108 | Time: 16.5s
+18:51:13 [INFO] Epoch 6 | Step 1000/1273 | Loss: 3.5538 | InfoNCE: 3.5466 | Fair_img: 0.3466 | Fair_txt: 0.3813 | Retr: 0.0000 | τ: 0.1112 | Time: 16.4s
+18:51:29 [INFO] Epoch 6 | Step 1050/1273 | Loss: 3.5892 | InfoNCE: 3.5822 | Fair_img: 0.3315 | Fair_txt: 0.3684 | Retr: 0.0000 | τ: 0.1103 | Time: 16.4s
+18:51:45 [INFO] Epoch 6 | Step 1100/1273 | Loss: 3.5672 | InfoNCE: 3.5601 | Fair_img: 0.3493 | Fair_txt: 0.3602 | Retr: 0.0000 | τ: 0.1114 | Time: 16.4s
+18:52:02 [INFO] Epoch 6 | Step 1150/1273 | Loss: 3.4747 | InfoNCE: 3.4673 | Fair_img: 0.3661 | Fair_txt: 0.3776 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+18:52:18 [INFO] Epoch 6 | Step 1200/1273 | Loss: 3.4753 | InfoNCE: 3.4674 | Fair_img: 0.3790 | Fair_txt: 0.4040 | Retr: 0.0000 | τ: 0.1131 | Time: 16.4s
+18:52:35 [INFO] Epoch 6 | Step 1250/1273 | Loss: 3.6505 | InfoNCE: 3.6446 | Fair_img: 0.2784 | Fair_txt: 0.3055 | Retr: 0.0000 | τ: 0.1069 | Time: 16.4s
+18:54:48 [INFO] Epoch 6 Summary: train_loss=3.5151 | val_loss=3.5827 | lr=9.05e-06
+18:54:48 [INFO]   Temperature: mean=0.1112 min=0.1039 max=0.1143
+18:54:49 [INFO]   Checkpoint saved: latest.pt (epoch 6)
+18:54:49 [INFO]   No improvement for 5/8 epochs
+18:54:49 [INFO] 
+Epoch 7/30
+18:55:06 [INFO] Epoch 7 | Step 50/1273 | Loss: 3.4752 | InfoNCE: 3.4682 | Fair_img: 0.3375 | Fair_txt: 0.3561 | Retr: 0.0000 | τ: 0.1107 | Time: 16.8s
+18:55:22 [INFO] Epoch 7 | Step 100/1273 | Loss: 3.5516 | InfoNCE: 3.5448 | Fair_img: 0.3296 | Fair_txt: 0.3564 | Retr: 0.0000 | τ: 0.1102 | Time: 16.4s
+18:55:39 [INFO] Epoch 7 | Step 150/1273 | Loss: 3.4760 | InfoNCE: 3.4689 | Fair_img: 0.3464 | Fair_txt: 0.3669 | Retr: 0.0000 | τ: 0.1112 | Time: 16.4s
+18:55:55 [INFO] Epoch 7 | Step 200/1273 | Loss: 3.4744 | InfoNCE: 3.4670 | Fair_img: 0.3741 | Fair_txt: 0.3705 | Retr: 0.0000 | τ: 0.1128 | Time: 16.4s
+18:56:12 [INFO] Epoch 7 | Step 250/1273 | Loss: 3.4749 | InfoNCE: 3.4679 | Fair_img: 0.3563 | Fair_txt: 0.3437 | Retr: 0.0000 | τ: 0.1118 | Time: 16.4s
+18:56:28 [INFO] Epoch 7 | Step 300/1273 | Loss: 3.4775 | InfoNCE: 3.4706 | Fair_img: 0.3389 | Fair_txt: 0.3471 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:56:45 [INFO] Epoch 7 | Step 350/1273 | Loss: 3.6314 | InfoNCE: 3.6246 | Fair_img: 0.3056 | Fair_txt: 0.3814 | Retr: 0.0000 | τ: 0.1087 | Time: 16.4s
+18:57:01 [INFO] Epoch 7 | Step 400/1273 | Loss: 3.4748 | InfoNCE: 3.4671 | Fair_img: 0.3791 | Fair_txt: 0.3863 | Retr: 0.0000 | τ: 0.1131 | Time: 16.4s
+18:57:18 [INFO] Epoch 7 | Step 450/1273 | Loss: 3.5546 | InfoNCE: 3.5474 | Fair_img: 0.3389 | Fair_txt: 0.3858 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+18:57:34 [INFO] Epoch 7 | Step 500/1273 | Loss: 3.4750 | InfoNCE: 3.4678 | Fair_img: 0.3547 | Fair_txt: 0.3581 | Retr: 0.0000 | τ: 0.1117 | Time: 16.4s
+18:57:50 [INFO] Epoch 7 | Step 550/1273 | Loss: 3.5008 | InfoNCE: 3.4939 | Fair_img: 0.3272 | Fair_txt: 0.3582 | Retr: 0.0000 | τ: 0.1100 | Time: 16.4s
+18:58:07 [INFO] Epoch 7 | Step 600/1273 | Loss: 3.6113 | InfoNCE: 3.6042 | Fair_img: 0.3312 | Fair_txt: 0.3847 | Retr: 0.0000 | τ: 0.1103 | Time: 16.4s
+18:58:23 [INFO] Epoch 7 | Step 650/1273 | Loss: 3.4747 | InfoNCE: 3.4671 | Fair_img: 0.3634 | Fair_txt: 0.3875 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+18:58:40 [INFO] Epoch 7 | Step 700/1273 | Loss: 3.4746 | InfoNCE: 3.4672 | Fair_img: 0.3660 | Fair_txt: 0.3747 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+18:58:56 [INFO] Epoch 7 | Step 750/1273 | Loss: 3.4744 | InfoNCE: 3.4670 | Fair_img: 0.3669 | Fair_txt: 0.3730 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+18:59:13 [INFO] Epoch 7 | Step 800/1273 | Loss: 3.6457 | InfoNCE: 3.6389 | Fair_img: 0.3143 | Fair_txt: 0.3580 | Retr: 0.0000 | τ: 0.1092 | Time: 16.4s
+18:59:29 [INFO] Epoch 7 | Step 850/1273 | Loss: 3.4753 | InfoNCE: 3.4680 | Fair_img: 0.3517 | Fair_txt: 0.3759 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+18:59:46 [INFO] Epoch 7 | Step 900/1273 | Loss: 3.4745 | InfoNCE: 3.4675 | Fair_img: 0.3505 | Fair_txt: 0.3545 | Retr: 0.0000 | τ: 0.1114 | Time: 16.4s
+19:00:02 [INFO] Epoch 7 | Step 950/1273 | Loss: 3.4781 | InfoNCE: 3.4708 | Fair_img: 0.3570 | Fair_txt: 0.3689 | Retr: 0.0000 | τ: 0.1118 | Time: 16.4s
+19:00:18 [INFO] Epoch 7 | Step 1000/1273 | Loss: 3.5320 | InfoNCE: 3.5247 | Fair_img: 0.3533 | Fair_txt: 0.3780 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+19:00:35 [INFO] Epoch 7 | Step 1050/1273 | Loss: 3.6381 | InfoNCE: 3.6313 | Fair_img: 0.3182 | Fair_txt: 0.3671 | Retr: 0.0000 | τ: 0.1095 | Time: 16.4s
+19:00:51 [INFO] Epoch 7 | Step 1100/1273 | Loss: 3.5743 | InfoNCE: 3.5670 | Fair_img: 0.3528 | Fair_txt: 0.3842 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+19:01:08 [INFO] Epoch 7 | Step 1150/1273 | Loss: 3.4746 | InfoNCE: 3.4671 | Fair_img: 0.3723 | Fair_txt: 0.3776 | Retr: 0.0000 | τ: 0.1127 | Time: 16.4s
+19:01:24 [INFO] Epoch 7 | Step 1200/1273 | Loss: 3.4744 | InfoNCE: 3.4671 | Fair_img: 0.3632 | Fair_txt: 0.3693 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+19:01:41 [INFO] Epoch 7 | Step 1250/1273 | Loss: 3.6575 | InfoNCE: 3.6511 | Fair_img: 0.3022 | Fair_txt: 0.3352 | Retr: 0.0000 | τ: 0.1085 | Time: 16.4s
+19:03:54 [INFO] Epoch 7 Summary: train_loss=3.5071 | val_loss=3.6055 | lr=8.72e-06
+19:03:54 [INFO]   Temperature: mean=0.1112 min=0.1050 max=0.1138
+19:03:55 [INFO]   Checkpoint saved: latest.pt (epoch 7)
+19:03:55 [INFO]   No improvement for 6/8 epochs
+19:03:55 [INFO] 
+Epoch 8/30
+19:04:12 [INFO] Epoch 8 | Step 50/1273 | Loss: 3.5238 | InfoNCE: 3.5172 | Fair_img: 0.3301 | Fair_txt: 0.3384 | Retr: 0.0000 | τ: 0.1102 | Time: 16.8s
+19:04:28 [INFO] Epoch 8 | Step 100/1273 | Loss: 3.4750 | InfoNCE: 3.4681 | Fair_img: 0.3430 | Fair_txt: 0.3497 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+19:04:45 [INFO] Epoch 8 | Step 150/1273 | Loss: 3.4743 | InfoNCE: 3.4671 | Fair_img: 0.3569 | Fair_txt: 0.3671 | Retr: 0.0000 | τ: 0.1118 | Time: 16.4s
+19:05:01 [INFO] Epoch 8 | Step 200/1273 | Loss: 3.4745 | InfoNCE: 3.4672 | Fair_img: 0.3626 | Fair_txt: 0.3717 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+19:05:18 [INFO] Epoch 8 | Step 250/1273 | Loss: 3.4923 | InfoNCE: 3.4850 | Fair_img: 0.3573 | Fair_txt: 0.3704 | Retr: 0.0000 | τ: 0.1118 | Time: 16.4s
+19:05:34 [INFO] Epoch 8 | Step 300/1273 | Loss: 3.5140 | InfoNCE: 3.5068 | Fair_img: 0.3493 | Fair_txt: 0.3790 | Retr: 0.0000 | τ: 0.1114 | Time: 16.4s
+19:05:51 [INFO] Epoch 8 | Step 350/1273 | Loss: 3.5743 | InfoNCE: 3.5673 | Fair_img: 0.3270 | Fair_txt: 0.3779 | Retr: 0.0000 | τ: 0.1100 | Time: 16.4s
+19:06:07 [INFO] Epoch 8 | Step 400/1273 | Loss: 3.4753 | InfoNCE: 3.4677 | Fair_img: 0.3687 | Fair_txt: 0.3835 | Retr: 0.0000 | τ: 0.1125 | Time: 16.5s
+19:06:24 [INFO] Epoch 8 | Step 450/1273 | Loss: 3.5170 | InfoNCE: 3.5098 | Fair_img: 0.3503 | Fair_txt: 0.3733 | Retr: 0.0000 | τ: 0.1114 | Time: 16.4s
+19:06:40 [INFO] Epoch 8 | Step 500/1273 | Loss: 3.4800 | InfoNCE: 3.4728 | Fair_img: 0.3520 | Fair_txt: 0.3690 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+19:06:56 [INFO] Epoch 8 | Step 550/1273 | Loss: 3.4745 | InfoNCE: 3.4675 | Fair_img: 0.3500 | Fair_txt: 0.3496 | Retr: 0.0000 | τ: 0.1114 | Time: 16.4s
+19:07:13 [INFO] Epoch 8 | Step 600/1273 | Loss: 3.5504 | InfoNCE: 3.5433 | Fair_img: 0.3381 | Fair_txt: 0.3702 | Retr: 0.0000 | τ: 0.1107 | Time: 16.4s
+19:07:29 [INFO] Epoch 8 | Step 650/1273 | Loss: 3.4747 | InfoNCE: 3.4673 | Fair_img: 0.3658 | Fair_txt: 0.3791 | Retr: 0.0000 | τ: 0.1123 | Time: 16.4s
+19:07:46 [INFO] Epoch 8 | Step 700/1273 | Loss: 3.4747 | InfoNCE: 3.4674 | Fair_img: 0.3606 | Fair_txt: 0.3685 | Retr: 0.0000 | τ: 0.1120 | Time: 16.4s
+19:08:02 [INFO] Epoch 8 | Step 750/1273 | Loss: 3.4831 | InfoNCE: 3.4758 | Fair_img: 0.3591 | Fair_txt: 0.3771 | Retr: 0.0000 | τ: 0.1119 | Time: 16.4s
+19:08:19 [INFO] Epoch 8 | Step 800/1273 | Loss: 3.5723 | InfoNCE: 3.5656 | Fair_img: 0.3259 | Fair_txt: 0.3468 | Retr: 0.0000 | τ: 0.1100 | Time: 16.4s
+19:08:35 [INFO] Epoch 8 | Step 850/1273 | Loss: 3.4746 | InfoNCE: 3.4673 | Fair_img: 0.3544 | Fair_txt: 0.3792 | Retr: 0.0000 | τ: 0.1117 | Time: 16.4s
+19:08:52 [INFO] Epoch 8 | Step 900/1273 | Loss: 3.4750 | InfoNCE: 3.4682 | Fair_img: 0.3427 | Fair_txt: 0.3416 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+19:09:08 [INFO] Epoch 8 | Step 950/1273 | Loss: 3.4742 | InfoNCE: 3.4669 | Fair_img: 0.3600 | Fair_txt: 0.3682 | Retr: 0.0000 | τ: 0.1120 | Time: 16.4s
+19:09:24 [INFO] Epoch 8 | Step 1000/1273 | Loss: 3.5421 | InfoNCE: 3.5354 | Fair_img: 0.3216 | Fair_txt: 0.3449 | Retr: 0.0000 | τ: 0.1097 | Time: 16.4s
+19:09:41 [INFO] Epoch 8 | Step 1050/1273 | Loss: 3.5737 | InfoNCE: 3.5670 | Fair_img: 0.3206 | Fair_txt: 0.3542 | Retr: 0.0000 | τ: 0.1096 | Time: 16.4s
+19:09:57 [INFO] Epoch 8 | Step 1100/1273 | Loss: 3.5607 | InfoNCE: 3.5536 | Fair_img: 0.3436 | Fair_txt: 0.3663 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+19:10:14 [INFO] Epoch 8 | Step 1150/1273 | Loss: 3.4742 | InfoNCE: 3.4668 | Fair_img: 0.3720 | Fair_txt: 0.3749 | Retr: 0.0000 | τ: 0.1127 | Time: 16.4s
+19:10:30 [INFO] Epoch 8 | Step 1200/1273 | Loss: 3.4740 | InfoNCE: 3.4669 | Fair_img: 0.3533 | Fair_txt: 0.3513 | Retr: 0.0000 | τ: 0.1116 | Time: 16.4s
+19:10:47 [INFO] Epoch 8 | Step 1250/1273 | Loss: 3.5666 | InfoNCE: 3.5594 | Fair_img: 0.3440 | Fair_txt: 0.3806 | Retr: 0.0000 | τ: 0.1111 | Time: 16.4s
+19:13:01 [INFO] Epoch 8 Summary: train_loss=3.5029 | val_loss=3.5912 | lr=8.35e-06
+19:13:01 [INFO]   Temperature: mean=0.1111 min=0.1045 max=0.1133
+19:13:02 [INFO]   Checkpoint saved: latest.pt (epoch 8)
+19:13:02 [INFO]   No improvement for 7/8 epochs
+19:13:02 [INFO] 
+Epoch 9/30
+19:13:18 [INFO] Epoch 9 | Step 50/1273 | Loss: 3.4791 | InfoNCE: 3.4717 | Fair_img: 0.3524 | Fair_txt: 0.3884 | Retr: 0.0000 | τ: 0.1116 | Time: 16.8s
+19:13:35 [INFO] Epoch 9 | Step 100/1273 | Loss: 3.4753 | InfoNCE: 3.4684 | Fair_img: 0.3430 | Fair_txt: 0.3376 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+19:13:51 [INFO] Epoch 9 | Step 150/1273 | Loss: 3.4748 | InfoNCE: 3.4674 | Fair_img: 0.3628 | Fair_txt: 0.3761 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+19:14:08 [INFO] Epoch 9 | Step 200/1273 | Loss: 3.4749 | InfoNCE: 3.4676 | Fair_img: 0.3625 | Fair_txt: 0.3651 | Retr: 0.0000 | τ: 0.1121 | Time: 16.4s
+19:14:24 [INFO] Epoch 9 | Step 250/1273 | Loss: 3.4743 | InfoNCE: 3.4670 | Fair_img: 0.3663 | Fair_txt: 0.3707 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+19:14:41 [INFO] Epoch 9 | Step 300/1273 | Loss: 3.5659 | InfoNCE: 3.5592 | Fair_img: 0.3246 | Fair_txt: 0.3471 | Retr: 0.0000 | τ: 0.1099 | Time: 16.4s
+19:14:57 [INFO] Epoch 9 | Step 350/1273 | Loss: 3.5428 | InfoNCE: 3.5357 | Fair_img: 0.3356 | Fair_txt: 0.3732 | Retr: 0.0000 | τ: 0.1106 | Time: 16.4s
+19:15:13 [INFO] Epoch 9 | Step 400/1273 | Loss: 3.4747 | InfoNCE: 3.4667 | Fair_img: 0.3895 | Fair_txt: 0.4138 | Retr: 0.0000 | τ: 0.1137 | Time: 16.4s
+19:15:30 [INFO] Epoch 9 | Step 450/1273 | Loss: 3.5424 | InfoNCE: 3.5356 | Fair_img: 0.3371 | Fair_txt: 0.3502 | Retr: 0.0000 | τ: 0.1106 | Time: 16.4s
+19:15:46 [INFO] Epoch 9 | Step 500/1273 | Loss: 3.4747 | InfoNCE: 3.4674 | Fair_img: 0.3569 | Fair_txt: 0.3666 | Retr: 0.0000 | τ: 0.1118 | Time: 16.4s
+19:16:03 [INFO] Epoch 9 | Step 550/1273 | Loss: 3.4748 | InfoNCE: 3.4679 | Fair_img: 0.3510 | Fair_txt: 0.3461 | Retr: 0.0000 | τ: 0.1115 | Time: 16.4s
+19:16:19 [INFO] Epoch 9 | Step 600/1273 | Loss: 3.4912 | InfoNCE: 3.4841 | Fair_img: 0.3477 | Fair_txt: 0.3645 | Retr: 0.0000 | τ: 0.1113 | Time: 16.4s
+19:16:36 [INFO] Epoch 9 | Step 650/1273 | Loss: 3.4749 | InfoNCE: 3.4675 | Fair_img: 0.3640 | Fair_txt: 0.3778 | Retr: 0.0000 | τ: 0.1122 | Time: 16.6s
+19:16:52 [INFO] Epoch 9 | Step 700/1273 | Loss: 3.4744 | InfoNCE: 3.4671 | Fair_img: 0.3610 | Fair_txt: 0.3610 | Retr: 0.0000 | τ: 0.1121 | Time: 16.4s
+19:17:08 [INFO] Epoch 9 | Step 750/1273 | Loss: 3.4753 | InfoNCE: 3.4678 | Fair_img: 0.3666 | Fair_txt: 0.3799 | Retr: 0.0000 | τ: 0.1124 | Time: 16.4s
+19:17:25 [INFO] Epoch 9 | Step 800/1273 | Loss: 3.5833 | InfoNCE: 3.5766 | Fair_img: 0.3192 | Fair_txt: 0.3538 | Retr: 0.0000 | τ: 0.1095 | Time: 16.4s
+19:17:41 [INFO] Epoch 9 | Step 850/1273 | Loss: 3.4935 | InfoNCE: 3.4866 | Fair_img: 0.3390 | Fair_txt: 0.3522 | Retr: 0.0000 | τ: 0.1108 | Time: 16.4s
+19:17:58 [INFO] Epoch 9 | Step 900/1273 | Loss: 3.5666 | InfoNCE: 3.5596 | Fair_img: 0.3309 | Fair_txt: 0.3659 | Retr: 0.0000 | τ: 0.1103 | Time: 16.4s
+19:18:14 [INFO] Epoch 9 | Step 950/1273 | Loss: 3.4743 | InfoNCE: 3.4670 | Fair_img: 0.3637 | Fair_txt: 0.3686 | Retr: 0.0000 | τ: 0.1122 | Time: 16.4s
+19:18:31 [INFO] Epoch 9 | Step 1000/1273 | Loss: 3.4761 | InfoNCE: 3.4689 | Fair_img: 0.3552 | Fair_txt: 0.3679 | Retr: 0.0000 | τ: 0.1117 | Time: 16.4s
+19:18:47 [INFO] Epoch 9 | Step 1050/1273 | Loss: 3.5703 | InfoNCE: 3.5632 | Fair_img: 0.3424 | Fair_txt: 0.3719 | Retr: 0.0000 | τ: 0.1110 | Time: 16.4s
+19:19:03 [INFO] Epoch 9 | Step 1100/1273 | Loss: 3.4744 | InfoNCE: 3.4669 | Fair_img: 0.3694 | Fair_txt: 0.3785 | Retr: 0.0000 | τ: 0.1125 | Time: 16.4s
+19:19:20 [INFO] Epoch 9 | Step 1150/1273 | Loss: 3.4742 | InfoNCE: 3.4670 | Fair_img: 0.3569 | Fair_txt: 0.3558 | Retr: 0.0000 | τ: 0.1118 | Time: 16.4s
+19:19:36 [INFO] Epoch 9 | Step 1200/1273 | Loss: 3.4747 | InfoNCE: 3.4677 | Fair_img: 0.3485 | Fair_txt: 0.3519 | Retr: 0.0000 | τ: 0.1113 | Time: 16.4s
+19:19:53 [INFO] Epoch 9 | Step 1250/1273 | Loss: 3.5580 | InfoNCE: 3.5512 | Fair_img: 0.3187 | Fair_txt: 0.3589 | Retr: 0.0000 | τ: 0.1095 | Time: 16.4s
+19:22:06 [INFO] Epoch 9 Summary: train_loss=3.4970 | val_loss=3.6109 | lr=7.94e-06
+19:22:06 [INFO]   Temperature: mean=0.1114 min=0.1058 max=0.1140
+19:22:07 [INFO]   Checkpoint saved: latest.pt (epoch 9)
+19:22:07 [INFO]   No improvement for 8/8 epochs
+19:22:07 [INFO] Early stopping triggered at epoch 9!
+19:22:07 [INFO] Best val loss: 3.5393 (epoch 1)
+19:22:07 [INFO] 
+Training complete!
+19:22:07 [INFO] Best val loss: 3.5393
+19:22:07 [INFO] Checkpoints saved to: results/checkpoints_procfix/fairface/ViT-B_16/gender/seed123

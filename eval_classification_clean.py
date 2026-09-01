@@ -25,6 +25,8 @@ def main():
     ap.add_argument("--attribute",required=True);ap.add_argument("--backbone",default="ViT-B/32")
     ap.add_argument("--seed",type=int,default=42);ap.add_argument("--rounds",type=int,default=14)
     ap.add_argument("--n_dirs",type=int,default=5);ap.add_argument("--baseline",action="store_true")
+    ap.add_argument("--model_path",default=None)
+    ap.add_argument("--model_path",default=None)
     a=ap.parse_args()
     cfg=OmegaConf.load("configs/datasets/local_paths.yaml")
     dev="cuda" if torch.cuda.is_available() else "cpu"
@@ -32,7 +34,7 @@ def main():
     if a.baseline:
         m=FairCLIP(model_name=a.backbone,device=dev)
     else:
-        ck=f"results/checkpoints/fairface/{bb}/{a.attribute}/seed{a.seed}/best_model.pt"
+        ck=a.model_path if a.model_path else f"results/checkpoints/fairface/{bb}/{a.attribute}/seed{a.seed}/best_model.pt"
         m=FairCLIP(model_name=a.backbone,device=dev);m.load(ck)
     m.eval()
     occ=m.backbone.encode_text(OCCUPATION_PROMPTS).cpu().float();occ=occ/occ.norm(dim=-1,keepdim=True)

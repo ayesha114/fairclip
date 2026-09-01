@@ -1,0 +1,32 @@
+nohup: ignoring input
+TRAIN no_fairloss gender Sat Aug 29 10:26:49 AM PKT 2026
+DONE no_fairloss gender Sat Aug 29 10:51:32 AM PKT 2026
+TRAIN no_temp gender Sat Aug 29 10:51:32 AM PKT 2026
+DONE no_temp gender Sat Aug 29 11:16:10 AM PKT 2026
+TRAIN no_trainproj gender Sat Aug 29 11:16:10 AM PKT 2026
+DONE no_trainproj gender Sat Aug 29 11:40:49 AM PKT 2026
+TRAIN no_procrustes gender Sat Aug 29 11:40:49 AM PKT 2026
+DONE no_procrustes gender Sat Aug 29 12:05:33 PM PKT 2026
+TRAIN no_subspace gender Sat Aug 29 12:05:33 PM PKT 2026
+DONE no_subspace gender Sat Aug 29 12:26:06 PM PKT 2026
+TRAIN no_fairloss age Sat Aug 29 12:26:06 PM PKT 2026
+DONE no_fairloss age Sat Aug 29 12:37:18 PM PKT 2026
+TRAIN no_temp age Sat Aug 29 12:37:18 PM PKT 2026
+DONE no_temp age Sat Aug 29 12:47:36 PM PKT 2026
+TRAIN no_trainproj age Sat Aug 29 12:47:36 PM PKT 2026
+DONE no_trainproj age Sat Aug 29 12:57:55 PM PKT 2026
+TRAIN no_procrustes age Sat Aug 29 12:57:55 PM PKT 2026
+DONE no_procrustes age Sat Aug 29 01:08:14 PM PKT 2026
+TRAIN no_subspace age Sat Aug 29 01:08:14 PM PKT 2026
+DONE no_subspace age Sat Aug 29 01:14:26 PM PKT 2026
+TRAIN no_fairloss race Sat Aug 29 01:14:26 PM PKT 2026
+DONE no_fairloss race Sat Aug 29 01:39:17 PM PKT 2026
+TRAIN no_temp race Sat Aug 29 01:39:17 PM PKT 2026
+DONE no_temp race Sat Aug 29 02:04:04 PM PKT 2026
+TRAIN no_trainproj race Sat Aug 29 02:04:04 PM PKT 2026
+DONE no_trainproj race Sat Aug 29 02:28:53 PM PKT 2026
+TRAIN no_procrustes race Sat Aug 29 02:28:53 PM PKT 2026
+DONE no_procrustes race Sat Aug 29 02:50:46 PM PKT 2026
+TRAIN no_subspace race Sat Aug 29 02:50:46 PM PKT 2026
+DONE no_subspace race Sat Aug 29 03:08:30 PM PKT 2026
+ABL DONE Sat Aug 29 03:08:30 PM PKT 2026

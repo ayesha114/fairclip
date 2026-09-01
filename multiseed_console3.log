@@ -1,0 +1,14 @@
+nohup: ignoring input
+SKIP ViT-B/32 gender s123
+SKIP ViT-B/32 age s123
+SKIP ViT-B/32 race s123
+SKIP ViT-B/16 gender s123
+SKIP ViT-B/16 age s123
+SKIP ViT-B/16 race s123
+SKIP ViT-L/14 gender s123
+SKIP ViT-L/14 age s123
+SKIP ViT-L/14 race s123
+TRAIN ViT-H/14 gender s123 Tue Aug 25 09:34:24 AM PKT 2026
+./train_multiseed.sh: line 7: 94483 Killed                  python -m training.train --dataset fairface --attribute $attr --backbone $bb --epochs 30 --patience 8 --batch_size 64 --lambda_fair $lf --n_bias_dirs 8 --seed $seed --output_dir results/checkpoints_procfix > "train_ms_${bbs}_${attr}_s${seed}.log" 2>&1
+DONE ViT-H/14 gender s123 Tue Aug 25 09:36:49 AM PKT 2026
+TRAIN ViT-H/14 age s123 Tue Aug 25 09:36:49 AM PKT 2026

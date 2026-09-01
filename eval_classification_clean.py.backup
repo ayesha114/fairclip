@@ -1,0 +1,58 @@
+import argparse, os, torch
+from omegaconf import OmegaConf
+from torch.utils.data import DataLoader
+from models.fairclip import FairCLIP
+from models.bias_subspace import BiasSubspaceDiscoverer
+from data.datasets import FaceDataset, collate_dict
+from evaluation.metrics.all_metrics import (compute_dpg_occupation, compute_eod_occupation,
+    compute_rbs, OCCUPATION_PROMPTS)
+
+def enc(m,cfg,ds,attr,split,dev,bb,cap=None):
+    d=FaceDataset(cfg[ds].manifest,split=split,train=False)
+    ebs=16 if bb in("ViT-L/14","ViT-H/14") else 64
+    ld=DataLoader(d,batch_size=ebs,shuffle=False,collate_fn=collate_dict,num_workers=2)
+    E,L=[],[]
+    with torch.no_grad():
+        for b in ld:
+            E.append(m.backbone.encode_images(b["image"].to(dev)).cpu());L.append(b[attr].clone().detach())
+            if cap and sum(x.shape[0] for x in E)>=cap:break
+    E=torch.cat(E).float();L=torch.cat(L)
+    if cap:E,L=E[:cap],L[:cap]
+    return E/E.norm(dim=-1,keepdim=True),L
+
+def main():
+    ap=argparse.ArgumentParser()
+    ap.add_argument("--attribute",required=True);ap.add_argument("--backbone",default="ViT-B/32")
+    ap.add_argument("--seed",type=int,default=42);ap.add_argument("--rounds",type=int,default=14)
+    ap.add_argument("--n_dirs",type=int,default=5);ap.add_argument("--baseline",action="store_true")
+    ap.add_argument("--model_path",default=None)
+    a=ap.parse_args()
+    cfg=OmegaConf.load("configs/datasets/local_paths.yaml")
+    dev="cuda" if torch.cuda.is_available() else "cpu"
+    bb=a.backbone.replace("/","_")
+    if a.baseline:
+        m=FairCLIP(model_name=a.backbone,device=dev)
+    else:
+        ck=a.model_path if a.model_path else f"results/checkpoints/fairface/{bb}/{a.attribute}/seed{a.seed}/best_model.pt"
+        m=FairCLIP(model_name=a.backbone,device=dev);m.load(ck)
+    m.eval()
+    occ=m.backbone.encode_text(OCCUPATION_PROMPTS).cpu().float();occ=occ/occ.norm(dim=-1,keepdim=True)
+    tr,trl=enc(m,cfg,"fairface",a.attribute,"train",dev,a.backbone,cap=20000)
+    va,val=enc(m,cfg,"fairface",a.attribute,"val",dev,a.backbone)
+    def fit(E,l,k):
+        g=sorted(l.unique().tolist());c=torch.stack([E[l==x].mean(0) for x in g])
+        _,_,Vt=torch.linalg.svd(c-c.mean(0,keepdim=True),full_matrices=False);return Vt.T[:,:k]
+    def proj(E,B):d=E-(E@B)@B.T;return d/d.norm(dim=-1,keepdim=True).clamp(min=1e-8)
+    # baseline = no projection; fairclip = iterative fit-on-train
+    if not a.baseline:
+        tr2,va2,occ2=tr.clone(),va.clone(),occ.clone()
+        for _ in range(a.rounds):
+            B=fit(tr2,trl,a.n_dirs);tr2=proj(tr2,B);va2=proj(va2,B);occ2=proj(occ2,B)
+        va,occ=va2,occ2
+    dpg=compute_dpg_occupation(va,occ,val)
+    eod=compute_eod_occupation(va,occ,val)
+    rbs=compute_rbs(va,val)
+    tag="BASELINE" if a.baseline else "FairCLIP(iter)"
+    print(f"{tag} {a.backbone} {a.attribute}: DPG={dpg:.4f} EOD={eod:.4f} RBS={rbs:.4f}")
+
+if __name__=="__main__":main()

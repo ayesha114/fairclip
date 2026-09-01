@@ -1,0 +1,6 @@
+nohup: ignoring input
+TRAIN ViT-B/16 race Fri Aug 21 02:27:30 PM PKT 2026
+DONE ViT-B/16 race Fri Aug 21 04:53:26 PM PKT 2026
+TRAIN ViT-B/16 age Fri Aug 21 04:53:26 PM PKT 2026
+DONE ViT-B/16 age Fri Aug 21 06:55:01 PM PKT 2026
+TRAIN ViT-L/14 race Fri Aug 21 06:55:01 PM PKT 2026

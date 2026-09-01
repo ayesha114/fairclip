@@ -1,2 +1,2 @@
 method,backbone,attribute,accuracy,precision,recall,f1,dpg,eod,rbs,facet_bias_score,maxskew_5,ndkl,able,vl_alignment,bias_level,TR@1,TR@5,TR@10,IR@1,IR@5,IR@10
-FairCLIP_ViT-H_14,ViT-H/14,race,0.7539,1.0,0.7539,0.8597,0.3067,0.3067,0.0613,1.9826,1.9826,1.1129,23.29,0.7539,1.9826,0.0,71.43,100.0,0.0,85.71,100.0
+FairCLIP_ViT-H_14,ViT-H/14,race,0.7542,1.0,0.7542,0.8598,0.1407,0.2813,0.0613,1.2295,1.2295,1.1062,42.15,0.7542,1.2295,0.0,71.43,100.0,0.0,85.71,100.0

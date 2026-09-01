@@ -1,0 +1,90 @@
+12:33:48 [INFO] ============================================================
+12:33:48 [INFO] FairCLIP Training
+12:33:48 [INFO] Attribute: race
+12:33:48 [INFO] Backbone:  ViT-H/14
+12:33:48 [INFO] Epochs:    30
+12:33:48 [INFO] Batch:     8
+12:33:48 [INFO] Lambda:    1.0
+12:33:48 [INFO] Device:    cuda
+12:33:48 [INFO] Seed:      123
+12:33:48 [INFO] ============================================================
+12:33:48 [INFO] Dataset: fairface  manifest: results/manifests/fairface.csv
+12:33:49 [INFO] Loaded manifest fairface.csv: 97698 rows
+12:33:49 [INFO] Filtered to split='train': 86744 rows
+12:33:49 [INFO] Loaded manifest fairface.csv: 97698 rows
+12:33:49 [INFO] Filtered to split='val': 10954 rows
+12:33:49 [INFO] Using 14 samples/group × 7 groups = 98 effective batch size
+12:33:49 [INFO]   Group 0: 16527 samples (19.1%)
+12:33:49 [INFO]   Group 1: 12233 samples (14.1%)
+12:33:49 [INFO]   Group 2: 13367 samples (15.4%)
+12:33:49 [INFO]   Group 3: 12287 samples (14.2%)
+12:33:49 [INFO]   Group 4: 10795 samples (12.4%)
+12:33:49 [INFO]   Group 5: 12319 samples (14.2%)
+12:33:49 [INFO]   Group 6: 9216 samples (10.6%)
+12:33:49 [INFO] DemographicBalancedSampler: 7 groups, 14/group, 658 batches/epoch, effective batch size 98
+12:33:49 [INFO] Train: 86744 samples
+12:33:49 [INFO] Val:   10954 samples
+12:33:49 [INFO] ============================================================
+12:33:49 [INFO] Initializing FairCLIP
+12:33:49 [INFO]   Backbone: ViT-H/14
+12:33:49 [INFO]   Bias directions: 5
+12:33:49 [INFO]   Lambda fair: img=1.0, txt=1.0
+12:33:49 [INFO]   Temperature: base=0.07, alpha=0.5
+12:33:49 [INFO] ============================================================
+12:33:49 [INFO] Loading CLIP backbone: ViT-H/14
+12:33:49 [INFO] Embedding dimension: 1024
+12:33:49 [INFO] Device: cuda
+12:33:49 [INFO] Parsing model identifier. Schema: None, Identifier: ViT-H-14
+12:33:49 [INFO] Loaded built-in ViT-H-14 model config.
+12:33:50 [INFO] HTTP Request: HEAD https://huggingface.co/laion/CLIP-ViT-H-14-laion2B-s32B-b79K/resolve/main/open_clip_model.safetensors "HTTP/1.1 302 Found"
+12:33:50 [INFO] Instantiating model architecture: CLIP
+Traceback (most recent call last):
+  File "/home/ayeshakalsoom/Downloads/thesis/models/clip_backbone.py", line 131, in _load_clip
+    model, _, preprocess = open_clip.create_model_and_transforms(
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/open_clip/factory.py", line 930, in create_model_and_transforms
+    model = create_model(
+            ^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/open_clip/factory.py", line 502, in create_model
+    _set_model_device_and_precision(model, device, precision, is_timm_model)
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/open_clip/factory.py", line 787, in _set_model_device_and_precision
+    model.to(device=device)
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1152, in to
+    return self._apply(convert)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 802, in _apply
+    module._apply(fn)
+  [Previous line repeated 3 more times]
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 825, in _apply
+    param_applied = fn(param)
+                    ^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/fairclip-thesis/venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1150, in convert
+    return t.to(device, dtype if t.is_floating_point() or t.is_complex() else None, non_blocking)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 26.00 MiB. GPU 0 has a total capacity of 7.78 GiB of which 35.50 MiB is free. Process 25533 has 552.00 MiB memory in use. Process 88697 has 5.97 GiB memory in use. Including non-PyTorch memory, this process has 902.00 MiB memory in use. Of the allocated memory 803.57 MiB is allocated by PyTorch, and 18.43 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 663, in <module>
+    main()
+  File "/home/ayeshakalsoom/Downloads/thesis/training/train.py", line 455, in main
+    model = FairCLIP(
+            ^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/fairclip.py", line 103, in __init__
+    self.backbone = CLIPBackbone(
+                    ^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/clip_backbone.py", line 89, in __init__
+    self.clip_model, self.preprocess = self._load_clip(model_name, device)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ayeshakalsoom/Downloads/thesis/models/clip_backbone.py", line 145, in _load_clip
+    raise RuntimeError(
+RuntimeError: Could not load CLIP. Tried both OpenAI CLIP and OpenCLIP.
+Last error: CUDA out of memory. Tried to allocate 26.00 MiB. GPU 0 has a total capacity of 7.78 GiB of which 35.50 MiB is free. Process 25533 has 552.00 MiB memory in use. Process 88697 has 5.97 GiB memory in use. Including non-PyTorch memory, this process has 902.00 MiB memory in use. Of the allocated memory 803.57 MiB is allocated by PyTorch, and 18.43 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Install with: pip install git+https://github.com/openai/CLIP.git
