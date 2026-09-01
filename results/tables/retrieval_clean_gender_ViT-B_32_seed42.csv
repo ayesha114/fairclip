@@ -1,2 +1,2 @@
 attribute,backbone,seed,MaxSkew,NDKL,Zhang_MS,Zhang_NDKL,beats
-gender,ViT-B/32,42,0.0645,0.0101,0.09,0.03,YES
+gender,ViT-B/32,42,0.0356,0.0104,0.09,0.03,YES
