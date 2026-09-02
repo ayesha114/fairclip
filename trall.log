@@ -1,0 +1,24 @@
+nohup: ignoring input
+DONE base ViT-B/32
+DONE ViT-B/32 gender
+DONE ViT-B/32 age
+DONE ViT-B/32 race
+DONE base ViT-B/16
+DONE ViT-B/16 gender
+DONE ViT-B/16 age
+DONE ViT-B/16 race
+DONE base ViT-L/14
+DONE ViT-L/14 gender
+DONE ViT-L/14 age
+DONE ViT-L/14 race
+DONE base ViT-H/14
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 gender
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 age
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE ViT-H/14 race
+FINISHED

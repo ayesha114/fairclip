@@ -39,7 +39,7 @@ def dpg(pred,l,n):
     return float(np.mean([max([(pred[l==g]==c).float().mean().item() for g in sorted(l.unique().tolist())])
                         - min([(pred[l==g]==c).float().mean().item() for g in sorted(l.unique().tolist())]) for c in range(n)]))
 rows=[]
-for bb,bbt,bs in [("ViT-B/16","ViT-B_16",32),("ViT-L/14","ViT-L_14",16),("ViT-H/14","ViT-H_14",8)]:
+for bb,bbt,bs in [("ViT-B/32","ViT-B_32",64),("ViT-B/16","ViT-B_16",32),("ViT-L/14","ViT-L_14",16),("ViT-H/14","ViT-H_14",8)]:
     for attr in ["gender","age","race"]:
         for method in ["FairCLIP"]:
             ck=f"results/checkpoints/fairface/{bbt}/{attr}/seed{SEED}/best_model.pt"

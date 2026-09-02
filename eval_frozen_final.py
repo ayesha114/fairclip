@@ -20,4 +20,4 @@ if Bi is not None:
 m.eval()
 with torch.no_grad():
     r=evaluate_retrieval(m,dataset="flickr30k",max_samples=1000,device="cuda")
-print(f"[{a.backbone}] TR@5={r.get('TR@5',0):.1f} IR@5={r.get('IR@5',0):.1f}")
+print(f"[{a.backbone}] TR@1={r.get('TR@1',0):.1f} TR@5={r.get('TR@5',0):.1f} TR@10={r.get('TR@10',0):.1f} IR@1={r.get('IR@1',0):.1f} IR@5={r.get('IR@5',0):.1f} IR@10={r.get('IR@10',0):.1f}")

@@ -1,0 +1,16 @@
+Hardware: NVIDIA RTX 3050 (8GB), Ubuntu 22.04, PyTorch 2.2.2, CUDA 12.2
+Trainable parameters: 21,135,872 (last 2 transformer blocks + projections)
+Batch size 64 (B/32,B/16) / 16 (L/14) / 8 (H/14), mixed precision, early stopping patience 5
+
+Backbone   Training time per cell    Epochs
+ViT-B/32   ~10-25 min                6-8
+ViT-B/16   ~35-50 min                6-8
+ViT-L/14   ~2-3 h                    6-8
+ViT-H/14   ~9-15 h                   7
+
+Evaluation (per cell, no training):
+  FairFace val (11k imgs)   B/32 ~3 min · H/14 ~25 min
+  UTKFace val (4.8k)        B/32 ~2 min · H/14 ~15 min
+  FACET (49k)               B/32 ~13 min · H/14 ~50 min
+  Flickr30k retrieval (1k)  B/32 ~2 min · H/14 ~15 min
+  ImageNetV2 (10k)          B/32 ~5 min · H/14 ~45 min

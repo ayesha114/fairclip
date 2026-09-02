@@ -1,0 +1,16 @@
+[ViT-B/32 BASE] Top-1: 52.50%   Top-5: 79.06%
+[ViT-B/16 BASE] Top-1: 58.34%   Top-5: 83.19%
+[ViT-B/32 gender] Top-1: 52.25%   Top-5: 78.96%
+[ViT-B/32 age] Top-1: 51.89%   Top-5: 78.63%
+[ViT-B/32 race] Top-1: 51.65%   Top-5: 78.33%
+[ViT-B/16 gender] Top-1: 58.25%   Top-5: 83.20%
+[ViT-B/16 age] Top-1: 57.56%   Top-5: 83.01%
+[ViT-B/16 race] Top-1: 57.41%   Top-5: 82.80%
+[ViT-L/14 BASE] Top-1: 64.53%   Top-5: 86.72%
+[ViT-L/14 gender] Top-1: 64.30%   Top-5: 86.75%
+[ViT-L/14 age] Top-1: 64.06%   Top-5: 86.45%
+[ViT-L/14 race] Top-1: 63.95%   Top-5: 86.30%
+[ViT-H/14 BASE] Top-1: 67.68%   Top-5: 88.10%
+[ViT-H/14 gender] Top-1: 67.55%   Top-5: 88.20%
+[ViT-H/14 age] Top-1: 67.27%   Top-5: 88.11%
+[ViT-H/14 race] Top-1: 67.56%   Top-5: 87.84%

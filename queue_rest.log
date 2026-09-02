@@ -1,0 +1,32 @@
+nohup: ignoring input
+ViT-B_32 gender FairCLIP: Acc=0.973 DPG=0.945 EOD=0.000 RBS=0.5460 MaxSkew=0.016 NDKL=0.012 ABLE=97.83
+ViT-B_32 age FairCLIP: Acc=0.467 DPG=0.535 EOD=0.195 RBS=0.4454 MaxSkew=0.235 NDKL=0.074 ABLE=58.69
+ViT-B_32 race FairCLIP: Acc=0.678 DPG=0.693 EOD=0.081 RBS=0.3091 MaxSkew=0.242 NDKL=0.087 ABLE=72.76
+ViT-B_16 gender FairCLIP: Acc=0.979 DPG=0.959 EOD=0.000 RBS=0.5338 MaxSkew=0.110 NDKL=0.016 ABLE=93.57
+ViT-B_16 age FairCLIP: Acc=0.549 DPG=0.589 EOD=0.143 RBS=0.5238 MaxSkew=0.391 NDKL=0.061 ABLE=60.64
+ViT-B_16 race FairCLIP: Acc=0.749 DPG=0.754 EOD=0.069 RBS=0.4296 MaxSkew=0.435 NDKL=0.278 ABLE=69.44
+ViT-L_14 gender FairCLIP: Acc=0.979 DPG=0.959 EOD=0.000 RBS=0.6400 MaxSkew=0.112 NDKL=0.028 ABLE=93.44
+ViT-L_14 age FairCLIP: Acc=0.582 DPG=0.579 EOD=0.131 RBS=0.4456 MaxSkew=0.226 NDKL=0.072 ABLE=67.28
+ViT-L_14 race FairCLIP: Acc=0.638 DPG=0.650 EOD=0.111 RBS=0.2942 MaxSkew=0.162 NDKL=0.079 ABLE=72.92
+ViT-H_14 gender FairCLIP: Acc=0.978 DPG=0.956 EOD=0.000 RBS=0.5922 MaxSkew=0.071 NDKL=0.016 ABLE=95.40
+ViT-H_14 age FairCLIP: Acc=0.490 DPG=0.578 EOD=0.151 RBS=0.4546 MaxSkew=0.239 NDKL=0.058 ABLE=60.42
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+ViT-H_14 race FairCLIP: Acc=0.741 DPG=0.735 EOD=0.079 RBS=0.3460 MaxSkew=0.132 NDKL=0.058 ABLE=80.32
+saved results/tables/complete_metrics_seed{SEED}.csv
+ViT-B_32 gender FairCLIP: Acc=0.974 DPG=0.948 EOD=0.000 RBS=0.5902 MaxSkew=0.012 NDKL=0.012 ABLE=98.07
+ViT-B_32 age FairCLIP: Acc=0.462 DPG=0.531 EOD=0.198 RBS=0.4470 MaxSkew=0.198 NDKL=0.068 ABLE=59.10
+ViT-B_32 race FairCLIP: Acc=0.655 DPG=0.672 EOD=0.087 RBS=0.3238 MaxSkew=0.167 NDKL=0.076 ABLE=73.84
+ViT-B_16 gender FairCLIP: Acc=0.979 DPG=0.958 EOD=0.000 RBS=0.5129 MaxSkew=0.141 NDKL=0.017 ABLE=92.02
+ViT-B_16 age FairCLIP: Acc=0.549 DPG=0.585 EOD=0.143 RBS=0.5238 MaxSkew=0.292 NDKL=0.075 ABLE=63.31
+ViT-B_16 race FairCLIP: Acc=0.750 DPG=0.754 EOD=0.069 RBS=0.4345 MaxSkew=0.474 NDKL=0.279 ABLE=68.05
+ViT-L_14 gender FairCLIP: Acc=0.979 DPG=0.959 EOD=0.000 RBS=0.6470 MaxSkew=0.109 NDKL=0.024 ABLE=93.63
+ViT-L_14 age FairCLIP: Acc=0.580 DPG=0.574 EOD=0.132 RBS=0.4476 MaxSkew=0.307 NDKL=0.066 ABLE=64.84
+ViT-L_14 race FairCLIP: Acc=0.666 DPG=0.684 EOD=0.093 RBS=0.2954 MaxSkew=0.234 NDKL=0.096 ABLE=72.29
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+ViT-H_14 gender FairCLIP: Acc=0.979 DPG=0.958 EOD=0.000 RBS=0.6165 MaxSkew=0.257 NDKL=0.033 ABLE=86.38
+ViT-H_14 age FairCLIP: Acc=0.495 DPG=0.573 EOD=0.152 RBS=0.4587 MaxSkew=0.262 NDKL=0.064 ABLE=60.26
+ViT-H_14 race FairCLIP: Acc=0.742 DPG=0.737 EOD=0.077 RBS=0.3529 MaxSkew=0.248 NDKL=0.074 ABLE=76.08
+saved results/tables/complete_metrics_seed{SEED}.csv
+MULTISEED_METRICS_DONE
