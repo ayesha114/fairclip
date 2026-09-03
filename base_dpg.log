@@ -1,0 +1,10 @@
+nohup: ignoring input
+DONE base ViT-B/16 gender DPG=0.0237 EOD=0.0474 RBS=1.70e-02
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE base ViT-H/14 gender DPG=0.0166 EOD=0.0331 RBS=2.67e-02
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+WARNING:huggingface_hub.utils._http:Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+DONE base ViT-H/14 age DPG=0.0744 EOD=0.1488 RBS=7.83e-02
+DONE base ViT-H/14 race DPG=0.0352 EOD=0.0704 RBS=5.30e-02
+BASELINE_DPG_FINISHED

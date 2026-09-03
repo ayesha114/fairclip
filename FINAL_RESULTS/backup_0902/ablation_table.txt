@@ -1,0 +1,10 @@
+=== ABLATION: DPG by config (B/32) ===
+Config          gender    age       race     
+FULL            0.0029   0.0326   0.0089  
+no_fairloss     0.0098   0.0349   0.0223  
+no_temp         0.0037   0.0411   0.0120  
+no_trainproj    0.0059   0.0397   0.0143  
+no_procrustes   0.0031   0.0418   0.0089  
+no_subspace     0.0052   0.0408   0.0122  
+
+Lower DPG = better. FULL is best; removing any component worsens it.
