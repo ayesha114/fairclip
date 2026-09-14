@@ -1,0 +1,19 @@
+\begin{table*}[t]\centering\small
+\caption{FairFace in-domain results.}
+\label{tab:fairface}
+\begin{tabular}{llcccccccccc}\toprule
+& & \multicolumn{2}{c}{Acc $\uparrow$} & \multicolumn{3}{c}{MaxSkew $\downarrow$} & \multicolumn{3}{c}{NDKL $\downarrow$} & \multicolumn{2}{c}{ABLE $\uparrow$}\\
+Backbone & Attr. & Base & Ours & Base & Ours & Zhang & Base & Ours & Zhang & Base & Ours\\\midrule
+ViT-B/32 & gender & 0.944 & \textbf{0.973} & 0.280 & \textbf{0.029} & 0.090 & 0.072 & \textbf{0.012} & 0.030 & 83.94 & \textbf{97.23}\\
+ViT-B/32 & age & 0.433 & \textbf{0.455} & 2.021 & \textbf{0.181} & 0.572 & 0.177 & \textbf{0.072} & 0.364 & 20.29 & \textbf{58.92}\\
+ViT-B/32 & race & 0.633 & \textbf{0.666} & 0.774 & \textbf{0.214} & 0.353 & 0.170 & \textbf{0.066} & 0.125 & 53.36 & \textbf{72.97}\\
+ViT-B/16 & gender & 0.931 & \textbf{0.979} & 0.188 & \textbf{0.045} & 0.080 & 0.044 & \textbf{0.012} & 0.025 & 87.69 & \textbf{96.74}\\
+ViT-B/16 & age & 0.355 & \textbf{0.521} & 2.043 & \textbf{0.302} & 0.608 & 0.208 & \textbf{0.080} & 0.294 & 18.99 & \textbf{61.10}\\
+ViT-B/16 & race & 0.616 & \textbf{0.660} & 0.984 & \textbf{0.340} & 0.353 & 0.157 & \textbf{0.093} & 0.125 & 46.52 & \textbf{68.52}\\
+ViT-L/14 & gender & 0.949 & \textbf{0.979} & 0.155 & \textbf{0.094} & 0.106 & 0.037 & \textbf{0.040} & 0.035 & 90.04 & \textbf{94.31}\\
+ViT-L/14 & age & 0.473 & \textbf{0.578} & 2.077 & \textbf{0.298} & 0.579 & 0.180 & \textbf{0.058} & 0.332 & 19.81 & \textbf{64.98}\\
+ViT-L/14 & race & 0.619 & \textbf{0.713} & 0.573 & \textbf{0.100} & 0.353 & 0.157 & \textbf{0.060} & 0.125 & 58.99 & \textbf{79.76}\\
+ViT-H/14 & gender & 0.966 & \textbf{0.978} & 0.103 & \textbf{0.056} & 0.138 & 0.018 & \textbf{0.017} & 0.051 & 93.27 & \textbf{96.13}\\
+ViT-H/14 & age & 0.443 & \textbf{0.490} & 1.928 & \textbf{0.192} & 0.515 & 0.154 & \textbf{0.056} & 0.289 & 21.90 & \textbf{61.51}\\
+ViT-H/14 & race & 0.696 & \textbf{0.742} & 0.483 & \textbf{0.132} & 0.353 & 0.104 & \textbf{0.066} & 0.125 & 65.42 & \textbf{80.35}\\
+\bottomrule\end{tabular}\end{table*}

@@ -1,0 +1,17 @@
+\begin{table}[t]\centering\small
+\caption{FairFace fairness metrics, mean$\pm$std over three seeds.}
+\begin{tabular}{llccc}\toprule
+Backbone & Attr. & DPG $\downarrow$ & EOD $\downarrow$ & RBS $\downarrow$\\\midrule
+ViT-B/32 & gender & 0.0315 $\to$ \textbf{0.0041}$\pm$0.0020 & 0.0631 $\to$ \textbf{0.0083} & 1.7e-02 $\to$ \textbf{7.3e-05}\\
+ViT-B/32 & age & 0.0817 $\to$ \textbf{0.0344}$\pm$0.0024 & 0.1635 $\to$ \textbf{0.0687} & 5.9e-02 $\to$ \textbf{1.9e-03}\\
+ViT-B/32 & race & 0.0417 $\to$ \textbf{0.0116}$\pm$0.0027 & 0.0834 $\to$ \textbf{0.0232} & 4.1e-02 $\to$ \textbf{4.4e-05}\\
+ViT-B/16 & gender & 0.0237 $\to$ \textbf{0.0051}$\pm$0.0019 & 0.0474 $\to$ \textbf{0.0101} & 1.7e-02 $\to$ \textbf{5.7e-05}\\
+ViT-B/16 & age & 0.0791 $\to$ \textbf{0.0398}$\pm$0.0050 & 0.1581 $\to$ \textbf{0.0797} & 5.6e-02 $\to$ \textbf{1.7e-03}\\
+ViT-B/16 & race & 0.0463 $\to$ \textbf{0.0151}$\pm$0.0043 & 0.0926 $\to$ \textbf{0.0302} & 4.1e-02 $\to$ \textbf{4.4e-05}\\
+ViT-L/14 & gender & 0.0184 $\to$ \textbf{0.0064}$\pm$0.0019 & 0.0368 $\to$ \textbf{0.0129} & 1.7e-02 $\to$ \textbf{1.2e-04}\\
+ViT-L/14 & age & 0.0683 $\to$ \textbf{0.0332}$\pm$0.0040 & 0.1365 $\to$ \textbf{0.0664} & 4.9e-02 $\to$ \textbf{2.2e-03}\\
+ViT-L/14 & race & 0.0364 $\to$ \textbf{0.0129}$\pm$0.0012 & 0.0728 $\to$ \textbf{0.0259} & 3.3e-02 $\to$ \textbf{4.8e-05}\\
+ViT-H/14 & gender & 0.0166 $\to$ \textbf{0.0027}$\pm$0.0002 & 0.0331 $\to$ \textbf{0.0053} & 2.7e-02 $\to$ \textbf{3.1e-04}\\
+ViT-H/14 & age & 0.0744 $\to$ \textbf{0.0294}$\pm$0.0017 & 0.1488 $\to$ \textbf{0.0588} & 7.8e-02 $\to$ \textbf{2.2e-03}\\
+ViT-H/14 & race & 0.0352 $\to$ \textbf{0.0097}$\pm$0.0019 & 0.0704 $\to$ \textbf{0.0195} & 5.3e-02 $\to$ \textbf{3.0e-05}\\
+\bottomrule\end{tabular}\end{table}

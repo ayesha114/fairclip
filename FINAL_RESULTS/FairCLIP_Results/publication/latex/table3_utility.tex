@@ -1,0 +1,21 @@
+\begin{table}[t]\centering\small
+\caption{Vision-language utility, mean over three seeds.}
+\begin{tabular}{llcccc}\toprule
+Backbone & Model & TR@5 & IR@5 & IN-V2 Top-1 & $\Delta$\\\midrule
+ViT-B/32 & Baseline & 78.4 & 77.4 & 52.50 & --\\
+ & gender & 76.7 & 74.8 & 52.25 & -0.25\\
+ & age & 77.7 & 74.7 & 51.92 & -0.58\\
+ & race & 77.9 & 75.8 & 51.64 & -0.86\\
+ViT-B/16 & Baseline & 81.5 & 78.9 & 58.34 & --\\
+ & gender & 80.5 & 77.1 & 58.24 & -0.10\\
+ & age & 79.4 & 76.3 & 57.55 & -0.79\\
+ & race & 81.6 & 78.5 & 57.43 & -0.91\\
+ViT-L/14 & Baseline & 82.1 & 80.4 & 64.53 & --\\
+ & gender & 80.2 & 79.5 & 64.30 & -0.23\\
+ & age & 80.5 & 78.2 & 64.06 & -0.47\\
+ & race & 81.6 & 79.8 & 63.97 & -0.56\\
+ViT-H/14 & Baseline & 89.1 & 87.3 & 67.68 & --\\
+ & gender & 88.6 & 86.2 & 67.55 & -0.13\\
+ & age & 88.0 & 85.4 & 67.30 & -0.38\\
+ & race & 88.8 & 86.5 & 67.56 & -0.12\\
+\bottomrule\end{tabular}\end{table}
